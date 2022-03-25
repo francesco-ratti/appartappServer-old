@@ -35,7 +35,7 @@ public class SignupResource {
         if (email==null || password==null || name==null || surname==null || birthdayStr==null || genderStr==null || (!(genderStr.equals("M") || genderStr.equals("F") || genderStr.equals("NB"))))
             return Response.status(Response.Status.UNAUTHORIZED).build();
 
-        Date birthday=Date.from(Instant.parse(birthdayStr));
+        Date birthday=new Date(Long.parseLong(birthdayStr));
         Gender gender=Gender.valueOf(genderStr);
 
         if (userServiceBean.UserExists(email)) {
