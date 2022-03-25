@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 
 @Path("/login")
 public class LoginResource {
-    @EJB(name = "com.example.demo2.beans/UserServiceBean")
+    @EJB(name = "com.polimi.mrf.appartapp.beans/UserServiceBean")
     UserServiceBean userServiceBean;
 
     @POST
