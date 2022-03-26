@@ -8,7 +8,7 @@
         testOnBorrow=true
         validationQuery=SELECT 1
         maxConnLifetimeMillis=27000000
-        UserName root
-        Password dervalaporta
+        UserName appuser
+        Password NotLocalhost
     </Resource>
 </resources>
