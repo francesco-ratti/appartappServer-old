@@ -1,7 +1,7 @@
 package com.polimi.mrf.appartapp.resources;
 
 import com.google.gson.Gson;
-import com.polimi.mrf.appartapp.beans.ApartmentServiceBean;
+import com.polimi.mrf.appartapp.beans.ApartmentSearchServiceBean;
 import com.polimi.mrf.appartapp.entities.Apartment;
 import com.polimi.mrf.appartapp.entities.User;
 
@@ -16,8 +16,8 @@ import javax.ws.rs.core.Response;
 
 @Path("/reserved/getnextnewapartment")
 public class GetNextNewApartmentResource {
-    @EJB(name = "com.polimi.mrf.appartapp.beans/ApartmentServiceBean")
-    ApartmentServiceBean apartmentServiceBean;
+    @EJB(name = "com.polimi.mrf.appartapp.beans/ApartmentSearchServiceBean")
+    ApartmentSearchServiceBean apartmentSearchServiceBean;
 
     @POST
     @Produces("application/json")
@@ -26,13 +26,13 @@ public class GetNextNewApartmentResource {
 
         HttpSession session = request.getSession(true);
         if ((session.isNew() || session.getAttribute("apartmentsservicebean")==null)) {
-            apartmentServiceBean.SearchNewApartments(user);
+            apartmentSearchServiceBean.SearchNewApartments(user);
         } else {
-            apartmentServiceBean = (ApartmentServiceBean) session.getAttribute("apartmentsservicebean");
+            apartmentSearchServiceBean = (ApartmentSearchServiceBean) session.getAttribute("apartmentsservicebean");
         }
 
-        Apartment nextapartment= apartmentServiceBean.getNewApartmentNextResult();
-        session.setAttribute("apartmentsservicebean", apartmentServiceBean);
+        Apartment nextapartment= apartmentSearchServiceBean.getNewApartmentNextResult();
+        session.setAttribute("apartmentsservicebean", apartmentSearchServiceBean);
         return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(new Gson().toJson(nextapartment)).build();
     }
 }
