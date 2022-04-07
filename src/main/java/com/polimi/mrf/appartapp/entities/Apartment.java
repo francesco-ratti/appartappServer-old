@@ -15,6 +15,9 @@ public class Apartment {
         return id;
     }
 
+    @ManyToOne
+    private User owner;
+
     private String listingTitle;
     private String description;
     private int price;
@@ -59,5 +62,10 @@ public class Apartment {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+        owner.addOwnedApartment(this);
     }
 }

@@ -25,7 +25,7 @@ public class User {
     private Gender gender;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name="user_apartment_disliked",
+    @JoinTable(name="user_apartment_ignored",
             joinColumns=@JoinColumn(name="user_id"),
             inverseJoinColumns=@JoinColumn(name="apartment_id"))
     private List<Apartment> ignoredApartmentList;
@@ -35,6 +35,9 @@ public class User {
             joinColumns=@JoinColumn(name="user_id"),
             inverseJoinColumns=@JoinColumn(name="apartment_id"))
     private List<Apartment> likedApartmentList;
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Apartment> ownedApartmentList;
 
     public Date getBirthday() {
         return birthday;
@@ -88,8 +91,12 @@ public class User {
         return ignoredApartmentList;
     }
 
-    public void setIgnoredApartmentList(List<Apartment> apartmentList) {
-        this.ignoredApartmentList = apartmentList;
+    public List<Apartment> getLikedApartmentList() {
+        return likedApartmentList;
+    }
+
+    public List<Apartment> getOwnedApartmentList() {
+        return ownedApartmentList;
     }
 
     public void addIgnoredApartment(Apartment apartment) {
@@ -98,5 +105,9 @@ public class User {
 
     public void addLikedApartment(Apartment apartment) {
         this.likedApartmentList.add(apartment);
+    }
+
+    public void addOwnedApartment(Apartment apartment) {
+        this.ownedApartmentList.add(apartment);
     }
 }

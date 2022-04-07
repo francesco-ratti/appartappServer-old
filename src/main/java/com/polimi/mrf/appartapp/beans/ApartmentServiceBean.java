@@ -18,4 +18,17 @@ public class ApartmentServiceBean {
         user.addIgnoredApartment(em.find(Apartment.class, apartmentId));
         em.merge(user);
     }
+
+    public Apartment createApartment(User user, String listingTitle, String description, int price, String address, String additionalExpenseDetail) {
+        Apartment apartment=new Apartment();
+        apartment.setListingTitle(listingTitle);
+        apartment.setDescription(description);
+        apartment.setPrice(price);
+        apartment.setAddress(address);
+        apartment.setAdditionalExpenseDetail(additionalExpenseDetail);
+        apartment.setOwner(user);
+
+        em.persist(apartment);
+        return apartment;
+    }
 }
