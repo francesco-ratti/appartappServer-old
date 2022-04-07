@@ -8,15 +8,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Stateful(name="ApartmentsServiceBean")
-public class ApartmentsServiceBean {
+@Stateful(name="ApartmentServiceBean")
+public class ApartmentServiceBean {
     @PersistenceContext(unitName = "appartapp")
     private EntityManager em;
 
     private List<Apartment> apartmentList=null;
     private int resNumToFetch =0;
 
-    public ApartmentsServiceBean() {
+    public ApartmentServiceBean() {
     }
 
     public void SearchNewApartments(User userToLookup) {
@@ -36,4 +36,13 @@ public class ApartmentsServiceBean {
         } else return null;
     }
 
+    public void likeApartment(User user, Long apartmentId) {
+        user.addLikedApartment(em.find(Apartment.class, apartmentId));
+        em.merge(user);
+    }
+
+    public void ignoreApartment(User user, Long apartmentId) {
+        user.addIgnoredApartment(em.find(Apartment.class, apartmentId));
+        em.merge(user);
+    }
 }

@@ -24,13 +24,13 @@ public class User {
     private Date birthday;
     private Gender gender;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name="user_apartment_disliked",
             joinColumns=@JoinColumn(name="user_id"),
             inverseJoinColumns=@JoinColumn(name="apartment_id"))
     private List<Apartment> ignoredApartmentList;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name="user_apartment_liked",
             joinColumns=@JoinColumn(name="user_id"),
             inverseJoinColumns=@JoinColumn(name="apartment_id"))
@@ -90,5 +90,13 @@ public class User {
 
     public void setIgnoredApartmentList(List<Apartment> apartmentList) {
         this.ignoredApartmentList = apartmentList;
+    }
+
+    public void addIgnoredApartment(Apartment apartment) {
+        this.ignoredApartmentList.add(apartment);
+    }
+
+    public void addLikedApartment(Apartment apartment) {
+        this.likedApartmentList.add(apartment);
     }
 }

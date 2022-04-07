@@ -1,7 +1,7 @@
 package com.polimi.mrf.appartapp.resources;
 
 import com.google.gson.Gson;
-import com.polimi.mrf.appartapp.beans.ApartmentsServiceBean;
+import com.polimi.mrf.appartapp.beans.ApartmentServiceBean;
 import com.polimi.mrf.appartapp.entities.Apartment;
 import com.polimi.mrf.appartapp.entities.User;
 
@@ -19,8 +19,8 @@ import java.util.List;
 
 @Path("/reserved/getallnewapartments")
 public class GetAllNewApartmentsResource {
-    @EJB(name = "com.polimi.mrf.appartapp.beans/ApartmentsServiceBean")
-    ApartmentsServiceBean apartmentsServiceBean;
+    @EJB(name = "com.polimi.mrf.appartapp.beans/ApartmentServiceBean")
+    ApartmentServiceBean apartmentServiceBean;
 
     @POST
     @Produces("application/json")
@@ -29,11 +29,11 @@ public class GetAllNewApartmentsResource {
 
         HttpSession session = request.getSession(true);
         if ((session.isNew() || session.getAttribute("apartmentsservicebean")==null)) {
-            apartmentsServiceBean.SearchNewApartments(user);
+            apartmentServiceBean.SearchNewApartments(user);
         }
 
-        List<Apartment> apartmentList= apartmentsServiceBean.getNewApartmentList();
-        session.setAttribute("apartmentsservicebean", apartmentsServiceBean);
+        List<Apartment> apartmentList= apartmentServiceBean.getNewApartmentList();
+        session.setAttribute("apartmentsservicebean", apartmentServiceBean);
         return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(new Gson().toJson(apartmentList)).build();
     }
 }
