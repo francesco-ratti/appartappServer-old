@@ -3,7 +3,7 @@ package com.polimi.mrf.appartapp.entities;
 import javax.persistence.*;
 
 @Entity
-public class Appartment {
+public class Apartment {
     @Id
     private Long id;
 

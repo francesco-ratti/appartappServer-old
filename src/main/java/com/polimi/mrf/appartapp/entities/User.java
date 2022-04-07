@@ -9,8 +9,8 @@ import java.util.List;
 @NamedQuery(name="User.checkCredentials",
         query="SELECT u FROM User u WHERE u.email=:email AND u.password=:password"
 )
-@NamedQuery(name = "User.getNewAppartments", query = "SELECT h FROM Appartment h, User u WHERE u.id=:userId AND h.id NOT IN (SELECT lh.id FROM u.likedAppartmentList lh) AND h.id NOT IN (SELECT ih.id FROM u.ignoredAppartmentList ih)")
-//@NamedQuery(name = "User.getNewAppartments", query = "SELECT h FROM Appartment h WHERE h.id NOT IN (SELECT lh.id FROM User u JOIN u.likedAppartmentList lh WHERE u.id=:userId) AND h.id NOT IN (SELECT ih.id FROM User u JOIN u.ignoredAppartmentList ih WHERE u.id=:userId)")
+@NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h, User u WHERE u.id=:userId AND h.id NOT IN (SELECT lh.id FROM u.likedApartmentList lh) AND h.id NOT IN (SELECT ih.id FROM u.ignoredApartmentList ih)")
+//@NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h WHERE h.id NOT IN (SELECT lh.id FROM User u JOIN u.likedApartmentList lh WHERE u.id=:userId) AND h.id NOT IN (SELECT ih.id FROM User u JOIN u.ignoredApartmentList ih WHERE u.id=:userId)")
 @Entity
 public class User {
     @Id
@@ -25,16 +25,16 @@ public class User {
     private Gender gender;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="user_appartment_disliked",
+    @JoinTable(name="user_apartment_disliked",
             joinColumns=@JoinColumn(name="user_id"),
-            inverseJoinColumns=@JoinColumn(name="appartment_id"))
-    private List<Appartment> ignoredAppartmentList;
+            inverseJoinColumns=@JoinColumn(name="apartment_id"))
+    private List<Apartment> ignoredApartmentList;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="user_appartment_liked",
+    @JoinTable(name="user_apartment_liked",
             joinColumns=@JoinColumn(name="user_id"),
-            inverseJoinColumns=@JoinColumn(name="appartment_id"))
-    private List<Appartment> likedAppartmentList;
+            inverseJoinColumns=@JoinColumn(name="apartment_id"))
+    private List<Apartment> likedApartmentList;
 
     public Date getBirthday() {
         return birthday;
@@ -84,11 +84,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Appartment> getIgnoredAppartmentList() {
-        return ignoredAppartmentList;
+    public List<Apartment> getIgnoredApartmentList() {
+        return ignoredApartmentList;
     }
 
-    public void setIgnoredAppartmentList(List<Appartment> appartmentList) {
-        this.ignoredAppartmentList = appartmentList;
+    public void setIgnoredApartmentList(List<Apartment> apartmentList) {
+        this.ignoredApartmentList = apartmentList;
     }
 }
