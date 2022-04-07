@@ -14,4 +14,50 @@ public class Apartment {
     public Long getId() {
         return id;
     }
+
+    private String listingTitle;
+    private String description;
+    private int price;
+    private String address;
+    private String additionalExpenseDetail;
+
+    public String getAdditionalExpenseDetail() {
+        return additionalExpenseDetail;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getListingTitle() {
+        return listingTitle;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setAdditionalExpenseDetail(String additionalExpenseDetail) {
+        this.additionalExpenseDetail = additionalExpenseDetail;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setListingTitle(String listingTitle) {
+        this.listingTitle = listingTitle;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }
