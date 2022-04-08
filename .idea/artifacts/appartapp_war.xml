@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="appartapp-1.0-SNAPSHOT.war">
+    <root id="archive" name="demo2-1.0-SNAPSHOT.war">
       <element id="artifact" artifact-name="appartapp:war exploded" />
     </root>
   </artifact>

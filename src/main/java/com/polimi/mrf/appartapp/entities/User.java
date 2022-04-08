@@ -9,11 +9,14 @@ import java.util.List;
 @NamedQuery(name="User.checkCredentials",
         query="SELECT u FROM User u WHERE u.email=:email AND u.password=:password"
 )
+@NamedQuery(name="User.findByEmail",
+        query="SELECT u FROM User u WHERE u.email=:email"
+)
 @NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h, User u WHERE u.id=:userId AND h.id NOT IN (SELECT lh.id FROM u.likedApartmentList lh) AND h.id NOT IN (SELECT ih.id FROM u.ignoredApartmentList ih)")
 //@NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h WHERE h.id NOT IN (SELECT lh.id FROM User u JOIN u.likedApartmentList lh WHERE u.id=:userId) AND h.id NOT IN (SELECT ih.id FROM User u JOIN u.ignoredApartmentList ih WHERE u.id=:userId)")
 @Entity
 public class User {
-    @Id
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     @Column(unique = true)
     private String email;
@@ -45,6 +48,10 @@ public class User {
 
     public Gender getGender() {
         return gender;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

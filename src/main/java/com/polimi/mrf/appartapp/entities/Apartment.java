@@ -4,9 +4,8 @@ import javax.persistence.*;
 
 @Entity
 public class Apartment {
-    @Id
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-
     public void setId(Long id) {
         this.id = id;
     }

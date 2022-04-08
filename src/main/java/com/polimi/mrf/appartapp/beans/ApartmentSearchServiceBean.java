@@ -21,7 +21,7 @@ public class ApartmentSearchServiceBean {
 
     public void SearchNewApartments(User userToLookup) {
         User user=em.find(User.class, userToLookup);
-        apartmentList=em.createNamedQuery("User.getNewApartments", Apartment.class).getResultList();
+        apartmentList=em.createNamedQuery("User.getNewApartments", Apartment.class).setParameter("userId", userToLookup.getId()).getResultList();
     }
 
     public List<Apartment> getNewApartmentList() {

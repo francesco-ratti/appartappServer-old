@@ -6,12 +6,14 @@ import com.polimi.mrf.appartapp.entities.User;
 import javax.ejb.EJB;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 
+@WebFilter(filterName="UserManagerFilter", urlPatterns="/api/reserved/*")
 public class UserManager extends HttpFilter {
 
     @EJB(name = "com.polimi.mrf.appartapp.beans/UserServiceBean")

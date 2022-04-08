@@ -38,7 +38,7 @@ public class UserServiceBean {
         return u;
     }
     public boolean UserExists(String email) {
-        User user=em.find(User.class, email);
-        return user!=null;
+        List<User> users=em.createNamedQuery("User.findByEmail", User.class).setParameter("email", email).getResultList();
+        return (users!=null && users.size()>0);
     }
 }
