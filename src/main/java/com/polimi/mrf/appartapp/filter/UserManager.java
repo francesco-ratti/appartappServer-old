@@ -37,4 +37,8 @@ public class UserManager extends HttpFilter {
             chain.doFilter(req, res);
         }
     }
+
+    @Override
+    public void destroy() {
+    }
 }

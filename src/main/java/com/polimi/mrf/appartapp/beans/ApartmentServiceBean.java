@@ -3,9 +3,11 @@ package com.polimi.mrf.appartapp.beans;
 import com.polimi.mrf.appartapp.entities.Apartment;
 import com.polimi.mrf.appartapp.entities.User;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+@Stateless(name="ApartmentServiceBean")
 public class ApartmentServiceBean {
     @PersistenceContext(unitName = "appartapp")
     private EntityManager em;

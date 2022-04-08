@@ -2,6 +2,7 @@ package com.polimi.mrf.appartapp.resources;
 
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.polimi.mrf.appartapp.beans.ApartmentServiceBean;
 import com.polimi.mrf.appartapp.entities.Apartment;
 import com.polimi.mrf.appartapp.entities.User;
@@ -34,8 +35,13 @@ public class CreateApartment {
             return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("missing parameters").build();
         try {
             int price = Integer.parseInt(priceStr);
-            Apartment apartment=apartmentServiceBean.createApartment((User) request.getAttribute("user"), listingTitle, description, price, address, additionalExpenseDetail);
-            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(new Gson().toJson(apartment)).build();
+            User user=(User) request.getAttribute("user");
+            Apartment apartment=apartmentServiceBean.createApartment(user, listingTitle, description, price, address, additionalExpenseDetail);
+            Gson gson = new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .create();
+            String json=gson.toJson(apartment);
+            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(json).build();
         } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("missing parameters").build();
         }

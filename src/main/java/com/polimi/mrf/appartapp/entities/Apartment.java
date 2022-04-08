@@ -1,9 +1,12 @@
 package com.polimi.mrf.appartapp.entities;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 
 @Entity
 public class Apartment {
+    @Expose
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     public void setId(Long id) {
@@ -17,10 +20,15 @@ public class Apartment {
     @ManyToOne
     private User owner;
 
+    @Expose
     private String listingTitle;
+    @Expose
     private String description;
+    @Expose
     private int price;
+    @Expose
     private String address;
+    @Expose
     private String additionalExpenseDetail;
 
     public String getAdditionalExpenseDetail() {
@@ -61,6 +69,10 @@ public class Apartment {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public User getOwner() {
+        return owner;
     }
 
     public void setOwner(User owner) {
