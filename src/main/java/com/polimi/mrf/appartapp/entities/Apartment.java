@@ -79,4 +79,19 @@ public class Apartment {
         this.owner = owner;
         owner.addOwnedApartment(this);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Apartment)) {
+            return false;
+        }
+
+        Apartment a=(Apartment) o;
+
+        return Long.compare(a.id, this.id)==0;
+    }
 }

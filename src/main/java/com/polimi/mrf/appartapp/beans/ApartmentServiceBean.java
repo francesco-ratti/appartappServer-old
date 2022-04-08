@@ -12,13 +12,23 @@ public class ApartmentServiceBean {
     @PersistenceContext(unitName = "appartapp")
     private EntityManager em;
     public void likeApartment(User user, Long apartmentId) {
-        user.addLikedApartment(em.find(Apartment.class, apartmentId));
-        em.merge(user);
+        Apartment apartmentToLike=new Apartment();
+        //avoiding useless lookup with find, since equals method of Apartment class has been overridden, returns true if ids are the same
+        apartmentToLike.setId(apartmentId);
+        if (!user.getLikedApartmentList().contains(apartmentToLike)) {
+            user.addLikedApartment(em.find(Apartment.class, apartmentId));
+            em.merge(user);
+        }
     }
 
     public void ignoreApartment(User user, Long apartmentId) {
-        user.addIgnoredApartment(em.find(Apartment.class, apartmentId));
-        em.merge(user);
+        Apartment apartmentToIgnore=new Apartment();
+        //avoiding useless lookup with find, since equals method of Apartment class has been overridden, returns true if ids are the same
+        apartmentToIgnore.setId(apartmentId);
+        if (!user.getIgnoredApartmentList().contains(apartmentToIgnore)) {
+            user.addIgnoredApartment(em.find(Apartment.class, apartmentId));
+            em.merge(user);
+        }
     }
 
     public Apartment createApartment(User user, String listingTitle, String description, int price, String address, String additionalExpenseDetail) {
