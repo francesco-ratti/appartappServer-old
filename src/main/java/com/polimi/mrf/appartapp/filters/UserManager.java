@@ -1,4 +1,4 @@
-package com.polimi.mrf.appartapp.filter;
+package com.polimi.mrf.appartapp.filters;
 
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.User;

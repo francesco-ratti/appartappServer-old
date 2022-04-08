@@ -7,18 +7,15 @@ import com.polimi.mrf.appartapp.entities.User;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import java.time.Instant;
 import java.util.Date;
-import java.util.Locale;
 
 @Path("/signup")
-public class SignupResource {
+public class Signup {
     @EJB(name = "com.polimi.mrf.appartapp.beans/UserServiceBean")
     UserServiceBean userServiceBean;
 
