@@ -35,7 +35,7 @@ public class GetApartmentImage {
 
             Response.ResponseBuilder response = Response.ok((Object) file);
             response.header("Content-Disposition",
-                    "attachment; filename=" + String.valueOf(id) + ".jpg");
+                    "attachment; filename=" + id + ".jpg");
             return response.build();
         } catch (NumberFormatException e) {
             return Response.status(Response.Status.NOT_ACCEPTABLE).type(MediaType.TEXT_PLAIN).entity("id not numeric").build();
