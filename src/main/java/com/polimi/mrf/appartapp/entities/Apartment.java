@@ -3,6 +3,7 @@ package com.polimi.mrf.appartapp.entities;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Apartment {
@@ -30,6 +31,9 @@ public class Apartment {
     private String address;
     @Expose
     private String additionalExpenseDetail;
+
+    @OneToMany
+    private List<ApartmentImage> apartmentImage;
 
     public String getAdditionalExpenseDetail() {
         return additionalExpenseDetail;
