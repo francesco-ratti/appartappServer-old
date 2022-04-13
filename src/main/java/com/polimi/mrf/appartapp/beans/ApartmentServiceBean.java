@@ -1,10 +1,10 @@
 package com.polimi.mrf.appartapp.beans;
 
-import com.polimi.mrf.appartapp.ImgIdService;
 import com.polimi.mrf.appartapp.entities.Apartment;
 import com.polimi.mrf.appartapp.entities.ApartmentImage;
 import com.polimi.mrf.appartapp.entities.User;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,8 +19,12 @@ public class ApartmentServiceBean {
 
     public static final String apartmentImagesFolderPath = System.getProperty("user.home")+"\\";
 
+    @EJB(name = "com.polimi.mrf.appartapp.beans/ImgIdServiceBean")
+    ImgIdServiceBean imgIdServiceBean;
+
     @PersistenceContext(unitName = "appartapp")
     private EntityManager em;
+
     public void likeApartment(User user, Long apartmentId) {
         Apartment apartmentToLike=new Apartment();
         //avoiding useless lookup with find, since equals method of Apartment class has been overridden, returns true if ids are the same
@@ -51,7 +55,8 @@ public class ApartmentServiceBean {
         apartment.setOwner(user);
 
         for (InputStream image: images) {
-            long currId=ImgIdService.getInstance().getNewApartmentImageId();
+            long currId=imgIdServiceBean.getNewApartmentImageId();
+
             Files.copy(image, Path.of(apartmentImagesFolderPath + currId+".jpg"));
             ApartmentImage apartmentImage=new ApartmentImage();
             apartmentImage.setId(currId);
