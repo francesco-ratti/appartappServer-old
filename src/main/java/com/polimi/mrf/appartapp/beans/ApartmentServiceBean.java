@@ -17,7 +17,7 @@ import java.util.List;
 @Stateless(name="ApartmentServiceBean")
 public class ApartmentServiceBean {
 
-    public static final String apartmentImageFolder = System.getProperty("user.home")+"\\";
+    public static final String apartmentImagesFolderPath = System.getProperty("user.home")+"\\";
 
     @PersistenceContext(unitName = "appartapp")
     private EntityManager em;
@@ -52,7 +52,7 @@ public class ApartmentServiceBean {
 
         for (InputStream image: images) {
             long currId=ImgIdService.getInstance().getNewApartmentImageId();
-            Files.copy(image, Path.of(apartmentImageFolder + currId+".jpg"));
+            Files.copy(image, Path.of(apartmentImagesFolderPath + currId+".jpg"));
             ApartmentImage apartmentImage=new ApartmentImage();
             apartmentImage.setId(currId);
 
