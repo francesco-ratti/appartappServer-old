@@ -1,5 +1,6 @@
 package com.polimi.mrf.appartapp.entities;
 
+import com.google.gson.annotations.Expose;
 import com.polimi.mrf.appartapp.Gender;
 
 import javax.persistence.*;
@@ -16,15 +17,28 @@ import java.util.List;
 //@NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h WHERE h.id NOT IN (SELECT lh.id FROM User u JOIN u.likedApartmentList lh WHERE u.id=:userId) AND h.id NOT IN (SELECT ih.id FROM User u JOIN u.ignoredApartmentList ih WHERE u.id=:userId)")
 @Entity
 public class User {
+    @Expose
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+
+    @Expose
     @Column(unique = true)
     private String email;
+
+    @Expose
     @Column(nullable = false)
     private String password;
+
+    @Expose
     private String name;
+
+    @Expose
     private String surname;
+
+    @Expose
     private Date birthday;
+
+    @Expose
     private Gender gender;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -39,8 +53,22 @@ public class User {
             inverseJoinColumns=@JoinColumn(name="apartment_id"))
     private List<Apartment> likedApartmentList;
 
+    @Expose
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Apartment> ownedApartmentList;
+
+    @Expose
+    @OneToMany(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval = true)
+    private List<UserImage> userImageList;
+
+    public List<UserImage> getUserImageList() {
+        return userImageList;
+    }
+
+    public void addUserImage(UserImage userImage) {
+        userImage.setUser(this);
+        userImageList.add(userImage);
+    }
 
     public Date getBirthday() {
         return birthday;

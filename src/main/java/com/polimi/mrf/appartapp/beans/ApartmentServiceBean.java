@@ -1,14 +1,24 @@
 package com.polimi.mrf.appartapp.beans;
 
+import com.polimi.mrf.appartapp.ImgIdService;
 import com.polimi.mrf.appartapp.entities.Apartment;
+import com.polimi.mrf.appartapp.entities.ApartmentImage;
 import com.polimi.mrf.appartapp.entities.User;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 
 @Stateless(name="ApartmentServiceBean")
 public class ApartmentServiceBean {
+
+    private static String pathStr="C:\\uploadedImages\\apartments\\";
+
     @PersistenceContext(unitName = "appartapp")
     private EntityManager em;
     public void likeApartment(User user, Long apartmentId) {
@@ -31,7 +41,7 @@ public class ApartmentServiceBean {
         }
     }
 
-    public Apartment createApartment(User user, String listingTitle, String description, int price, String address, String additionalExpenseDetail) {
+    public Apartment createApartment(User user, String listingTitle, String description, int price, String address, String additionalExpenseDetail, List<InputStream> images) throws IOException {
         Apartment apartment=new Apartment();
         apartment.setListingTitle(listingTitle);
         apartment.setDescription(description);
@@ -39,6 +49,15 @@ public class ApartmentServiceBean {
         apartment.setAddress(address);
         apartment.setAdditionalExpenseDetail(additionalExpenseDetail);
         apartment.setOwner(user);
+
+        for (InputStream image: images) {
+            long currId=ImgIdService.getInstance().getNewApartmentImageId();
+            Files.copy(image, Path.of(pathStr + currId+".jpg"));
+            ApartmentImage apartmentImage=new ApartmentImage();
+            apartmentImage.setId(currId);
+
+            apartment.addImage(apartmentImage);
+        }
 
         em.persist(apartment);
         return apartment;

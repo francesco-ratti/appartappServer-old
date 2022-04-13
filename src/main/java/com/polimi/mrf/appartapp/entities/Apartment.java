@@ -32,8 +32,8 @@ public class Apartment {
     @Expose
     private String additionalExpenseDetail;
 
-    @OneToMany
-    private List<ApartmentImage> apartmentImage;
+    @OneToMany(mappedBy="apartment", cascade=CascadeType.ALL, orphanRemoval = true)
+    private List<ApartmentImage> apartmentImageList;
 
     public String getAdditionalExpenseDetail() {
         return additionalExpenseDetail;
@@ -97,5 +97,11 @@ public class Apartment {
         Apartment a=(Apartment) o;
 
         return Long.compare(a.id, this.id)==0;
+    }
+
+    public void addImage(ApartmentImage apartmentImage) {
+        apartmentImage.setApartment(this);
+
+        apartmentImageList.add(apartmentImage);
     }
 }

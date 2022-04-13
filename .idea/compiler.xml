@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="appartapp" target="1.8" />
+      <module name="appartapp" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

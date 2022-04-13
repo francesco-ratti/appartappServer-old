@@ -66,6 +66,13 @@
           <element id="library" level="project" name="Maven: javax:javaee-api:8.0" />
           <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.6.0" />
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
+          <element id="library" level="project" name="Maven: org.glassfish.jersey.media:jersey-media-multipart:2.27" />
+          <element id="library" level="project" name="Maven: org.glassfish.jersey.core:jersey-common:2.27" />
+          <element id="library" level="project" name="Maven: javax.ws.rs:javax.ws.rs-api:2.1" />
+          <element id="library" level="project" name="Maven: javax.annotation:javax.annotation-api:1.2" />
+          <element id="library" level="project" name="Maven: org.glassfish.hk2.external:javax.inject:2.5.0-b42" />
+          <element id="library" level="project" name="Maven: org.glassfish.hk2:osgi-resource-locator:1.0.1" />
+          <element id="library" level="project" name="Maven: org.jvnet.mimepull:mimepull:1.9.6" />
         </element>
       </element>
       <element id="directory" name="META-INF">

@@ -1,6 +1,7 @@
 package com.polimi.mrf.appartapp.resources;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.polimi.mrf.appartapp.Gender;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.User;
@@ -11,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Date;
 
@@ -39,8 +41,13 @@ public class Signup {
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
         else {
-            User u=userServiceBean.createUser(email, password,name,surname, birthday, gender);
-            return Response.status(Response.Status.OK).entity(new Gson().toJson(u)).build();
+            User user=userServiceBean.createUser(email, password,name,surname, birthday, gender);
+            Gson gson = new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .create();
+            String json=gson.toJson(user);
+
+            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(json).build();
         }
     }
 }
