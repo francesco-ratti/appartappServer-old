@@ -3,6 +3,7 @@ package com.polimi.mrf.appartapp.entities;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,8 +33,9 @@ public class Apartment {
     @Expose
     private String additionalExpenseDetail;
 
+    @Expose
     @OneToMany(mappedBy="apartment", cascade=CascadeType.ALL, orphanRemoval = true)
-    private List<ApartmentImage> apartmentImageList;
+    private List<ApartmentImage> apartmentImageList=new ArrayList<>();
 
     public String getAdditionalExpenseDetail() {
         return additionalExpenseDetail;

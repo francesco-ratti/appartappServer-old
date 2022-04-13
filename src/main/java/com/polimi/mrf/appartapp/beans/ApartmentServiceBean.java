@@ -17,7 +17,7 @@ import java.util.List;
 @Stateless(name="ApartmentServiceBean")
 public class ApartmentServiceBean {
 
-    public static final String apartmentImagesFolderPath = System.getProperty("user.home")+"\\";
+    public static final String apartmentImagesFolderPath = System.getProperty("user.home")+"\\uploadedImages\\apartments\\";
 
     @EJB(name = "com.polimi.mrf.appartapp.beans/ImgIdServiceBean")
     ImgIdServiceBean imgIdServiceBean;
@@ -57,7 +57,8 @@ public class ApartmentServiceBean {
         for (InputStream image: images) {
             long currId=imgIdServiceBean.getNewApartmentImageId();
 
-            Files.copy(image, Path.of(apartmentImagesFolderPath + currId+".jpg"));
+            Path path=Path.of(apartmentImagesFolderPath + currId+".jpg");
+            Files.copy(image, path);
             ApartmentImage apartmentImage=new ApartmentImage();
             apartmentImage.setId(currId);
 
