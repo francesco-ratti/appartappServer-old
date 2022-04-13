@@ -17,7 +17,7 @@ import java.util.List;
 @Stateless(name="ApartmentServiceBean")
 public class ApartmentServiceBean {
 
-    public static final String apartmentImageFolder = "C:\\uploadedImages\\apartments\\";
+    public static final String apartmentImageFolder = System.getProperty("user.home")+"\\";
 
     @PersistenceContext(unitName = "appartapp")
     private EntityManager em;
