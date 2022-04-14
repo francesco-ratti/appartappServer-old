@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.polimi.mrf.appartapp.Gender;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -59,16 +60,17 @@ public class User {
 
     @Expose
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval = true)
-    private List<UserImage> userImageList;
+    private List<UserImage> userImageList=new ArrayList<>();
 
     public List<UserImage> getUserImageList() {
         return userImageList;
     }
 
-    public void addUserImage(UserImage userImage) {
+    public void addImage(UserImage userImage) {
         userImage.setUser(this);
         userImageList.add(userImage);
     }
+
 
     public Date getBirthday() {
         return birthday;

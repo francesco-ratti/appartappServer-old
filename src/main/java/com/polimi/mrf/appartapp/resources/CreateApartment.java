@@ -37,9 +37,6 @@ public class CreateApartment extends HttpServlet {
         String additionalExpenseDetail=request.getParameter("additionalexpensedetail");
         String priceStr=request.getParameter("price");
 
-        //String email=request.getParameter("email");
-        //String password=request.getParameter("password");
-
         if (listingTitle==null || description==null || address==null || additionalExpenseDetail==null || priceStr==null || listingTitle.length()==0 || description.length()==0 || address.length()==0 || additionalExpenseDetail.length()==0 || priceStr.length()==0) {
             response.sendError(Response.Status.BAD_REQUEST.getStatusCode(), "missing parameters");
             return;
@@ -48,14 +45,6 @@ public class CreateApartment extends HttpServlet {
             int price = Integer.parseInt(priceStr);
 
             User user= (User) request.getAttribute("user");
-
-            /*
-            User user=userServiceBean.getUser(email, password);
-            if (user==null) {
-                response.sendError(Response.Status.UNAUTHORIZED.getStatusCode(), "unauthorized");
-                return;
-            }
-             */
 
             Collection<Part> parts=request.getParts();
             List<InputStream> images= new ArrayList<>();

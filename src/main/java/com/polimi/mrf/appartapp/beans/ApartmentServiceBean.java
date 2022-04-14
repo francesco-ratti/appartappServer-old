@@ -45,15 +45,7 @@ public class ApartmentServiceBean {
         }
     }
 
-    public Apartment createApartment(User user, String listingTitle, String description, int price, String address, String additionalExpenseDetail, List<InputStream> images) throws IOException {
-        Apartment apartment=new Apartment();
-        apartment.setListingTitle(listingTitle);
-        apartment.setDescription(description);
-        apartment.setPrice(price);
-        apartment.setAddress(address);
-        apartment.setAdditionalExpenseDetail(additionalExpenseDetail);
-        apartment.setOwner(user);
-
+    private Apartment appendImages(Apartment apartment, List<InputStream> images) throws IOException {
         for (InputStream image: images) {
             long currId=imgIdServiceBean.getNewApartmentImageId();
 
@@ -64,8 +56,29 @@ public class ApartmentServiceBean {
 
             apartment.addImage(apartmentImage);
         }
+        return apartment;
+    }
 
+    public Apartment createApartment(User user, String listingTitle, String description, int price, String address, String additionalExpenseDetail, List<InputStream> images) throws IOException {
+        Apartment apartment=new Apartment();
+        apartment.setListingTitle(listingTitle);
+        apartment.setDescription(description);
+        apartment.setPrice(price);
+        apartment.setAddress(address);
+        apartment.setAdditionalExpenseDetail(additionalExpenseDetail);
+        apartment.setOwner(user);
+        apartment=appendImages(apartment, images);
         em.persist(apartment);
         return apartment;
+    }
+
+    public Apartment addImage(Apartment apartment, List<InputStream> images) throws IOException {
+        apartment=appendImages(apartment, images);
+        em.persist(apartment);
+        return apartment;
+    }
+
+    public Apartment getApartment(long id) {
+        return em.find(Apartment.class, id);
     }
 }
