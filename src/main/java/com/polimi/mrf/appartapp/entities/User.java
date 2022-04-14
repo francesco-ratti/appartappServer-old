@@ -14,7 +14,7 @@ import java.util.List;
 @NamedQuery(name="User.findByEmail",
         query="SELECT u FROM User u WHERE u.email=:email"
 )
-@NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h, User u WHERE u.id=:userId AND h.id NOT IN (SELECT lh.id FROM u.likedApartmentList lh) AND h.id NOT IN (SELECT ih.id FROM u.ignoredApartmentList ih)")
+@NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h, User u WHERE u.id=:userId AND u.id <> h.owner.id AND h.id NOT IN (SELECT lh.id FROM u.likedApartmentList lh) AND h.id NOT IN (SELECT ih.id FROM u.ignoredApartmentList ih)")
 //@NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h WHERE h.id NOT IN (SELECT lh.id FROM User u JOIN u.likedApartmentList lh WHERE u.id=:userId) AND h.id NOT IN (SELECT ih.id FROM User u JOIN u.ignoredApartmentList ih WHERE u.id=:userId)")
 @Entity
 public class User {
@@ -154,4 +154,10 @@ public class User {
         dummyImg.setId(imageId);
         return this.images.remove(dummyImg);
     }
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name="user_apartment_matched",
+            joinColumns=@JoinColumn(name="user_id"),
+            inverseJoinColumns=@JoinColumn(name="apartment_id"))
+    public List<Apartment> matchedApartments;
 }

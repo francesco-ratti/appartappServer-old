@@ -113,4 +113,7 @@ public class Apartment {
         dummyImg.setId(imageId);
         return this.images.remove(dummyImg);
     }
+
+    @ManyToMany(mappedBy = "matchedApartments", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<User> matchedUsers;
 }
