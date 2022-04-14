@@ -18,7 +18,7 @@ public class LikeApartment {
 
     @POST
     @Produces("text/plain")
-    public Response LikeApartment(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+    public Response LikeApartment(@Context HttpServletRequest request) {
         String apartmentIdStr=request.getParameter("apartmentid");
         if (apartmentIdStr == null)
             return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("missing parameters").build();

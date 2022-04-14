@@ -50,7 +50,7 @@ public class AddApartmentImage extends HttpServlet {
 
             Apartment apartment=apartmentServiceBean.getApartment(id);
 
-            if (apartment.getOwner().getId().equals(user.getId())) { //if logged user is the owner of apartment
+            if (Long.compare(apartment.getOwner().getId(), user.getId())==0) { //if logged user is the owner of apartment
                 apartmentServiceBean.addImage(apartment, images);
                 response.setStatus(Response.Status.OK.getStatusCode());
             } else {

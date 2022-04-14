@@ -1,8 +1,6 @@
 package com.polimi.mrf.appartapp.beans;
 
-import com.polimi.mrf.appartapp.entities.Apartment;
-import com.polimi.mrf.appartapp.entities.ApartmentImage;
-import com.polimi.mrf.appartapp.entities.User;
+import com.polimi.mrf.appartapp.entities.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -80,5 +78,14 @@ public class ApartmentServiceBean {
 
     public Apartment getApartment(long id) {
         return em.find(Apartment.class, id);
+    }
+
+    public boolean deleteImage(Apartment apartment, long imageId) {
+        if (apartment.removeImage(imageId)) {
+            em.persist(apartment);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

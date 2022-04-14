@@ -35,7 +35,7 @@ public class Apartment {
 
     @Expose
     @OneToMany(mappedBy="apartment", cascade=CascadeType.ALL, orphanRemoval = true)
-    private List<ApartmentImage> apartmentImageList=new ArrayList<>();
+    private List<ApartmentImage> images =new ArrayList<>();
 
     public String getAdditionalExpenseDetail() {
         return additionalExpenseDetail;
@@ -104,6 +104,13 @@ public class Apartment {
     public void addImage(ApartmentImage apartmentImage) {
         apartmentImage.setApartment(this);
 
-        apartmentImageList.add(apartmentImage);
+        images.add(apartmentImage);
+    }
+
+    public boolean removeImage(long imageId) {
+        //avoiding useless lookup , since equals method of Image class has been overridden, returns true if ids are the same
+        ApartmentImage dummyImg=new ApartmentImage();
+        dummyImg.setId(imageId);
+        return this.images.remove(dummyImg);
     }
 }

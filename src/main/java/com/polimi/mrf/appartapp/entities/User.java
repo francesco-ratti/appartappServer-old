@@ -60,15 +60,15 @@ public class User {
 
     @Expose
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval = true)
-    private List<UserImage> userImageList=new ArrayList<>();
+    private List<UserImage> images =new ArrayList<>();
 
-    public List<UserImage> getUserImageList() {
-        return userImageList;
+    public List<UserImage> getImages() {
+        return images;
     }
 
     public void addImage(UserImage userImage) {
         userImage.setUser(this);
-        userImageList.add(userImage);
+        images.add(userImage);
     }
 
 
@@ -146,5 +146,12 @@ public class User {
 
     public void addOwnedApartment(Apartment apartment) {
         this.ownedApartmentList.add(apartment);
+    }
+
+    public boolean removeImage (long imageId) {
+        //avoiding useless lookup , since equals method of Image class has been overridden, returns true if ids are the same
+        UserImage dummyImg=new UserImage();
+        dummyImg.setId(imageId);
+        return this.images.remove(dummyImg);
     }
 }

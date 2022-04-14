@@ -20,4 +20,19 @@ public abstract class Image {
     public void setId(Long id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Image)) {
+            return false;
+        }
+
+        Image i=(Image) o;
+
+        return Long.compare(i.id, this.id)==0;
+    }
 }

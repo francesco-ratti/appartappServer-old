@@ -1,15 +1,13 @@
 package com.polimi.mrf.appartapp.beans;
 
 import com.polimi.mrf.appartapp.Gender;
-import com.polimi.mrf.appartapp.entities.Apartment;
-import com.polimi.mrf.appartapp.entities.ApartmentImage;
-import com.polimi.mrf.appartapp.entities.User;
-import com.polimi.mrf.appartapp.entities.UserImage;
+import com.polimi.mrf.appartapp.entities.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -73,5 +71,14 @@ public class UserServiceBean {
         user=appendImages(user, images);
         em.persist(user);
         return user;
+    }
+
+    public boolean deleteImage(User user, long imageId) {
+        if (user.removeImage(imageId)) {
+            em.persist(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
