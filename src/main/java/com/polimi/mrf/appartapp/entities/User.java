@@ -14,7 +14,8 @@ import java.util.List;
 @NamedQuery(name="User.findByEmail",
         query="SELECT u FROM User u WHERE u.email=:email"
 )
-@NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h, User u WHERE u.id=:userId AND u.id <> h.owner.id AND h.id NOT IN (SELECT lh.id FROM u.likedApartmentList lh) AND h.id NOT IN (SELECT ih.id FROM u.ignoredApartmentList ih)")
+
+@NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h, User u WHERE u.id=:userId AND u.id <> h.owner.id AND h.id NOT IN (SELECT lh.id FROM u.likedApartments lh) AND h.id NOT IN (SELECT ih.id FROM u.ignoredApartments ih)")
 //@NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h WHERE h.id NOT IN (SELECT lh.id FROM User u JOIN u.likedApartmentList lh WHERE u.id=:userId) AND h.id NOT IN (SELECT ih.id FROM User u JOIN u.ignoredApartmentList ih WHERE u.id=:userId)")
 @Entity
 public class User {
@@ -46,17 +47,17 @@ public class User {
     @JoinTable(name="user_apartment_ignored",
             joinColumns=@JoinColumn(name="user_id"),
             inverseJoinColumns=@JoinColumn(name="apartment_id"))
-    private List<Apartment> ignoredApartmentList;
+    private List<Apartment> ignoredApartments;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name="user_apartment_liked",
             joinColumns=@JoinColumn(name="user_id"),
             inverseJoinColumns=@JoinColumn(name="apartment_id"))
-    private List<Apartment> likedApartmentList;
+    private List<Apartment> likedApartments;
 
     @Expose
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Apartment> ownedApartmentList;
+    private List<Apartment> ownedApartments;
 
     @Expose
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval = true)
@@ -124,28 +125,28 @@ public class User {
         this.password = password;
     }
 
-    public List<Apartment> getIgnoredApartmentList() {
-        return ignoredApartmentList;
+    public List<Apartment> getIgnoredApartments() {
+        return ignoredApartments;
     }
 
-    public List<Apartment> getLikedApartmentList() {
-        return likedApartmentList;
+    public List<Apartment> getLikedApartments() {
+        return likedApartments;
     }
 
-    public List<Apartment> getOwnedApartmentList() {
-        return ownedApartmentList;
+    public List<Apartment> getOwnedApartments() {
+        return ownedApartments;
     }
 
     public void addIgnoredApartment(Apartment apartment) {
-        this.ignoredApartmentList.add(apartment);
+        this.ignoredApartments.add(apartment);
     }
 
     public void addLikedApartment(Apartment apartment) {
-        this.likedApartmentList.add(apartment);
+        this.likedApartments.add(apartment);
     }
 
     public void addOwnedApartment(Apartment apartment) {
-        this.ownedApartmentList.add(apartment);
+        this.ownedApartments.add(apartment);
     }
 
     public boolean removeImage (long imageId) {
@@ -155,9 +156,9 @@ public class User {
         return this.images.remove(dummyImg);
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name="user_apartment_matched",
-            joinColumns=@JoinColumn(name="user_id"),
-            inverseJoinColumns=@JoinColumn(name="apartment_id"))
+    /*
+    @ManyToMany(mappedBy = "matchedUsers", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     public List<Apartment> matchedApartments;
+    */
+
 }

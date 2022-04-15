@@ -6,6 +6,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*@NamedQuery(name="Apartment.mail",
+        query="SELECT u FROM User u WHERE u.email=:email"
+)*/
+@NamedQuery(name = "Apartment.getNewUsers", query = "SELECT u FROM Apartment a, User u WHERE a.id=:apartmentId AND u.id NOT IN (SELECT lu.id FROM a.likedUsers lu) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu)")
+@NamedQuery(name = "Apartment.getNewUsersWhoLikedMyApartments", query = "SELECT u FROM Apartment a, User u WHERE a IN :apartmentList AND u.id NOT IN (SELECT lu.id FROM a.likedUsers lu) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu)")
+
 @Entity
 public class Apartment {
     @Expose
@@ -36,6 +42,34 @@ public class Apartment {
     @Expose
     @OneToMany(mappedBy="apartment", cascade=CascadeType.ALL, orphanRemoval = true)
     private List<ApartmentImage> images =new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name="apartment_user_liked",
+            joinColumns=@JoinColumn(name="apartment_id"),
+            inverseJoinColumns=@JoinColumn(name="user_id"))
+    private List<User> likedUsers;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name="apartment_user_ignored",
+            joinColumns=@JoinColumn(name="apartment_id"),
+            inverseJoinColumns=@JoinColumn(name="user_id"))
+    private List<User> ignoredUsers;
+
+    public List<User> getIgnoredUsers() {
+        return ignoredUsers;
+    }
+
+    public List<User> getLikedUsers() {
+        return likedUsers;
+    }
+
+    public void addIgnoredUser(User user) {
+        this.ignoredUsers.add(user);
+    }
+
+    public void addLikedUser(User user) {
+        this.likedUsers.add(user);
+    }
 
     public String getAdditionalExpenseDetail() {
         return additionalExpenseDetail;
@@ -114,6 +148,5 @@ public class Apartment {
         return this.images.remove(dummyImg);
     }
 
-    @ManyToMany(mappedBy = "matchedApartments", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<User> matchedUsers;
+
 }

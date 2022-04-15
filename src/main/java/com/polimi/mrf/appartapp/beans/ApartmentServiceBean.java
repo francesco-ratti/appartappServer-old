@@ -27,7 +27,7 @@ public class ApartmentServiceBean {
         Apartment apartmentToLike=new Apartment();
         //avoiding useless lookup with find, since equals method of Apartment class has been overridden, returns true if ids are the same
         apartmentToLike.setId(apartmentId);
-        if (!user.getLikedApartmentList().contains(apartmentToLike)) {
+        if (!user.getLikedApartments().contains(apartmentToLike)) {
             user.addLikedApartment(em.find(Apartment.class, apartmentId));
             em.merge(user);
         }
@@ -37,7 +37,7 @@ public class ApartmentServiceBean {
         Apartment apartmentToIgnore=new Apartment();
         //avoiding useless lookup with find, since equals method of Apartment class has been overridden, returns true if ids are the same
         apartmentToIgnore.setId(apartmentId);
-        if (!user.getIgnoredApartmentList().contains(apartmentToIgnore)) {
+        if (!user.getIgnoredApartments().contains(apartmentToIgnore)) {
             user.addIgnoredApartment(em.find(Apartment.class, apartmentId));
             em.merge(user);
         }
