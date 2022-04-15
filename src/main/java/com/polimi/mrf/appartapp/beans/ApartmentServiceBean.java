@@ -88,4 +88,8 @@ public class ApartmentServiceBean {
             return false;
         }
     }
+
+    public void updateApartment(Apartment apartment) {
+        em.persist(apartment);
+    }
 }
