@@ -56,7 +56,6 @@ public class User {
             inverseJoinColumns=@JoinColumn(name="apartment_id"))
     private List<Apartment> likedApartments;
 
-    @Expose
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Apartment> ownedApartments;
 

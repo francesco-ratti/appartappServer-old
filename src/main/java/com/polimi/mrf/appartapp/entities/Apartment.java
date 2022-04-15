@@ -25,6 +25,7 @@ public class Apartment {
         return id;
     }
 
+    @Expose
     @ManyToOne
     private User owner;
 
