@@ -85,4 +85,8 @@ public class UserServiceBean {
     public List<Apartment> getMatchedApartments(User user) {
         return em.createNamedQuery("User.findMatchedApartments", Apartment.class).setParameter("userId", user.getId()).getResultList();
     }
+
+    public void updateUser(User user) {
+        em.persist(user);
+    }
 }

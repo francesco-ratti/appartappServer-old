@@ -16,30 +16,6 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 
 public class GetImages {
-    @GET
-    @Path("/images/apartments/{id}")
-    @Produces("image/jpg")
-    public Response getApartmentImage(@PathParam("id") String idStr) {
-        return buildResponse(idStr, ApartmentServiceBean.apartmentImagesFolderPath);
-    }
-
-    @GET
-    @Path("/reserved/images/users/{id}")
-    @Produces("image/jpg")
-    public Response getUserImage(@PathParam("id") String idStr, @Context HttpServletRequest request) {
-        User user= (User) request.getAttribute("user");
-        try {
-            //avoiding useless lookup , since equals method of Image class has been overridden, returns true if ids are the same
-            UserImage userImage = new UserImage();
-            userImage.setId(Long.parseLong(idStr));
-            if (user.getImages().contains(userImage)) //security check TODO: allow matches too! not only logged user to see his/her pictures
-                return buildResponse(idStr, UserServiceBean.userImagesFolderPath);
-        } catch (NumberFormatException e) {
-            return Response.status(Response.Status.NOT_ACCEPTABLE).type(MediaType.TEXT_PLAIN).entity("id not numeric").build();
-        }
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity("INTERNAL_SERVER_ERROR").build();
-    }
-
     public Response buildResponse(String idStr, String folderPath) {
         if (idStr == null || idStr.length() == 0)
             return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("missing parameters").build();
@@ -62,5 +38,29 @@ public class GetImages {
         } catch (NumberFormatException e) {
             return Response.status(Response.Status.NOT_ACCEPTABLE).type(MediaType.TEXT_PLAIN).entity("id not numeric").build();
         }
+    }
+
+    @GET
+    @Path("/images/apartments/{id}")
+    @Produces("image/jpg")
+    public Response getApartmentImage(@PathParam("id") String idStr) {
+        return buildResponse(idStr, ApartmentServiceBean.apartmentImagesFolderPath);
+    }
+
+    @GET
+    @Path("/reserved/images/users/{id}")
+    @Produces("image/jpg")
+    public Response getUserImage(@PathParam("id") String idStr, @Context HttpServletRequest request) {
+        User user= (User) request.getAttribute("user");
+        try {
+            //avoiding useless lookup , since equals method of Image class has been overridden, returns true if ids are the same
+            UserImage userImage = new UserImage();
+            userImage.setId(Long.parseLong(idStr));
+            //if (user.getImages().contains(userImage)) //security check TODO: allow matches too! not only logged user to see his/her pictures
+            return buildResponse(idStr, UserServiceBean.userImagesFolderPath);
+        } catch (NumberFormatException e) {
+            return Response.status(Response.Status.NOT_ACCEPTABLE).type(MediaType.TEXT_PLAIN).entity("id not numeric").build();
+        }
+        //return Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity("INTERNAL_SERVER_ERROR").build();
     }
 }
