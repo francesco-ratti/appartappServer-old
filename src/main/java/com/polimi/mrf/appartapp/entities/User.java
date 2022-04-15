@@ -156,6 +156,10 @@ public class User {
         return this.images.remove(dummyImg);
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     /*
     @ManyToMany(mappedBy = "matchedUsers", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     public List<Apartment> matchedApartments;
