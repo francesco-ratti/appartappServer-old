@@ -81,4 +81,8 @@ public class UserServiceBean {
             return false;
         }
     }
+
+    public List<Apartment> getMatchedApartments(User user) {
+        return em.createNamedQuery("User.findMatchedApartments", Apartment.class).setParameter("userId", user.getId()).getResultList();
+    }
 }
