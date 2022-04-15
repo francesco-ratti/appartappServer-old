@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Stateful(name="ApartmentSearchServiceBean")
+@Stateful(name="UserSearchServiceBean")
 public class UserSearchServiceBean {
     @PersistenceContext(unitName = "appartapp")
     private EntityManager em;

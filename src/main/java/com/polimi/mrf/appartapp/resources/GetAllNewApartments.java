@@ -29,14 +29,14 @@ public class GetAllNewApartments {
         User user= (User) request.getAttribute("user");
 
         HttpSession session = request.getSession(true);
-        if ((session.isNew() || session.getAttribute("apartmentsservicebean")==null)) {
+        if ((session.isNew() || session.getAttribute("apartmentsearchservicebean")==null)) {
             apartmentSearchServiceBean.SearchNewApartments(user);
         } else {
-            apartmentSearchServiceBean=(ApartmentSearchServiceBean) session.getAttribute("apartmentsservicebean");
+            apartmentSearchServiceBean=(ApartmentSearchServiceBean) session.getAttribute("apartmentsearchservicebean");
         }
 
         List<Apartment> apartmentList= apartmentSearchServiceBean.getNewApartmentList();
-        session.setAttribute("apartmentsservicebean", apartmentSearchServiceBean);
+        session.setAttribute("apartmentsearchservicebean", apartmentSearchServiceBean);
 
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
