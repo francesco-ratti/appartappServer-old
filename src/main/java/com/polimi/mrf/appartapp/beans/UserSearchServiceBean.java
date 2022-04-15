@@ -19,7 +19,7 @@ public class UserSearchServiceBean {
     }
 
     public void SearchNewUsers(User ownerOfApartmentsToLookup) {
-        userList=em.createNamedQuery("Apartment.getNewUsersWhoLikedMyApartments", User.class).setParameter("apartmentList", ownerOfApartmentsToLookup.getOwnedApartments()).getResultList();
+        userList=em.createNamedQuery("Apartment.getNewUsersWhoLikedMyApartments", User.class).setParameter("ownedApartmentList", ownerOfApartmentsToLookup.getOwnedApartments()).getResultList();
     }
 
     public List<User> getNewUserList() {

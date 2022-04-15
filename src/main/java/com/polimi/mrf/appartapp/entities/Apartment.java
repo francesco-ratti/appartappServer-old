@@ -9,8 +9,8 @@ import java.util.List;
 /*@NamedQuery(name="Apartment.mail",
         query="SELECT u FROM User u WHERE u.email=:email"
 )*/
-@NamedQuery(name = "Apartment.getNewUsers", query = "SELECT u FROM Apartment a, User u WHERE a.id=:apartmentId AND u.id NOT IN (SELECT lu.id FROM a.likedUsers lu) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu)")
-@NamedQuery(name = "Apartment.getNewUsersWhoLikedMyApartments", query = "SELECT u FROM Apartment a, User u WHERE a IN :apartmentList AND u.id NOT IN (SELECT lu.id FROM a.likedUsers lu) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu)")
+@NamedQuery(name = "Apartment.getNewUsers", query = "SELECT u FROM User u JOIN u.likedApartments a WHERE a.id=:apartmentId AND u.id NOT IN (SELECT lu.id FROM a.likedUsers lu) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu)")
+@NamedQuery(name = "Apartment.getNewUsersWhoLikedMyApartments", query = "SELECT u FROM User u JOIN u.likedApartments a WHERE a IN :ownedApartmentList AND u.id NOT IN (SELECT lu.id FROM a.likedUsers lu) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu)")
 
 @Entity
 public class Apartment {
