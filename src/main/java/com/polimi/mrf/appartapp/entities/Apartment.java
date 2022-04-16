@@ -49,7 +49,6 @@ public class Apartment {
     @Expose
     @OneToMany(mappedBy="apartment", cascade=CascadeType.ALL, orphanRemoval = true)
     private List<ApartmentImage> images =new ArrayList<>();
-
     /*
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name="apartment_user_liked",
@@ -57,7 +56,6 @@ public class Apartment {
             inverseJoinColumns=@JoinColumn(name="user_id"))
     private List<User> likedUsers;
      */
-
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "apartment_user_liked", schema = "appartapp", joinColumns = @JoinColumn(name = "apartment_id"))
     @MapKeyJoinColumn(name = "user_id")

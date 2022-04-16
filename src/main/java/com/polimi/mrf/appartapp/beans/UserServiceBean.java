@@ -86,6 +86,10 @@ public class UserServiceBean {
         return em.createNamedQuery("User.findMatchedApartments", Apartment.class).setParameter("userId", user.getId()).getResultList();
     }
 
+    public List<Apartment> getMatchedApartmentsFromDate(User user, Date date) {
+        return em.createNamedQuery("User.findMatchedApartmentsFromDate", Apartment.class).setParameter("userId", user.getId()).setParameter("date", date).getResultList();
+    }
+
     public void updateUser(User user) {
         em.persist(user);
     }
