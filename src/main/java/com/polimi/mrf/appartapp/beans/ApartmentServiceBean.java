@@ -46,7 +46,7 @@ public class ApartmentServiceBean {
         User userToLike=new User();
         //avoiding useless lookup with find, since equals method of Apartment class has been overridden, returns true if ids are the same
         userToLike.setId(userId);
-        if (!apartment.getLikedUsers().contains(userToLike)) {
+        if (!apartment.getLikedUsers().containsKey(userToLike)) {
             apartment.addLikedUser(em.find(User.class, userId));
             em.merge(apartment);
         }

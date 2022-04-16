@@ -14,7 +14,9 @@ import java.util.List;
 @NamedQuery(name="User.findByEmail",
         query="SELECT u FROM User u WHERE u.email=:email"
 )
-@NamedQuery(name = "User.findMatchedApartments", query = "SELECT a FROM Apartment a JOIN a.likedUsers lu WHERE lu.id=:userId AND a.id IN (SELECT l.id FROM lu.likedApartments l)") //in parenthesis useless
+//@NamedQuery(name = "User.findMatchedApartments", query = "SELECT a FROM Apartment a JOIN a.likedUsers luMap WHERE KEY(luMap).id=:userId ORDER BY VALUE(luMap) DESC")
+
+@NamedQuery(name = "User.findMatchedApartments", query = "SELECT a FROM Apartment a JOIN a.likedUsers luMap WHERE KEY(luMap).id=:userId AND a.id IN (SELECT l.id FROM User u JOIN u.likedApartments l WHERE u.id=KEY(luMap).id) ORDER BY VALUE(luMap) DESC")  //in parenthesis "useless"
 
 @NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h, User u WHERE u.id=:userId AND u.id <> h.owner.id AND h.id NOT IN (SELECT lh.id FROM u.likedApartments lh) AND h.id NOT IN (SELECT ih.id FROM u.ignoredApartments ih)")
 //@NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h WHERE h.id NOT IN (SELECT lh.id FROM User u JOIN u.likedApartmentList lh WHERE u.id=:userId) AND h.id NOT IN (SELECT ih.id FROM User u JOIN u.ignoredApartmentList ih WHERE u.id=:userId)")

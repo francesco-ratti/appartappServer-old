@@ -4,13 +4,19 @@ import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /*@NamedQuery(name="Apartment.mail",
         query="SELECT u FROM User u WHERE u.email=:email"
 )*/
+/*
 @NamedQuery(name = "Apartment.getNewUsers", query = "SELECT u FROM User u JOIN u.likedApartments a WHERE a.id=:apartmentId AND u.id NOT IN (SELECT lu.id FROM a.likedUsers lu) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu)")
 @NamedQuery(name = "Apartment.getNewUsersWhoLikedMyApartments", query = "SELECT u FROM User u JOIN u.likedApartments a WHERE a IN :ownedApartmentList AND u.id NOT IN (SELECT lu.id FROM a.likedUsers lu) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu)")
+*/
+@NamedQuery(name = "Apartment.getNewUsers", query = "SELECT u FROM User u JOIN u.likedApartments a WHERE a.id=:apartmentId AND u.id NOT IN (SELECT KEY(luMap).id FROM a.likedUsers luMap) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu)")
+@NamedQuery(name = "Apartment.getNewUsersWhoLikedMyApartments", query = "SELECT u FROM User u JOIN u.likedApartments a WHERE a IN :ownedApartmentList AND u.id NOT IN (SELECT KEY(luMap).id FROM a.likedUsers luMap) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu) ")
 
 @Entity
 public class Apartment {
@@ -44,11 +50,20 @@ public class Apartment {
     @OneToMany(mappedBy="apartment", cascade=CascadeType.ALL, orphanRemoval = true)
     private List<ApartmentImage> images =new ArrayList<>();
 
+    /*
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name="apartment_user_liked",
             joinColumns=@JoinColumn(name="apartment_id"),
             inverseJoinColumns=@JoinColumn(name="user_id"))
     private List<User> likedUsers;
+     */
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "apartment_user_liked", schema = "appartapp", joinColumns = @JoinColumn(name = "apartment_id"))
+    @MapKeyJoinColumn(name = "user_id")
+    @Column(name = "date")
+    private Map<User, Date> likedUsers;
+
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name="apartment_user_ignored",
@@ -60,16 +75,18 @@ public class Apartment {
         return ignoredUsers;
     }
 
-    public List<User> getLikedUsers() {
-        return likedUsers;
-    }
+
 
     public void addIgnoredUser(User user) {
         this.ignoredUsers.add(user);
     }
 
     public void addLikedUser(User user) {
-        this.likedUsers.add(user);
+        this.likedUsers.put(user, new Date());
+    }
+
+    public Map<User, Date> getLikedUsers() {
+        return likedUsers;
     }
 
     public String getAdditionalExpenseDetail() {
