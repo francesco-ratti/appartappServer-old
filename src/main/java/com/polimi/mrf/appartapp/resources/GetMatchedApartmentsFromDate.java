@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
 import java.util.Date;
 import java.util.List;
 
-@Path("/reserved/getmatchedapartments")
+@Path("/reserved/getmatchedapartmentsfromdate")
 public class GetMatchedApartmentsFromDate {
     @EJB(name = "com.polimi.mrf.appartapp.beans/UserServiceBean")
     UserServiceBean userServiceBean;
