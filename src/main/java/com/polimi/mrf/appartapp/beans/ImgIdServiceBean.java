@@ -26,6 +26,7 @@ public class ImgIdServiceBean {
     public ImgIdServiceBean() {    }
 
     //first run, retrieve max ids from data store
+
     @PostConstruct
     private void fetchFromDataStore() {
         List<Long> apResultList=em.createNamedQuery("ApartmentImage.findMaxId", long.class).getResultList();
