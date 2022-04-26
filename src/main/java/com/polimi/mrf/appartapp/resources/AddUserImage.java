@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@WebServlet(name = "Servlet", value = "/api/reserved/adduserimage")
+@WebServlet(name = "AddUserImage", value = "/api/reserved/adduserimage")
 @MultipartConfig
 public class AddUserImage extends HttpServlet {
     @EJB(name = "com.polimi.mrf.appartapp.beans/UserServiceBean")

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@WebServlet(name = "Servlet", value = "/api/reserved/addapartmentimage")
+@WebServlet(name = "AddApartmentImage", value = "/api/reserved/addapartmentimage")
 @MultipartConfig
 public class AddApartmentImage extends HttpServlet {
     @EJB(name = "com.polimi.mrf.appartapp.beans/ApartmentServiceBean")

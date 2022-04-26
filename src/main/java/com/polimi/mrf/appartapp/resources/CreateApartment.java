@@ -23,12 +23,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@WebServlet(name = "Servlet", value = "/api/reserved/createapartment")
+@WebServlet(name = "CreateApartment", value = "/api/reserved/createapartment")
 @MultipartConfig
 public class CreateApartment extends HttpServlet {
     @EJB(name = "com.polimi.mrf.appartapp.beans/ApartmentServiceBean")
     ApartmentServiceBean apartmentServiceBean;
 
+    /*
+    @EJB(name = "com.polimi.mrf.appartapp.beans/UserServiceBean")
+    UserServiceBean userServiceBean;
+     */
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String listingTitle=request.getParameter("listingtitle");
@@ -36,6 +40,22 @@ public class CreateApartment extends HttpServlet {
         String address=request.getParameter("address");
         String additionalExpenseDetail=request.getParameter("additionalexpensedetail");
         String priceStr=request.getParameter("price");
+
+        /*
+        String email=request.getParameter("email");
+        String password=request.getParameter("password");
+
+        if (email==null || password==null || email.length()==0 || password.length()==0) {
+            response.setStatus(Response.Status.UNAUTHORIZED.getStatusCode());
+            return;
+        }
+
+        User user=userServiceBean.getUser(email, password);
+        if (user==null) {
+            response.setStatus(Response.Status.UNAUTHORIZED.getStatusCode());
+            return;
+        }
+         */
 
         if (listingTitle==null || description==null || address==null || additionalExpenseDetail==null || priceStr==null || listingTitle.length()==0 || description.length()==0 || address.length()==0 || additionalExpenseDetail.length()==0 || priceStr.length()==0) {
             response.sendError(Response.Status.BAD_REQUEST.getStatusCode(), "missing parameters");
