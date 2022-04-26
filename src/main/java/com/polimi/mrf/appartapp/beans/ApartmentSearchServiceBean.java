@@ -14,7 +14,7 @@ public class ApartmentSearchServiceBean {
     private EntityManager em;
 
     private List<Apartment> apartmentList=null;
-    private int resNumToFetch =0;
+    private int resNumToFetch=0;
 
     public ApartmentSearchServiceBean() {
     }

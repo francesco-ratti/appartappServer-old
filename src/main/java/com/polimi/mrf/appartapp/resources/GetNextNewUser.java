@@ -18,7 +18,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/reserved/getnextnewapartment")
+@Path("/reserved/getnextnewuser")
 public class GetNextNewUser {
     @EJB(name = "com.polimi.mrf.appartapp.beans/UserSearchServiceBean")
     UserSearchServiceBean userSearchServiceBean;
