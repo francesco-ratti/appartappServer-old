@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
 
+@Path("/")
 public class GetImages {
     public Response buildResponse(String idStr, String folderPath) {
         if (idStr == null || idStr.length() == 0)
@@ -51,7 +52,7 @@ public class GetImages {
     @Path("/reserved/images/users/{id}")
     @Produces("image/jpg")
     public Response getUserImage(@PathParam("id") String idStr, @Context HttpServletRequest request) {
-        User user= (User) request.getAttribute("user");
+        /*User user= (User) request.getAttribute("user");
         try {
             //avoiding useless lookup , since equals method of Image class has been overridden, returns true if ids are the same
             UserImage userImage = new UserImage();
@@ -61,6 +62,8 @@ public class GetImages {
         } catch (NumberFormatException e) {
             return Response.status(Response.Status.NOT_ACCEPTABLE).type(MediaType.TEXT_PLAIN).entity("id not numeric").build();
         }
-        //return Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity("INTERNAL_SERVER_ERROR").build();
+        //return Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity("INTERNAL_SERVER_ERROR").build(); */
+
+        return buildResponse(idStr, UserServiceBean.userImagesFolderPath);
     }
 }
