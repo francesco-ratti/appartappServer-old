@@ -49,7 +49,7 @@ public class GetImages {
     }
 
     @GET
-    @Path("/reserved/images/users/{id}")
+    @Path("/images/users/{id}")
     @Produces("image/jpg")
     public Response getUserImage(@PathParam("id") String idStr, @Context HttpServletRequest request) {
         /*User user= (User) request.getAttribute("user");
