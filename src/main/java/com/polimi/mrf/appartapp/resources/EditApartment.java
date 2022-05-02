@@ -18,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Date;
 
-@Path("/reserved/edituser")
+@Path("/reserved/editapartment")
 public class EditApartment {
     @EJB(name = "com.polimi.mrf.appartapp.beans/ApartmentServiceBean")
     ApartmentServiceBean apartmentServiceBean;
