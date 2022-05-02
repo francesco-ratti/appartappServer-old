@@ -91,6 +91,6 @@ public class UserServiceBean {
     }
 
     public void updateUser(User user) {
-        em.persist(user);
+        em.merge(user);
     }
 }
