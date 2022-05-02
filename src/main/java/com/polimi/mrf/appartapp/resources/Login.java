@@ -2,6 +2,7 @@ package com.polimi.mrf.appartapp.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.User;
 
@@ -35,7 +36,7 @@ public class Login {
             return Response.status(Response.Status.UNAUTHORIZED).type(MediaType.TEXT_PLAIN).entity("unauthorized").build();
         else {
             Gson gson = new GsonBuilder()
-                    .excludeFieldsWithoutExposeAnnotation()
+                    .excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(User.class, new UserAdapter())
                     .create();
             String json=gson.toJson(user);
 
