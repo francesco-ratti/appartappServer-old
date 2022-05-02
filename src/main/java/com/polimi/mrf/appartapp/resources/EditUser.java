@@ -25,27 +25,28 @@ public class EditUser {
     @POST
     @Produces("application/json")
     public Response EditUser(@Context HttpServletRequest request) {
-        String email = request.getParameter("email");
+        String email = request.getParameter("newemail");
+        String password = request.getParameter("newpassword");
+
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
-        String password = request.getParameter("password");
         String birthdayStr = request.getParameter("birthday");
         String genderStr = request.getParameter("gender");
 
         User user= (User) request.getAttribute("user");
-        if (email!=null && email.length()>0)
+        if (email!=null && email.trim().length()>0)
             user.setEmail(email.trim());
 
-        if (name!=null && name.length()>0)
+        if (name!=null && name.trim().length()>0)
             user.setName(name.trim());
 
-        if (surname!=null && surname.length()>0)
+        if (surname!=null && surname.trim().length()>0)
             user.setSurname(surname.trim());
 
-        if (password!=null && password.length()>0)
+        if (password!=null && password.trim().length()>0)
             user.setPassword(password.trim());
 
-        if (birthdayStr!=null && birthdayStr.length()>0)
+        if (birthdayStr!=null && birthdayStr.trim().length()>0)
             user.setBirthday(new Date(Long.parseLong(birthdayStr)));
 
         if (genderStr.equals("M") || genderStr.equals("F") || genderStr.equals("NB"))
