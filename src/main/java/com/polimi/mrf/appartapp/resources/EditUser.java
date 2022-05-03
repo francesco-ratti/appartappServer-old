@@ -50,7 +50,7 @@ public class EditUser {
         if (birthdayStr!=null && birthdayStr.trim().length()>0)
             user.setBirthday(new Date(Long.parseLong(birthdayStr)));
 
-        if (genderStr.equals("M") || genderStr.equals("F") || genderStr.equals("NB"))
+        if (genderStr != null && (genderStr.equals("M") || genderStr.equals("F") || genderStr.equals("NB")))
             user.setGender(Gender.valueOf(genderStr));
 
         userServiceBean.updateUser(user);
