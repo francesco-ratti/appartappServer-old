@@ -1,7 +1,6 @@
 package com.polimi.mrf.appartapp.resources;
 
 import com.polimi.mrf.appartapp.beans.ApartmentServiceBean;
-import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.Apartment;
 import com.polimi.mrf.appartapp.entities.User;
 
