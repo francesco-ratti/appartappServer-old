@@ -15,8 +15,8 @@ import java.util.Map;
 @NamedQuery(name = "Apartment.getNewUsers", query = "SELECT u FROM User u JOIN u.likedApartments a WHERE a.id=:apartmentId AND u.id NOT IN (SELECT lu.id FROM a.likedUsers lu) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu)")
 @NamedQuery(name = "Apartment.getNewUsersWhoLikedMyApartments", query = "SELECT u FROM User u JOIN u.likedApartments a WHERE a IN :ownedApartmentList AND u.id NOT IN (SELECT lu.id FROM a.likedUsers lu) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu)")
 */
-@NamedQuery(name = "Apartment.getNewUsers", query = "SELECT u FROM User u JOIN u.likedApartments a WHERE a.id=:apartmentId AND u.id NOT IN (SELECT KEY(luMap).id FROM a.likedUsers luMap) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu)")
-@NamedQuery(name = "Apartment.getNewUsersWhoLikedMyApartments", query = "SELECT u FROM User u JOIN u.likedApartments a WHERE a IN :ownedApartmentList AND u.id NOT IN (SELECT KEY(luMap).id FROM a.likedUsers luMap) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu) ")
+@NamedQuery(name = "Apartment.getNewUsers", query = "SELECT new com.polimi.mrf.appartapp.entities.UserApartmentContainer( TREAT (u AS User), TREAT (a AS Apartment )) FROM User u JOIN u.likedApartments a WHERE (a.id=:apartmentId AND u NOT IN (SELECT m.user FROM a.matches m) AND u NOT IN (SELECT iu FROM a.ignoredUsers iu))")
+@NamedQuery(name = "Apartment.getNewUsersWhoLikedMyApartments", query = "SELECT new com.polimi.mrf.appartapp.entities.UserApartmentContainer(u,a) FROM User u JOIN u.likedApartments a WHERE (a IN :ownedApartmentList AND u NOT IN (SELECT m.user FROM a.matches m) AND u NOT IN (SELECT iu FROM a.ignoredUsers iu))")
 
 @Entity
 public class Apartment {
@@ -56,11 +56,13 @@ public class Apartment {
             inverseJoinColumns=@JoinColumn(name="user_id"))
     private List<User> likedUsers;
      */
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "apartment_user_liked", schema = "appartapp", joinColumns = @JoinColumn(name = "apartment_id"))
-    @MapKeyJoinColumn(name = "user_id")
-    @Column(name = "date")
-    private Map<User, Date> likedUsers;
+
+    //@ElementCollection(fetch = FetchType.EAGER)
+    //@CollectionTable(name = "apartment_user_liked", joinColumns = @JoinColumn(name = "apartment_id"))
+    //@MapKeyJoinColumn(name = "user_id", referencedColumnName = "ID")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "apartment")
+    @OrderBy("matchDate DESC")
+    private List<Match> matches;
 
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -79,12 +81,13 @@ public class Apartment {
         this.ignoredUsers.add(user);
     }
 
-    public void addLikedUser(User user) {
-        this.likedUsers.put(user, new Date());
+    public void addMatch(Match match) {
+        match.setApartment(this);
+        this.matches.add(match);
     }
 
-    public Map<User, Date> getLikedUsers() {
-        return likedUsers;
+    public List<Match> getMatches() {
+        return matches;
     }
 
     public String getAdditionalExpenseDetail() {
