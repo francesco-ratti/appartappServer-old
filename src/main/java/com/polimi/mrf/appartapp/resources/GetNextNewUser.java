@@ -6,6 +6,7 @@ import com.polimi.mrf.appartapp.beans.ApartmentSearchServiceBean;
 import com.polimi.mrf.appartapp.beans.UserSearchServiceBean;
 import com.polimi.mrf.appartapp.entities.Apartment;
 import com.polimi.mrf.appartapp.entities.User;
+import com.polimi.mrf.appartapp.entities.UserApartmentContainer;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +36,7 @@ public class GetNextNewUser {
             userSearchServiceBean = (UserSearchServiceBean) session.getAttribute("usersearchservicebean");
         }
 
-        User nextuser= userSearchServiceBean.getNewApartmentNextResult();
+        UserApartmentContainer nextuser= userSearchServiceBean.getNewApartmentNextResult();
         session.setAttribute("usersearchservicebean", userSearchServiceBean);
 
         Gson gson = new GsonBuilder()

@@ -6,10 +6,12 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Date;
 import java.util.List;
 
 @Stateless(name="ApartmentServiceBean")
@@ -30,6 +32,7 @@ public class ApartmentServiceBean {
         if (!user.getLikedApartments().contains(apartmentToLike)) {
             user.addLikedApartment(em.find(Apartment.class, apartmentId));
             em.merge(user);
+            em.flush();
         }
     }
     public void ignoreApartment(User user, Long apartmentId) {
@@ -39,6 +42,7 @@ public class ApartmentServiceBean {
         if (!user.getIgnoredApartments().contains(apartmentToIgnore)) {
             user.addIgnoredApartment(em.find(Apartment.class, apartmentId));
             em.merge(user);
+            em.flush();
         }
     }
 
@@ -46,10 +50,18 @@ public class ApartmentServiceBean {
         User userToLike=new User();
         //avoiding useless lookup with find, since equals method of Apartment class has been overridden, returns true if ids are the same
         userToLike.setId(userId);
-        if (!apartment.getLikedUsers().containsKey(userToLike)) {
-            apartment.addLikedUser(em.find(User.class, userId));
+        //if (!apartment.getMatches().containsKey(userToLike)) {
+        //TODO fix dupli
+            Match match = new Match(em.find(User.class, userId), new Date());
+            apartment.addMatch(match);
+        try {
+            em.persist(match);
             em.merge(apartment);
+        } catch (PersistenceException ignored) {
+            //duplicate entity
         }
+        em.flush();
+       // }
     }
 
     public void ignoreUser(Apartment apartment, Long userId) {
@@ -59,6 +71,7 @@ public class ApartmentServiceBean {
         if (!apartment.getIgnoredUsers().contains(userToIgnore)) {
             apartment.addIgnoredUser(em.find(User.class, userId));
             em.merge(apartment);
+            em.flush();
         }
     }
 

@@ -82,12 +82,13 @@ public class UserServiceBean {
         }
     }
 
-    public List<Apartment> getMatchedApartments(User user) {
-        return em.createNamedQuery("User.findMatchedApartments", Apartment.class).setParameter("userId", user.getId()).getResultList();
+    public List<Match> getMatchedApartments(User user) {
+        System.out.println(user.getId());
+        return em.createNamedQuery("User.findMatchedApartments", Match.class).setParameter("user", user).getResultList();
     }
 
     public List<Apartment> getMatchedApartmentsFromDate(User user, Date date) {
-        return em.createNamedQuery("User.findMatchedApartmentsFromDate", Apartment.class).setParameter("userId", user.getId()).setParameter("date", date).getResultList();
+        return em.createNamedQuery("User.findMatchedApartmentsFromDate", Apartment.class).setParameter("user", user).setParameter("date", date).getResultList();
     }
 
     public void updateUser(User user) {

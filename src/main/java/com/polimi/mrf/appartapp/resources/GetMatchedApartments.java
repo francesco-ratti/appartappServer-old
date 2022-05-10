@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.Apartment;
+import com.polimi.mrf.appartapp.entities.Match;
 import com.polimi.mrf.appartapp.entities.User;
 
 import javax.ejb.EJB;
@@ -27,7 +28,7 @@ public class GetMatchedApartments {
     public Response GetMatchedApartmentsResource(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         User user= (User) request.getAttribute("user");
 
-        List<Apartment> matchedApartments=userServiceBean.getMatchedApartments(user);
+        List<Match> matchedApartments=userServiceBean.getMatchedApartments(user);
 
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()

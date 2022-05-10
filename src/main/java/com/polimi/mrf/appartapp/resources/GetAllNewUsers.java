@@ -6,6 +6,7 @@ import com.polimi.mrf.appartapp.beans.ApartmentSearchServiceBean;
 import com.polimi.mrf.appartapp.beans.UserSearchServiceBean;
 import com.polimi.mrf.appartapp.entities.Apartment;
 import com.polimi.mrf.appartapp.entities.User;
+import com.polimi.mrf.appartapp.entities.UserApartmentContainer;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,7 @@ public class GetAllNewUsers {
             userSearchServiceBean=(UserSearchServiceBean) session.getAttribute("usersearchservicebean");
         }
 
-        List<User> userList= userSearchServiceBean.getNewUserList();
+        List<UserApartmentContainer> userList= userSearchServiceBean.getNewUserList();
         session.setAttribute("usersearchservicebean", userSearchServiceBean);
 
         Gson gson = new GsonBuilder()
