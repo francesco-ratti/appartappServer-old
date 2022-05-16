@@ -2,6 +2,8 @@ package com.polimi.mrf.appartapp.entities;
 
 import com.google.gson.annotations.Expose;
 import com.polimi.mrf.appartapp.Gender;
+import com.polimi.mrf.appartapp.Month;
+import com.polimi.mrf.appartapp.TemporalQ;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -69,6 +71,34 @@ public class User {
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval = true)
     private List<UserImage> images =new ArrayList<>();
 
+    @Expose
+    @Column(nullable = true)
+    String bio;
+
+    @Expose
+    @Column(nullable = true)
+    String reason;
+
+    @Expose
+    @Column(nullable = true)
+    Month month;
+
+    @Expose
+    @Column(nullable = true)
+    String job;
+
+    @Expose
+    @Column(nullable = true)
+    String income;
+
+    @Expose
+    @Column(nullable = true)
+    TemporalQ smoker;
+
+    @Expose
+    @Column(nullable = true)
+    String pets;
+
     public List<UserImage> getImages() {
         return images;
     }
@@ -77,7 +107,6 @@ public class User {
         userImage.setUser(this);
         images.add(userImage);
     }
-
 
     public Date getBirthday() {
         return birthday;
@@ -170,6 +199,81 @@ public class User {
     @ManyToMany(mappedBy = "matchedUsers", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     public List<Apartment> matchedApartments;
     */
+
+    //OPTIONALS
+
+
+    public Month getMonth() {
+        return month;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public String getIncome() {
+        return income;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public String getPets() {
+        return pets;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public TemporalQ getSmoker() {
+        return smoker;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setIgnoredApartments(List<Apartment> ignoredApartments) {
+        this.ignoredApartments = ignoredApartments;
+    }
+
+    public void setImages(List<UserImage> images) {
+        this.images = images;
+    }
+
+    public void setIncome(String income) {
+        this.income = income;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public void setLikedApartments(List<Apartment> likedApartments) {
+        this.likedApartments = likedApartments;
+    }
+
+    public void setMonth(Month month) {
+        this.month = month;
+    }
+
+    public void setOwnedApartments(List<Apartment> ownedApartments) {
+        this.ownedApartments = ownedApartments;
+    }
+
+    public void setPets(String pets) {
+        this.pets = pets;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public void setSmoker(TemporalQ smoker) {
+        this.smoker = smoker;
+    }
 
     @Override
     public boolean equals(Object o) {

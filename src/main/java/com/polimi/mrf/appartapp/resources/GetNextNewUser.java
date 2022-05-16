@@ -2,9 +2,7 @@ package com.polimi.mrf.appartapp.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.polimi.mrf.appartapp.beans.ApartmentSearchServiceBean;
 import com.polimi.mrf.appartapp.beans.UserSearchServiceBean;
-import com.polimi.mrf.appartapp.entities.Apartment;
 import com.polimi.mrf.appartapp.entities.User;
 import com.polimi.mrf.appartapp.entities.UserApartmentContainer;
 
@@ -26,7 +24,7 @@ public class GetNextNewUser {
 
     @POST
     @Produces("application/json")
-    public Response GetNextApartmentResource(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+    public Response GetNextUserResource(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         User user= (User) request.getAttribute("user");
 
         HttpSession session = request.getSession(true);

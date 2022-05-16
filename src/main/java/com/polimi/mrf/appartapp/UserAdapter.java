@@ -4,9 +4,11 @@ import com.google.gson.*;
 
 import java.util.List;
 
+import com.google.gson.annotations.Expose;
 import com.polimi.mrf.appartapp.entities.User;
 import com.polimi.mrf.appartapp.entities.UserImage;
 
+import javax.persistence.Column;
 import java.lang.reflect.Type;
 
 public class UserAdapter implements JsonSerializer<User> {
@@ -20,6 +22,15 @@ public class UserAdapter implements JsonSerializer<User> {
         obj.addProperty("surname", user.getSurname());
         obj.addProperty("birthday", user.getBirthday().getTime());
         obj.addProperty("gender", user.getGender().toString());
+
+        //OPTIONAL ATTRIBUTES
+        obj.addProperty("bio", user.getBio()!=null ? user.getBio() : "");
+        obj.addProperty("reason", user.getReason()!=null ? user.getReason() : "");
+        obj.addProperty("month", user.getMonth()!=null ? user.getMonth().toString() : "");
+        obj.addProperty("job", user.getJob()!=null ? user.getJob() : "");
+        obj.addProperty("income", user.getIncome()!=null ? user.getIncome() : "");
+        obj.addProperty("smoker", user.getSmoker()!=null ? user.getSmoker().toString() : "");
+        obj.addProperty("pets", user.getPets()!=null ? user.getPets() : "");
 
         Gson gson=new Gson();
         TypeAdapter<List> listAdapter=gson.getAdapter(List.class);
