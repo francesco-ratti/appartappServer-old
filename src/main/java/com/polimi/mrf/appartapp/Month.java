@@ -1,16 +1,16 @@
 package com.polimi.mrf.appartapp;
 
 public enum Month {
-    Genuary,
-    Febraury,
-    March,
-    April,
-    May,
-    June,
-    July,
-    August,
-    September,
-    October,
-    November,
-    December
+    Gennaio,
+    Febbraio,
+    Marzo,
+    Aprile,
+    Maggio,
+    Giugno,
+    Luglio,
+    Agosto,
+    Settembre,
+    Ottobre,
+    Novembre,
+    Dicembre
 }

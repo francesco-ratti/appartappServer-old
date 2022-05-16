@@ -3,6 +3,8 @@ package com.polimi.mrf.appartapp.resources;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.polimi.mrf.appartapp.Gender;
+import com.polimi.mrf.appartapp.Month;
+import com.polimi.mrf.appartapp.TemporalQ;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.User;
@@ -34,6 +36,15 @@ public class EditUser {
         String birthdayStr = request.getParameter("birthday");
         String genderStr = request.getParameter("gender");
 
+        //tenants attributes
+        String bioStr=request.getParameter("bio");
+        String reasonStr=request.getParameter("reason");
+        String monthStr=request.getParameter("month");
+        String jobStr=request.getParameter("job");
+        String incomeStr=request.getParameter("income");
+        String smokerStr=request.getParameter("smoker");
+        String petsStr=request.getParameter("pets");
+
         User user= (User) request.getAttribute("user");
         if (email!=null && email.trim().length()>0)
             user.setEmail(email.trim());
@@ -52,6 +63,28 @@ public class EditUser {
 
         if (genderStr != null && (genderStr.equals("M") || genderStr.equals("F") || genderStr.equals("NB")))
             user.setGender(Gender.valueOf(genderStr));
+
+        //tenants:
+        if (bioStr!=null && bioStr.trim().length()>0)
+            user.setBio(bioStr.trim());
+
+        if (reasonStr!=null && reasonStr.trim().length()>0)
+            user.setReason(reasonStr.trim());
+
+        if (monthStr != null && monthStr.length()>0)
+            user.setMonth(Month.valueOf(monthStr.trim()));
+
+        if (jobStr!=null && jobStr.trim().length()>0)
+            user.setJob(jobStr.trim());
+
+        if (incomeStr!=null && incomeStr.trim().length()>0)
+            user.setIncome(incomeStr.trim());
+
+        if (smokerStr!=null && smokerStr.trim().length()>0)
+            user.setSmoker(TemporalQ.valueOf(smokerStr.trim()));
+
+        if (petsStr!=null && petsStr.trim().length()>0)
+            user.setPets(petsStr.trim());
 
         userServiceBean.updateUser(user);
         Gson gson = new GsonBuilder()
