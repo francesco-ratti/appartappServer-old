@@ -2,6 +2,7 @@ package com.polimi.mrf.appartapp.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserSearchServiceBean;
 import com.polimi.mrf.appartapp.entities.User;
 import com.polimi.mrf.appartapp.entities.UserApartmentContainer;
@@ -39,6 +40,7 @@ public class GetNextNewUser {
 
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapter(User.class, new UserAdapter())
                 .create();
         String json=gson.toJson(nextuser);
 
