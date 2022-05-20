@@ -36,6 +36,7 @@ public class Login {
             return Response.status(Response.Status.UNAUTHORIZED).type(MediaType.TEXT_PLAIN).entity("unauthorized").build();
         else {
             Gson gson = new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
                     .registerTypeAdapter(User.class, new UserAdapter())
                     .create();
             String json=gson.toJson(user);

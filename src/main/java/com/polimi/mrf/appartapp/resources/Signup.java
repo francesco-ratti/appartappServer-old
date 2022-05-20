@@ -3,6 +3,7 @@ package com.polimi.mrf.appartapp.resources;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.polimi.mrf.appartapp.Gender;
+import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.User;
 
@@ -44,6 +45,7 @@ public class Signup {
             User user=userServiceBean.createUser(email, password,name,surname, birthday, gender);
             Gson gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
+                    .registerTypeAdapter(User.class, new UserAdapter())
                     .create();
             String json=gson.toJson(user);
 

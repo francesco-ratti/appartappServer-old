@@ -88,6 +88,7 @@ public class EditUser {
 
         userServiceBean.updateUser(user);
         Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
                 .registerTypeAdapter(User.class, new UserAdapter())
                 .create();
         String json=gson.toJson(user);
