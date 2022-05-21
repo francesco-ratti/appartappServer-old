@@ -7,6 +7,7 @@ import com.polimi.mrf.appartapp.MatchAdapter;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.Apartment;
+import com.polimi.mrf.appartapp.entities.Match;
 import com.polimi.mrf.appartapp.entities.User;
 
 import javax.ejb.EJB;
@@ -50,7 +51,7 @@ public class GetMatchedApartmentsFromDate {
             Gson gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
                     .registerTypeAdapter(User.class, new UserAdapter())
-                    .registerTypeAdapter(Apartment.class, new MatchAdapter())
+                    .registerTypeAdapter(Match.class, new MatchAdapter())
                     .create();
             JsonElement jsonElement=gson.toJsonTree(matchedApartments);
             jsonElement.getAsJsonObject().addProperty("checkDate", now.getTime());
