@@ -55,10 +55,11 @@ public class GetMatchedApartmentsFromDate {
                     .create();
 
             JsonElement jsonElement=gson.toJsonTree(matchedApartments);
+            /*
             jsonElement.getAsJsonObject().addProperty("checkDate", now.getTime());
-            String json=gson.toJson(jsonElement);
+            String json=gson.toJson(jsonElement);*/
 
-            //String json=gson.toJson(matchedApartments);
+            String json=gson.toJson(matchedApartments);
 
             return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(json).build();
         } catch (NumberFormatException e) {
