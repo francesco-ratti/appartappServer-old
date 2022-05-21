@@ -2,6 +2,8 @@ package com.polimi.mrf.appartapp.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.polimi.mrf.appartapp.MatchAdapter;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.Apartment;
@@ -34,13 +36,25 @@ public class GetMatchedApartmentsFromDate {
             return Response.status(Response.Status.BAD_REQUEST).build();
 
         try {
+            Date now=new Date();
             List<Apartment> matchedApartments = userServiceBean.getMatchedApartmentsFromDate(user, new Date(Long.parseLong(dateStr)));
 
+            /*
             Gson gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
                     .registerTypeAdapter(User.class, new UserAdapter())
                     .create();
             String json = gson.toJson(matchedApartments);
+             */
+
+            Gson gson = new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .registerTypeAdapter(User.class, new UserAdapter())
+                    .registerTypeAdapter(Apartment.class, new MatchAdapter())
+                    .create();
+            JsonElement jsonElement=gson.toJsonTree(matchedApartments);
+            jsonElement.getAsJsonObject().addProperty("checkDate", now.getTime());
+            String json=gson.toJson(jsonElement);
 
             return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(json).build();
         } catch (NumberFormatException e) {

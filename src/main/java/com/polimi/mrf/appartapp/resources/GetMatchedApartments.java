@@ -2,6 +2,8 @@ package com.polimi.mrf.appartapp.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.polimi.mrf.appartapp.MatchAdapter;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.Apartment;
@@ -17,6 +19,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Date;
 import java.util.List;
 
 @Path("/reserved/getmatchedapartments")
@@ -29,13 +32,17 @@ public class GetMatchedApartments {
     public Response GetMatchedApartmentsResource(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         User user= (User) request.getAttribute("user");
 
+        Date now=new Date();
         List<Match> matchedApartments=userServiceBean.getMatchedApartments(user);
 
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .registerTypeAdapter(User.class, new UserAdapter())
+                .registerTypeAdapter(Apartment.class, new MatchAdapter())
                 .create();
-        String json=gson.toJson(matchedApartments);
+        JsonElement jsonElement=gson.toJsonTree(matchedApartments);
+        jsonElement.getAsJsonObject().addProperty("checkDate", now.getTime());
+        String json=gson.toJson(jsonElement);
 
         return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(json).build();
     }

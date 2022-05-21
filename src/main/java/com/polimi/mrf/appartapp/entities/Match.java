@@ -21,7 +21,6 @@ public class Match {
     @JoinColumn(name = "apartment_id")
     Apartment apartment;
 
-    @Expose
     @ManyToOne()
     @JoinColumn(name = "user_id")
     User user;
