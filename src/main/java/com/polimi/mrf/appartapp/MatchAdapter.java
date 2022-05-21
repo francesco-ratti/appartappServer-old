@@ -12,9 +12,9 @@ public class MatchAdapter implements JsonSerializer<Match> {
     @Override
     public JsonElement serialize(Match match, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject obj = new JsonObject();
-        Gson gson=new Gson();
+        GsonBuilder gsonb=new GsonBuilder();
 
-        obj.add("apartment", gson.getAdapter(Apartment.class).toJsonTree(match.getApartment()));
+        obj.add("apartment", gsonb.excludeFieldsWithoutExposeAnnotation().create().toJsonTree(match.getApartment()));
         obj.addProperty("matchDate", match.getMatchDate().getTime());
 
         return obj;
