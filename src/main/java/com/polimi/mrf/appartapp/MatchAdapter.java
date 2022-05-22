@@ -14,7 +14,7 @@ public class MatchAdapter implements JsonSerializer<Match> {
         JsonObject obj = new JsonObject();
         GsonBuilder gsonb=new GsonBuilder();
 
-        obj.add("apartment", gsonb.excludeFieldsWithoutExposeAnnotation().create().toJsonTree(match.getApartment()));
+        obj.add("apartment", gsonb.excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(User.class, new UserAdapter()).create().toJsonTree(match.getApartment()));
         obj.addProperty("matchDate", match.getMatchDate().getTime());
 
         return obj;
