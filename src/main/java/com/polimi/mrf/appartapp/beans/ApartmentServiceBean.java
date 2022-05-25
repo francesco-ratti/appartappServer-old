@@ -104,7 +104,7 @@ public class ApartmentServiceBean {
 
     public Apartment addImage(Apartment apartment, List<InputStream> images) throws IOException {
         apartment=appendImages(apartment, images);
-        em.persist(apartment);
+        em.merge(apartment);
         return apartment;
     }
 
@@ -114,7 +114,7 @@ public class ApartmentServiceBean {
 
     public boolean deleteImage(Apartment apartment, long imageId) {
         if (apartment.removeImage(imageId)) {
-            em.persist(apartment);
+            em.merge(apartment);
             return true;
         } else {
             return false;

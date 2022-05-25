@@ -55,7 +55,7 @@ public class UserServiceBean {
 
     private User appendImages(User user, List<InputStream> images) throws IOException {
         for (InputStream image: images) {
-            long currId=imgIdServiceBean.getNewApartmentImageId();
+            long currId=imgIdServiceBean.getNewUserImageId();
 
             Path path=Path.of(userImagesFolderPath + currId+".jpg");
             Files.copy(image, path);
@@ -69,13 +69,13 @@ public class UserServiceBean {
 
     public User addImage(User user, List<InputStream> images) throws IOException {
         user=appendImages(user, images);
-        em.persist(user);
+        em.merge(user);
         return user;
     }
 
     public boolean deleteImage(User user, long imageId) {
         if (user.removeImage(imageId)) {
-            em.persist(user);
+            em.merge(user);
             return true;
         } else {
             return false;
