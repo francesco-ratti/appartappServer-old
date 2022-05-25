@@ -32,9 +32,9 @@ public class UserAdapter implements JsonSerializer<User> {
         obj.addProperty("smoker", user.getSmoker()!=null ? user.getSmoker().toString() : "");
         obj.addProperty("pets", user.getPets()!=null ? user.getPets() : "");
 
-        Gson gson=new Gson();
-        TypeAdapter<List> listAdapter=gson.getAdapter(List.class);
-        obj.add("images", listAdapter.toJsonTree(user.getImages()));
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation().create();
+        obj.add("images", gson.toJsonTree(user.getImages()));
 
         return obj;
     }
