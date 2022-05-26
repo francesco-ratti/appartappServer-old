@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -58,7 +59,7 @@ public class UserServiceBean {
             long currId=imgIdServiceBean.getNewUserImageId();
 
             Path path=Path.of(userImagesFolderPath + currId+".jpg");
-            Files.copy(image, path);
+            Files.copy(image, path, StandardCopyOption.REPLACE_EXISTING);
             UserImage userImage=new UserImage();
             userImage.setId(currId);
 
@@ -73,9 +74,11 @@ public class UserServiceBean {
         return user;
     }
 
-    public boolean deleteImage(User user, long imageId) {
+    public boolean deleteImage(User user, long imageId) throws IOException {
         if (user.removeImage(imageId)) {
             em.merge(user);
+            Path path=Path.of(userImagesFolderPath + imageId+".jpg");
+            Files.delete(path);
             return true;
         } else {
             return false;

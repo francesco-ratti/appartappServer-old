@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
 
@@ -80,7 +81,7 @@ public class ApartmentServiceBean {
             long currId=imgIdServiceBean.getNewApartmentImageId();
 
             Path path=Path.of(apartmentImagesFolderPath + currId+".jpg");
-            Files.copy(image, path);
+            Files.copy(image, path, StandardCopyOption.REPLACE_EXISTING);
             ApartmentImage apartmentImage=new ApartmentImage();
             apartmentImage.setId(currId);
 
@@ -112,9 +113,11 @@ public class ApartmentServiceBean {
         return em.find(Apartment.class, id);
     }
 
-    public boolean deleteImage(Apartment apartment, long imageId) {
+    public boolean deleteImage(Apartment apartment, long imageId) throws IOException {
         if (apartment.removeImage(imageId)) {
             em.merge(apartment);
+            Path path=Path.of(apartmentImagesFolderPath + imageId+".jpg");
+            Files.delete(path);
             return true;
         } else {
             return false;

@@ -13,6 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 
 @Path("/reserved/deleteapartmentimage")
 public class DeleteApartmentImage {
@@ -44,6 +45,8 @@ public class DeleteApartmentImage {
             }
             } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity("id not numeric").build();
+        } catch (IOException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("error removing file from disk").build();
         }
     }
 }
