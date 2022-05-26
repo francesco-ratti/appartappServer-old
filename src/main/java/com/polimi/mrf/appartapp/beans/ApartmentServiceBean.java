@@ -122,6 +122,6 @@ public class ApartmentServiceBean {
     }
 
     public void updateApartment(Apartment apartment) {
-        em.persist(apartment);
+        em.merge(apartment);
     }
 }
