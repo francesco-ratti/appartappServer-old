@@ -73,154 +73,46 @@ public class Login {
         HttpSession session = request.getSession();
 
 
-        boolean loggedIn = session != null && session.getAttribute("loggeduser") != null;
+        User user = null;
 
-        if (loggedIn) {
-            User user = (User) session.getAttribute("loggeduser");
-
-            Gson gson = new GsonBuilder()
-                    .excludeFieldsWithoutExposeAnnotation()
-                    .registerTypeAdapter(User.class, new UserAdapter())
-                    .create();
-            String json = gson.toJson(user);
-
-            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(json).build();
-        }
-
-
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String idToken = request.getParameter("idtoken");
-
-
-        if ((email == null || email.isEmpty()) && (password == null || password.isEmpty()) && (idToken == null || idToken.isEmpty())) {
-
-            Cookie[] cookies = request.getCookies();
-
-            if (cookies == null) {
-                return Response.status(Response.Status.UNAUTHORIZED).type(MediaType.TEXT_PLAIN).entity("unauthorized").build();
+        try {
+            if (session != null && session.getAttribute("loggeduser") != null) {
+                user = (User) session.getAttribute("loggeduser");
             } else {
-                // process auto login for remember me feature
-                String selector = "";
-                String rawValidator = "";
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
+                String idToken = request.getParameter("idtoken");
 
-                for (Cookie aCookie : cookies) {
-                    if (aCookie.getName().equals("selector")) {
-                        selector = aCookie.getValue();
-                    } else if (aCookie.getName().equals("validator")) {
-                        rawValidator = aCookie.getValue();
-                    }
-                }
 
-                if (!"".equals(selector) && !"".equals(rawValidator)) {
-                    UserAuthToken token = userAuthServiceBean.findAuthTokenBySelector(selector);
+                if ((email == null || email.isEmpty()) && (password == null || password.isEmpty()) && (idToken == null || idToken.isEmpty())) {
 
-                    if (token == null) {
-                        return Response.status(Response.Status.UNAUTHORIZED).type(MediaType.TEXT_PLAIN).entity("unauthorized").build();
-                    } else {
-                        try {
-                            String hashedValidatorDatabase = token.getValidator();
-                            String hashedValidatorCookie = HashGenerator.generateSHA256(rawValidator);
+                    Cookie[] cookies = request.getCookies();
 
-                            if (hashedValidatorCookie.equals(hashedValidatorDatabase)) {
-                                session = request.getSession();
-                                session.setAttribute("loggeduser", token.getUser());
+                    if (cookies != null) {
+                        // process auto login for remember me feature
+                        String selector = "";
+                        String rawValidator = "";
 
-                                // update new token in database
-                                String newSelector = RandomStringUtils.randomAlphanumeric(12);
-                                String newRawValidator = RandomStringUtils.randomAlphanumeric(64);
-
-                                String newHashedValidator = HashGenerator.generateSHA256(newRawValidator);
-
-                                token.setSelector(newSelector);
-                                token.setValidator(newHashedValidator);
-                                token.setLastUse(new Date());
-                                userAuthServiceBean.update(token);
-
-                                // update cookie
-                                Cookie cookieSelector = new Cookie("selector", newSelector);
-                                cookieSelector.setMaxAge(604800);
-
-                                Cookie cookieValidator = new Cookie("validator", newRawValidator);
-                                cookieValidator.setMaxAge(604800);
-
-                                response.addCookie(cookieSelector);
-                                response.addCookie(cookieValidator);
-
-                                Gson gson = new GsonBuilder()
-                                        .excludeFieldsWithoutExposeAnnotation()
-                                        .registerTypeAdapter(User.class, new UserAdapter())
-                                        .create();
-                                String json = gson.toJson(token.getUser());
-
-                                return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(json).build();
-                            } else {
-                                    return Response.status(Response.Status.UNAUTHORIZED).type(MediaType.TEXT_PLAIN).entity("unauthorized").build();
+                        for (Cookie aCookie : cookies) {
+                            if (aCookie.getName().equals("selector")) {
+                                selector = aCookie.getValue();
+                            } else if (aCookie.getName().equals("validator")) {
+                                rawValidator = aCookie.getValue();
                             }
-                        } catch (java.io.UnsupportedEncodingException e) {
-                            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity("INTERNAL_SERVER_ERROR").build();
                         }
-                    }
-                } else {
-                    return Response.status(Response.Status.UNAUTHORIZED).type(MediaType.TEXT_PLAIN).entity("unauthorized").build();
-                }
-            }
-        } else {
-            User user=null;
 
-            //validate cred
-            if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
-                //google auth
-                return Response.status(Response.Status.UNAUTHORIZED).type(MediaType.TEXT_PLAIN).entity("unauthorized").build();
+                        if (!"".equals(selector) && !"".equals(rawValidator)) {
+                            UserAuthToken token = userAuthServiceBean.findAuthTokenBySelector(selector);
 
-
-            } else {
-                user = userServiceBean.getUser(email, password);
-            }
-
-            if (user == null)
-                return Response.status(Response.Status.UNAUTHORIZED).type(MediaType.TEXT_PLAIN).entity("unauthorized").build();
-            else {
-                Cookie[] cookies = request.getCookies();
-
-                if (cookies==null) {
-                    //create new entity
-                    try {
-                        response=appendNewTokenToSession(response, userAuthServiceBean, user);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity("INTERNAL_SERVER_ERROR").build();
-                    }
-                } else {
-
-                    String selector = "";
-                    String rawValidator = "";
-
-                    for (Cookie aCookie : cookies) {
-                        if (aCookie.getName().equals("selector")) {
-                            selector = aCookie.getValue();
-                        } else if (aCookie.getName().equals("validator")) {
-                            rawValidator = aCookie.getValue();
-                        }
-                    }
-
-                    if (!"".equals(selector) && !"".equals(rawValidator)) {
-                        UserAuthToken token = userAuthServiceBean.findAuthTokenBySelector(selector);
-
-                        if (token == null) {
-                            //create new entity
-                            try {
-                                response=appendNewTokenToSession(response, userAuthServiceBean, user);
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity("INTERNAL_SERVER_ERROR").build();
-                            }
-                        } else {
-                            try {
+                            if (token != null) {
                                 String hashedValidatorDatabase = token.getValidator();
                                 String hashedValidatorCookie = HashGenerator.generateSHA256(rawValidator);
 
                                 if (hashedValidatorCookie.equals(hashedValidatorDatabase)) {
+                                    session = request.getSession();
+                                    session.setAttribute("loggeduser", token.getUser());
+                                    user = token.getUser();
+
                                     // update new token in database
                                     String newSelector = RandomStringUtils.randomAlphanumeric(12);
                                     String newRawValidator = RandomStringUtils.randomAlphanumeric(64);
@@ -241,30 +133,95 @@ public class Login {
 
                                     response.addCookie(cookieSelector);
                                     response.addCookie(cookieValidator);
-                                } else {
-                                    //create new entity
-                                    try {
-                                        response=appendNewTokenToSession(response, userAuthServiceBean, user);
-                                    } catch (UnsupportedEncodingException e) {
-                                        e.printStackTrace();
-                                        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity("INTERNAL_SERVER_ERROR").build();
-                                    }
                                 }
-                            } catch (java.io.UnsupportedEncodingException e) {
-                                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity("INTERNAL_SERVER_ERROR").build();
+
                             }
                         }
-                    } else {
-                        //create new entity
-                        try {
-                            response=appendNewTokenToSession(response, userAuthServiceBean, user);
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity("INTERNAL_SERVER_ERROR").build();
+                    }
+                } else {
+                    //validate cred
+                    if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
+                        //google login
+                        GoogleUserInfo googleUserInfo = GoogleTokenVerifier.verifyToken(idToken);
+                        if (googleUserInfo != null) {
+
+                            //connect to db
+
                         }
+
+                    } else {
+                        user = userServiceBean.getUser(email, password);
+                    }
+
+                    if (user != null) {
+                        Cookie[] cookies = request.getCookies();
+
+                        if (cookies == null) {
+                            //create new entity
+                            response = appendNewTokenToSession(response, userAuthServiceBean, user);
+
+                        } else {
+
+                            String selector = "";
+                            String rawValidator = "";
+
+                            for (Cookie aCookie : cookies) {
+                                if (aCookie.getName().equals("selector")) {
+                                    selector = aCookie.getValue();
+                                } else if (aCookie.getName().equals("validator")) {
+                                    rawValidator = aCookie.getValue();
+                                }
+                            }
+
+                            if (!"".equals(selector) && !"".equals(rawValidator)) {
+                                UserAuthToken token = userAuthServiceBean.findAuthTokenBySelector(selector);
+
+                                if (token == null) {
+                                    //create new entity
+                                    response = appendNewTokenToSession(response, userAuthServiceBean, user);
+                                } else {
+                                    String hashedValidatorDatabase = token.getValidator();
+                                    String hashedValidatorCookie = HashGenerator.generateSHA256(rawValidator);
+
+                                    if (hashedValidatorCookie.equals(hashedValidatorDatabase)) {
+                                        // update new token in database
+                                        String newSelector = RandomStringUtils.randomAlphanumeric(12);
+                                        String newRawValidator = RandomStringUtils.randomAlphanumeric(64);
+
+                                        String newHashedValidator = HashGenerator.generateSHA256(newRawValidator);
+
+                                        token.setSelector(newSelector);
+                                        token.setValidator(newHashedValidator);
+                                        token.setLastUse(new Date());
+                                        userAuthServiceBean.update(token);
+
+                                        // update cookie
+                                        Cookie cookieSelector = new Cookie("selector", newSelector);
+                                        cookieSelector.setMaxAge(604800);
+
+                                        Cookie cookieValidator = new Cookie("validator", newRawValidator);
+                                        cookieValidator.setMaxAge(604800);
+
+                                        response.addCookie(cookieSelector);
+                                        response.addCookie(cookieValidator);
+                                    } else {
+                                        //create new entity
+                                        response = appendNewTokenToSession(response, userAuthServiceBean, user);
+                                    }
+
+                                }
+                            } else {
+                                //create new entity
+                                response = appendNewTokenToSession(response, userAuthServiceBean, user);
+
+                            }
+                        }
+
+
                     }
                 }
-
+            }
+            if (user != null) {
                 Gson gson = new GsonBuilder()
                         .excludeFieldsWithoutExposeAnnotation()
                         .registerTypeAdapter(User.class, new UserAdapter())
@@ -272,7 +229,14 @@ public class Login {
                 String json = gson.toJson(user);
 
                 return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(json).build();
-            }
+            } else
+                return Response.status(Response.Status.UNAUTHORIZED).type(MediaType.TEXT_PLAIN).entity("UNAUTHORIZED").build();
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.UNAUTHORIZED).type(MediaType.TEXT_PLAIN).entity("UNAUTHORIZED").build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity("INTERNAL_SERVER_ERROR").build();
         }
     }
 }
