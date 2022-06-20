@@ -21,6 +21,7 @@ public class UserManager extends HttpFilter {
 
     @Override
     public void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException, ServletException {
+        /*
         String email=req.getParameter("email");
         String password=req.getParameter("password");
 
@@ -36,6 +37,10 @@ public class UserManager extends HttpFilter {
             req.setAttribute("user", user);
             chain.doFilter(req, res);
         }
+
+         */
+
+
     }
 
     @Override

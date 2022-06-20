@@ -4,12 +4,15 @@ import com.polimi.mrf.appartapp.entities.User;
 import com.polimi.mrf.appartapp.entities.UserApartmentContainer;
 
 import javax.ejb.Stateful;
+import javax.ejb.StatefulTimeout;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Stateful(name="UserSearchServiceBean")
+//@StatefulTimeout(value = 5, unit = TimeUnit.MINUTES)
 public class UserSearchServiceBean {
     @PersistenceContext(unitName = "appartapp")
     private EntityManager em;

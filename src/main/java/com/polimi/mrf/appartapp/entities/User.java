@@ -6,9 +6,7 @@ import com.polimi.mrf.appartapp.Month;
 import com.polimi.mrf.appartapp.TemporalQ;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @NamedQuery(name="User.checkCredentials",
         query="SELECT u FROM User u WHERE u.email=:email AND u.password=:password"
@@ -98,6 +96,17 @@ public class User {
     @Expose
     @Column(nullable = true)
     String pets;
+
+    private Set<UserAuthToken> userAuthTokens = new HashSet<>(0);
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    public Set<UserAuthToken> getUserAuthTokens() {
+        return userAuthTokens;
+    }
+
+    public void setUserAuthTokens(Set<UserAuthToken> userAuthTokens) {
+        this.userAuthTokens = userAuthTokens;
+    }
 
     public List<UserImage> getImages() {
         return images;
