@@ -42,7 +42,7 @@ public class Signup {
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
         else {
-            User user=userServiceBean.createUser(email, password,name,surname, birthday, gender);
+            User user=userServiceBean.createCredentialsUser(email, password,name,surname, birthday, gender);
             Gson gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
                     .registerTypeAdapter(User.class, new UserAdapter())

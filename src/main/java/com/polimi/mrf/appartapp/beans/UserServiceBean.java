@@ -7,7 +7,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -15,7 +14,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @Stateless(name = "UserServiceBean")
 public class UserServiceBean {
@@ -37,8 +35,21 @@ public class UserServiceBean {
             return null;
     }
 
-    public User createUser(String email, String password, String name, String surname, Date birthday, Gender gender) {
-        User u=new User();
+    public User createGoogleUser(String googleId, String email, String name, String surname, Date birthday, Gender gender) {
+        GoogleUser u=new GoogleUser();
+        u.setGoogleId(googleId);
+        u.setEmail(email);
+        u.setName(name);
+        u.setSurname(surname);
+        u.setBirthday(birthday);
+        u.setGender(gender);
+
+        em.persist(u);
+        return u;
+    }
+
+    public User createCredentialsUser (String email, String password, String name, String surname, Date birthday, Gender gender){
+        CredentialsUser u=new CredentialsUser();
         u.setEmail(email);
         u.setPassword(password);
         u.setName(name);

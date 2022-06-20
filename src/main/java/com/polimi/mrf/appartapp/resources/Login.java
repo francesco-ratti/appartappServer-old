@@ -2,13 +2,16 @@ package com.polimi.mrf.appartapp.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.polimi.mrf.appartapp.Gender;
 import com.polimi.mrf.appartapp.HashGenerator;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.ApartmentSearchServiceBean;
 import com.polimi.mrf.appartapp.beans.UserAuthServiceBean;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
+import com.polimi.mrf.appartapp.entities.GoogleUser;
 import com.polimi.mrf.appartapp.entities.User;
 import com.polimi.mrf.appartapp.entities.UserAuthToken;
+import com.polimi.mrf.appartapp.entities.UserImage;
 import com.polimi.mrf.appartapp.google.GoogleTokenVerifier;
 import com.polimi.mrf.appartapp.google.GoogleUserInfo;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -31,6 +34,8 @@ import java.util.Date;
 
 @Path("/login")
 public class Login {
+
+    private static final int COOKIE_TIMEOUT=15768000; //6 months
 
     @EJB(name = "com.polimi.mrf.appartapp.beans/UserServiceBean")
     UserServiceBean userServiceBean;
@@ -56,10 +61,10 @@ public class Login {
         userAuthServiceBean.create(newToken);
 
         Cookie cookieSelector = new Cookie("selector", selector);
-        cookieSelector.setMaxAge(15768000); //6 months
+        cookieSelector.setMaxAge(COOKIE_TIMEOUT);
 
         Cookie cookieValidator = new Cookie("validator", rawValidator);
-        cookieValidator.setMaxAge(15768000);
+        cookieValidator.setMaxAge(COOKIE_TIMEOUT);
 
         response.addCookie(cookieSelector);
         response.addCookie(cookieValidator);
@@ -126,10 +131,10 @@ public class Login {
 
                                     // update cookie
                                     Cookie cookieSelector = new Cookie("selector", newSelector);
-                                    cookieSelector.setMaxAge(604800);
+                                    cookieSelector.setMaxAge(COOKIE_TIMEOUT);
 
                                     Cookie cookieValidator = new Cookie("validator", newRawValidator);
-                                    cookieValidator.setMaxAge(604800);
+                                    cookieValidator.setMaxAge(COOKIE_TIMEOUT);
 
                                     response.addCookie(cookieSelector);
                                     response.addCookie(cookieValidator);
@@ -144,11 +149,20 @@ public class Login {
                         //google login
                         GoogleUserInfo googleUserInfo = GoogleTokenVerifier.verifyToken(idToken);
                         if (googleUserInfo != null) {
-
                             //connect to db
+                            GoogleUser googleUser=userAuthServiceBean.findGoogleUserByGoogleId(googleUserInfo.getId());
+                            if (googleUser==null) {
+                                //create google user
 
+                                //TODO:redirect to signup
+
+                                //TODO: add image from google
+                                user=userServiceBean.createGoogleUser(googleUserInfo.getId(), googleUserInfo.getEmail(), googleUserInfo.getGivenName(), googleUserInfo.getFamilyName(), new Date(), Gender.M);
+
+                            } else {
+                                user=(User) googleUser;
+                            }
                         }
-
                     } else {
                         user = userServiceBean.getUser(email, password);
                     }
@@ -159,7 +173,6 @@ public class Login {
                         if (cookies == null) {
                             //create new entity
                             response = appendNewTokenToSession(response, userAuthServiceBean, user);
-
                         } else {
 
                             String selector = "";

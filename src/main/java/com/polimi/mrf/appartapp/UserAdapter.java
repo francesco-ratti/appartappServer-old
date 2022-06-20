@@ -17,7 +17,7 @@ public class UserAdapter implements JsonSerializer<User> {
         JsonObject obj = new JsonObject();
         obj.addProperty("id", user.getId());
         obj.addProperty("email", user.getEmail());
-        obj.addProperty("password", user.getPassword());
+        //obj.addProperty("password", user.getPassword());
         obj.addProperty("name", user.getName());
         obj.addProperty("surname", user.getSurname());
         obj.addProperty("birthday", user.getBirthday().getTime());

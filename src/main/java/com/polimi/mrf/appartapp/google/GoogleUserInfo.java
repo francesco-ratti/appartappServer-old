@@ -21,6 +21,10 @@ public class GoogleUserInfo {
         this.givenName=givenName;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }

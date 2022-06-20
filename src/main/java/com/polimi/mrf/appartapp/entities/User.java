@@ -8,9 +8,6 @@ import com.polimi.mrf.appartapp.TemporalQ;
 import javax.persistence.*;
 import java.util.*;
 
-@NamedQuery(name="User.checkCredentials",
-        query="SELECT u FROM User u WHERE u.email=:email AND u.password=:password"
-)
 @NamedQuery(name="User.findByEmail",
         query="SELECT u FROM User u WHERE u.email=:email"
 )
@@ -25,6 +22,7 @@ import java.util.*;
 @NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h, User u WHERE u.id=:userId AND u.id <> h.owner.id AND h.id NOT IN (SELECT lh.id FROM u.likedApartments lh) AND h.id NOT IN (SELECT ih.id FROM u.ignoredApartments ih)")
 //@NamedQuery(name = "User.getNewApartments", query = "SELECT h FROM Apartment h WHERE h.id NOT IN (SELECT lh.id FROM User u JOIN u.likedApartmentList lh WHERE u.id=:userId) AND h.id NOT IN (SELECT ih.id FROM User u JOIN u.ignoredApartmentList ih WHERE u.id=:userId)")
 @Entity
+@Inheritance(strategy=InheritanceType.JOINED)
 public class User {
     @Expose
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -33,10 +31,6 @@ public class User {
     @Expose
     @Column(unique = true)
     private String email;
-
-    @Expose
-    @Column(nullable = false)
-    private String password;
 
     @Expose
     private String name;
@@ -159,14 +153,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public List<Apartment> getIgnoredApartments() {
