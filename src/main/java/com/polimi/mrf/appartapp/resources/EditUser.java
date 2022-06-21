@@ -30,9 +30,6 @@ public class EditUser {
     @POST
     @Produces("application/json")
     public Response EditUser(@Context HttpServletRequest request) {
-        String email = request.getParameter("newemail");
-        String password = request.getParameter("newpassword");
-
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String birthdayStr = request.getParameter("birthday");
@@ -48,24 +45,12 @@ public class EditUser {
         String petsStr=request.getParameter("pets");
 
         User user= (User) request.getAttribute("user");
-        if (email!=null && email.trim().length()>0)
-            user.setEmail(email.trim());
 
         if (name!=null && name.trim().length()>0)
             user.setName(name.trim());
 
         if (surname!=null && surname.trim().length()>0)
             user.setSurname(surname.trim());
-
-        if (password!=null && password.trim().length()>0) {
-            if (user instanceof CredentialsUser) {
-                CredentialsUser cu=(CredentialsUser) user;
-                cu.setPassword(password.trim());
-            }
-            else
-                return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("BAD_REQUEST").build();
-
-        }
 
         if (birthdayStr!=null && birthdayStr.trim().length()>0)
             user.setBirthday(new Date(Long.parseLong(birthdayStr)));
