@@ -5,13 +5,11 @@ import com.google.gson.GsonBuilder;
 import com.polimi.mrf.appartapp.Gender;
 import com.polimi.mrf.appartapp.HashGenerator;
 import com.polimi.mrf.appartapp.UserAdapter;
-import com.polimi.mrf.appartapp.beans.ApartmentSearchServiceBean;
 import com.polimi.mrf.appartapp.beans.UserAuthServiceBean;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.GoogleUser;
 import com.polimi.mrf.appartapp.entities.User;
 import com.polimi.mrf.appartapp.entities.UserAuthToken;
-import com.polimi.mrf.appartapp.entities.UserImage;
 import com.polimi.mrf.appartapp.google.GoogleTokenVerifier;
 import com.polimi.mrf.appartapp.google.GoogleUserInfo;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -43,7 +41,7 @@ public class Login {
     @EJB(name = "com.polimi.mrf.appartapp.beans/UserAuthServiceBean")
     UserAuthServiceBean userAuthServiceBean;
 
-    public static HttpServletResponse appendNewTokenToSession(HttpServletResponse response, UserAuthServiceBean userAuthServiceBean, User user) throws UnsupportedEncodingException {
+    public static HttpServletResponse generateNewTokenAndAppendToResponse(HttpServletResponse response, UserAuthServiceBean userAuthServiceBean, User user) throws UnsupportedEncodingException {
         UserAuthToken newToken = new UserAuthToken();
 
         String selector = RandomStringUtils.randomAlphanumeric(12);
@@ -81,7 +79,7 @@ public class Login {
         User user = null;
 
         try {
-            if (session != null && session.getAttribute("loggeduser") != null) {
+            if (false && (session != null && session.getAttribute("loggeduser") != null)) {
                 user = (User) session.getAttribute("loggeduser");
             } else {
                 String email = request.getParameter("email");
@@ -114,8 +112,6 @@ public class Login {
                                 String hashedValidatorCookie = HashGenerator.generateSHA256(rawValidator);
 
                                 if (hashedValidatorCookie.equals(hashedValidatorDatabase)) {
-                                    session = request.getSession();
-                                    session.setAttribute("loggeduser", token.getUser());
                                     user = token.getUser();
 
                                     // update new token in database
@@ -172,7 +168,7 @@ public class Login {
 
                         if (cookies == null) {
                             //create new entity
-                            response = appendNewTokenToSession(response, userAuthServiceBean, user);
+                            response = generateNewTokenAndAppendToResponse(response, userAuthServiceBean, user);
                         } else {
 
                             String selector = "";
@@ -191,7 +187,7 @@ public class Login {
 
                                 if (token == null) {
                                     //create new entity
-                                    response = appendNewTokenToSession(response, userAuthServiceBean, user);
+                                    response = generateNewTokenAndAppendToResponse(response, userAuthServiceBean, user);
                                 } else {
                                     String hashedValidatorDatabase = token.getValidator();
                                     String hashedValidatorCookie = HashGenerator.generateSHA256(rawValidator);
@@ -219,13 +215,13 @@ public class Login {
                                         response.addCookie(cookieValidator);
                                     } else {
                                         //create new entity
-                                        response = appendNewTokenToSession(response, userAuthServiceBean, user);
+                                        response = generateNewTokenAndAppendToResponse(response, userAuthServiceBean, user);
                                     }
 
                                 }
                             } else {
                                 //create new entity
-                                response = appendNewTokenToSession(response, userAuthServiceBean, user);
+                                response = generateNewTokenAndAppendToResponse(response, userAuthServiceBean, user);
 
                             }
                         }
@@ -235,6 +231,9 @@ public class Login {
                 }
             }
             if (user != null) {
+                session = request.getSession();
+                session.setAttribute("loggeduser", user);
+
                 Gson gson = new GsonBuilder()
                         .excludeFieldsWithoutExposeAnnotation()
                         .registerTypeAdapter(User.class, new UserAdapter())

@@ -49,9 +49,11 @@ public class UserAuthToken implements java.io.Serializable {
     }
 
     public void setSelector(String selector) {
+        this.selector=selector;
     }
 
     public void setValidator(String hashedValidator) {
+        this.validator=hashedValidator;
     }
 
     public String getSelector() {

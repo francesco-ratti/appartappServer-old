@@ -89,17 +89,18 @@ public class UserManager extends HttpFilter {
                     }
                 }
             }
+        }
+        if (user == null) {
+            res.setStatus(Response.Status.UNAUTHORIZED.getStatusCode());
+            return;
+        } else {
+            req.setAttribute("user", user);
+            chain.doFilter(req, res);
+        }
 
-            if (user == null) {
-                res.setStatus(Response.Status.UNAUTHORIZED.getStatusCode());
-                return;
-            } else {
-                req.setAttribute("user", user);
-                chain.doFilter(req, res);
-            }
 
 
-        /*
+                /*
         String email=req.getParameter("email");
         String password=req.getParameter("password");
 
@@ -116,7 +117,6 @@ public class UserManager extends HttpFilter {
             chain.doFilter(req, res);
         }
          */
-        }
     }
 
     @Override

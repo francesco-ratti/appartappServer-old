@@ -7,6 +7,7 @@ import com.polimi.mrf.appartapp.Month;
 import com.polimi.mrf.appartapp.TemporalQ;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
+import com.polimi.mrf.appartapp.entities.CredentialsUser;
 import com.polimi.mrf.appartapp.entities.User;
 
 import javax.ejb.EJB;
@@ -55,8 +56,15 @@ public class EditUser {
         if (surname!=null && surname.trim().length()>0)
             user.setSurname(surname.trim());
 
-        if (password!=null && password.trim().length()>0)
-            user.setPassword(password.trim());
+        if (password!=null && password.trim().length()>0) {
+            if (user instanceof CredentialsUser) {
+                CredentialsUser cu=(CredentialsUser) user;
+                cu.setPassword(password.trim());
+            }
+            else
+                return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("BAD_REQUEST").build();
+
+        }
 
         if (birthdayStr!=null && birthdayStr.trim().length()>0)
             user.setBirthday(new Date(Long.parseLong(birthdayStr)));
