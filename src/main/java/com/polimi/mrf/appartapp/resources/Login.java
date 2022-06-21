@@ -7,6 +7,7 @@ import com.polimi.mrf.appartapp.HashGenerator;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserAuthServiceBean;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
+import com.polimi.mrf.appartapp.entities.CredentialsUser;
 import com.polimi.mrf.appartapp.entities.GoogleUser;
 import com.polimi.mrf.appartapp.entities.User;
 import com.polimi.mrf.appartapp.entities.UserAuthToken;
@@ -29,6 +30,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Path("/login")
 public class Login {
@@ -147,16 +150,31 @@ public class Login {
                         if (googleUserInfo != null) {
                             //connect to db
                             GoogleUser googleUser=userAuthServiceBean.findGoogleUserByGoogleId(googleUserInfo.getId());
+
+                            String fullName=googleUserInfo.getName().trim();
+
+                            Pattern p = Pattern.compile("\\s\\S+$");
+                            Matcher m = p.matcher(fullName);
+                            m.find();
+                            int surnameBegin = m.start();
+                            String name=fullName.substring(0, surnameBegin).trim();
+                            String surname=fullName.substring(surnameBegin).trim();
+
                             if (googleUser==null) {
                                 //create google user
 
                                 //TODO:redirect to signup
 
                                 //TODO: add image from google
-                                user=userServiceBean.createGoogleUser(googleUserInfo.getId(), googleUserInfo.getEmail(), googleUserInfo.getGivenName(), googleUserInfo.getFamilyName(), new Date(), Gender.M);
+                                //googleUserInfo.getName().split();
 
+                                user=userServiceBean.createGoogleUser(googleUserInfo.getId(), googleUserInfo.getEmail(), name, surname, new Date(), Gender.M);
                             } else {
-                                user=(User) googleUser;
+                                googleUser.setName(name);
+                                googleUser.setSurname(surname);
+                                googleUser.setEmail(googleUserInfo.getEmail());
+
+                                user=userServiceBean.updateGoogleUser(googleUser);
                             }
                         }
                     } else {
@@ -234,9 +252,12 @@ public class Login {
                 session = request.getSession();
                 session.setAttribute("loggeduser", user);
 
+                UserAdapter userAdapter=new UserAdapter();
                 Gson gson = new GsonBuilder()
                         .excludeFieldsWithoutExposeAnnotation()
-                        .registerTypeAdapter(User.class, new UserAdapter())
+                        .registerTypeAdapter(User.class, userAdapter)
+                        .registerTypeAdapter(CredentialsUser.class, userAdapter)
+                        .registerTypeAdapter(GoogleUser.class, userAdapter)
                         .create();
                 String json = gson.toJson(user);
 

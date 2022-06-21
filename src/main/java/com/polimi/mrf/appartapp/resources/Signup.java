@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.polimi.mrf.appartapp.Gender;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
+import com.polimi.mrf.appartapp.entities.CredentialsUser;
+import com.polimi.mrf.appartapp.entities.GoogleUser;
 import com.polimi.mrf.appartapp.entities.User;
 
 import javax.ejb.EJB;
@@ -43,9 +45,12 @@ public class Signup {
         }
         else {
             User user=userServiceBean.createCredentialsUser(email, password,name,surname, birthday, gender);
+            UserAdapter userAdapter=new UserAdapter();
             Gson gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
-                    .registerTypeAdapter(User.class, new UserAdapter())
+                    .registerTypeAdapter(User.class, userAdapter)
+                    .registerTypeAdapter(CredentialsUser.class, userAdapter)
+                    .registerTypeAdapter(GoogleUser.class, userAdapter)
                     .create();
             String json=gson.toJson(user);
 

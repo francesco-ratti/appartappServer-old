@@ -5,9 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.ApartmentSearchServiceBean;
 import com.polimi.mrf.appartapp.beans.UserSearchServiceBean;
-import com.polimi.mrf.appartapp.entities.Apartment;
-import com.polimi.mrf.appartapp.entities.User;
-import com.polimi.mrf.appartapp.entities.UserApartmentContainer;
+import com.polimi.mrf.appartapp.entities.*;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -41,9 +39,12 @@ public class GetAllNewUsers {
         List<UserApartmentContainer> userList= userSearchServiceBean.getNewUserList();
         session.setAttribute("usersearchservicebean", userSearchServiceBean);
 
+        UserAdapter userAdapter=new UserAdapter();
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
-                .registerTypeAdapter(User.class, new UserAdapter())
+                .registerTypeAdapter(User.class, userAdapter)
+                .registerTypeAdapter(CredentialsUser.class, userAdapter)
+                .registerTypeAdapter(GoogleUser.class, userAdapter)
                 .create();
         String json=gson.toJson(userList);
 

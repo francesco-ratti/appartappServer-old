@@ -48,6 +48,11 @@ public class UserServiceBean {
         return u;
     }
 
+    public User updateGoogleUser(GoogleUser googleUser) {
+        em.merge(googleUser);
+        return googleUser;
+    }
+
     public User createCredentialsUser (String email, String password, String name, String surname, Date birthday, Gender gender){
         CredentialsUser u=new CredentialsUser();
         u.setEmail(email);
@@ -108,4 +113,5 @@ public class UserServiceBean {
     public void updateUser(User user) {
         em.merge(user);
     }
+
 }

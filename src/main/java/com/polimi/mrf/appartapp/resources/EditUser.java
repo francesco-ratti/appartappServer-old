@@ -8,6 +8,7 @@ import com.polimi.mrf.appartapp.TemporalQ;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.CredentialsUser;
+import com.polimi.mrf.appartapp.entities.GoogleUser;
 import com.polimi.mrf.appartapp.entities.User;
 
 import javax.ejb.EJB;
@@ -95,9 +96,12 @@ public class EditUser {
             user.setPets(petsStr.trim());
 
         userServiceBean.updateUser(user);
+        UserAdapter userAdapter=new UserAdapter();
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
-                .registerTypeAdapter(User.class, new UserAdapter())
+                .registerTypeAdapter(User.class, userAdapter)
+                .registerTypeAdapter(CredentialsUser.class, userAdapter)
+                .registerTypeAdapter(GoogleUser.class, userAdapter)
                 .create();
         String json=gson.toJson(user);
 

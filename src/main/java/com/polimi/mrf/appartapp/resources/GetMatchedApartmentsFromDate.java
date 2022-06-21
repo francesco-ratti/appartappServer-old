@@ -6,9 +6,7 @@ import com.google.gson.JsonElement;
 import com.polimi.mrf.appartapp.MatchAdapter;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
-import com.polimi.mrf.appartapp.entities.Apartment;
-import com.polimi.mrf.appartapp.entities.Match;
-import com.polimi.mrf.appartapp.entities.User;
+import com.polimi.mrf.appartapp.entities.*;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -48,9 +46,12 @@ public class GetMatchedApartmentsFromDate {
             String json = gson.toJson(matchedApartments);
              */
 
+            UserAdapter userAdapter=new UserAdapter();
             Gson gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
-                    .registerTypeAdapter(User.class, new UserAdapter())
+                    .registerTypeAdapter(User.class, userAdapter)
+                    .registerTypeAdapter(CredentialsUser.class, userAdapter)
+                    .registerTypeAdapter(GoogleUser.class, userAdapter)
                     .registerTypeAdapter(Match.class, new MatchAdapter())
                     .create();
 

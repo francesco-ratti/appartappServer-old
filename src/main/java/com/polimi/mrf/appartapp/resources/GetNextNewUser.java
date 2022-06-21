@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserSearchServiceBean;
+import com.polimi.mrf.appartapp.entities.CredentialsUser;
+import com.polimi.mrf.appartapp.entities.GoogleUser;
 import com.polimi.mrf.appartapp.entities.User;
 import com.polimi.mrf.appartapp.entities.UserApartmentContainer;
 
@@ -38,9 +40,12 @@ public class GetNextNewUser {
         UserApartmentContainer nextuser= userSearchServiceBean.getNewApartmentNextResult();
         session.setAttribute("usersearchservicebean", userSearchServiceBean);
 
+        UserAdapter userAdapter=new UserAdapter();
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
-                .registerTypeAdapter(User.class, new UserAdapter())
+                .registerTypeAdapter(User.class, userAdapter)
+                .registerTypeAdapter(CredentialsUser.class, userAdapter)
+                .registerTypeAdapter(GoogleUser.class, userAdapter)
                 .create();
         String json=gson.toJson(nextuser);
 
