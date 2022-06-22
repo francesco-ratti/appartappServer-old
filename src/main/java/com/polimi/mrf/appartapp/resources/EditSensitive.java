@@ -2,9 +2,6 @@ package com.polimi.mrf.appartapp.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.polimi.mrf.appartapp.Gender;
-import com.polimi.mrf.appartapp.Month;
-import com.polimi.mrf.appartapp.TemporalQ;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.CredentialsUser;
@@ -19,16 +16,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Date;
 
-@Path("/reserved/edituser")
-public class EditPassword {
+@Path("/reserved/editsensitive")
+public class EditSensitive {
     @EJB(name = "com.polimi.mrf.appartapp.beans/UserServiceBean")
     UserServiceBean userServiceBean;
 
     @POST
     @Produces("application/json")
-    public Response EditPassword(@Context HttpServletRequest request) {
+    public Response EditSensitive(@Context HttpServletRequest request) {
         String email = request.getParameter("newemail");
         String password = request.getParameter("password");
         String newpassword = request.getParameter("newpassword");

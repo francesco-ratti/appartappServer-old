@@ -82,7 +82,7 @@ public class Login {
         User user = null;
 
         try {
-            if (false && (session != null && session.getAttribute("loggeduser") != null)) {
+            if (session != null && session.getAttribute("loggeduser") != null) {
                 user = (User) session.getAttribute("loggeduser");
             } else {
                 String email = request.getParameter("email");
