@@ -1,5 +1,8 @@
 package com.polimi.mrf.appartapp.google;
 
+import com.google.api.services.people.v1.model.Birthday;
+import com.google.api.services.people.v1.model.Gender;
+
 public class GoogleUserInfo {
     private String id;
     private String email;
@@ -9,8 +12,10 @@ public class GoogleUserInfo {
     private String locale;
     private String familyName;
     private String givenName;
+    private Birthday birthday;
+    private Gender gender;
 
-    public GoogleUserInfo(String id, String email, boolean emailVerified, String name, String pictureUrl, String locale, String familyName, String givenName) {
+    public GoogleUserInfo(String id, String email, boolean emailVerified, String name, String pictureUrl, String locale, String familyName, String givenName, Birthday birthday, Gender gender) {
         this.id=id;
         this.email=email;
         this.emailVerified=emailVerified;
@@ -19,6 +24,16 @@ public class GoogleUserInfo {
         this.locale=locale;
         this.familyName=familyName;
         this.givenName=givenName;
+        this.birthday = birthday;
+        this.gender = gender;
+    }
+
+    public Birthday getBirthday() {
+        return birthday;
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 
     public String getId() {

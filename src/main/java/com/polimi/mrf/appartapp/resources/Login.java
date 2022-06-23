@@ -1,5 +1,6 @@
 package com.polimi.mrf.appartapp.resources;
 
+import com.google.api.services.people.v1.model.Birthday;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.polimi.mrf.appartapp.Gender;
@@ -88,7 +89,7 @@ public class Login {
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
                 String idToken = request.getParameter("idtoken");
-
+                String accessToken = request.getParameter("accesstoken");
 
                 if ((email == null || email.isEmpty()) && (password == null || password.isEmpty()) && (idToken == null || idToken.isEmpty())) {
 
@@ -146,33 +147,64 @@ public class Login {
                     //validate cred
                     if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
                         //google login
-                        GoogleUserInfo googleUserInfo = GoogleTokenVerifier.verifyToken(idToken);
+                        GoogleUserInfo googleUserInfo = GoogleTokenVerifier.verifyToken(idToken, accessToken);
                         if (googleUserInfo != null) {
-                            //connect to db
                             GoogleUser googleUser=userAuthServiceBean.findGoogleUserByGoogleId(googleUserInfo.getId());
 
-                            String fullName=googleUserInfo.getName().trim();
+                            //parse user infos
+                            String name;
+                            String surname;
 
-                            Pattern p = Pattern.compile("\\s\\S+$");
-                            Matcher m = p.matcher(fullName);
-                            m.find();
-                            int surnameBegin = m.start();
-                            String name=fullName.substring(0, surnameBegin).trim();
-                            String surname=fullName.substring(surnameBegin).trim();
+                            if(googleUserInfo.getFamilyName() == null || googleUserInfo.getFamilyName().isEmpty() || googleUserInfo.getGivenName()== null || googleUserInfo.getName().isEmpty()) {
+                                String fullName = googleUserInfo.getName().trim();
 
-                            if (googleUser==null) {
-                                //create google user
-
-                                //TODO:redirect to signup
-
-                                //TODO: add image from google
-                                //googleUserInfo.getName().split();
-
-                                user=userServiceBean.createGoogleUser(googleUserInfo.getId(), googleUserInfo.getEmail(), name, surname, new Date(), Gender.M);
+                                Pattern p = Pattern.compile("\\s\\S+$");
+                                Matcher m = p.matcher(fullName);
+                                m.find();
+                                int surnameBegin = m.start();
+                                name = fullName.substring(0, surnameBegin).trim();
+                                surname = fullName.substring(surnameBegin).trim();
                             } else {
+                                name= googleUserInfo.getGivenName();
+                                surname= googleUserInfo.getFamilyName();
+                            }
+
+                            com.google.api.services.people.v1.model.Date birthday=googleUserInfo.getBirthday().getDate();
+                            Date myBirthday=new Date(0);
+
+                            String bstr=birthday.toString();
+                            if (birthday.getDay()!=null)
+                                myBirthday.setDate(birthday.getDay());
+                            if (birthday.getMonth()!=null)
+                                myBirthday.setMonth(birthday.getMonth()-1);
+                            if (birthday.getYear()!=null)
+                                myBirthday.setYear(birthday.getYear()-1900);
+
+                            com.google.api.services.people.v1.model.Gender gender=googleUserInfo.getGender();
+                            Gender myGender;
+                            switch (gender.getValue()) {
+                                case "male":
+                                    myGender=Gender.M;
+                                    break;
+                                case "female":
+                                    myGender=Gender.F;
+                                case "unspecified":
+                                    myGender=Gender.NB;
+                                    break;
+                                default:
+                                    myGender=Gender.NB;
+                                    break;
+                            }
+                            //create user
+                            if (googleUser==null) {
+                                user=userServiceBean.createGoogleUser(googleUserInfo.getId(), googleUserInfo.getEmail(), name, surname, myBirthday, myGender);
+                            } else {
+                                //update user
                                 googleUser.setName(name);
                                 googleUser.setSurname(surname);
                                 googleUser.setEmail(googleUserInfo.getEmail());
+                                googleUser.setGender(myGender);
+                                googleUser.setBirthday(myBirthday);
 
                                 user=userServiceBean.updateGoogleUser(googleUser);
                             }
