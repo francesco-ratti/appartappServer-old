@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.polimi.mrf.appartapp.Gender;
 import com.polimi.mrf.appartapp.HashGenerator;
+import com.polimi.mrf.appartapp.ImgFromUrlToInputStream;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserAuthServiceBean;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
@@ -28,9 +29,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -198,6 +202,10 @@ public class Login {
                             //create user
                             if (googleUser==null) {
                                 user=userServiceBean.createGoogleUser(googleUserInfo.getId(), googleUserInfo.getEmail(), name, surname, myBirthday, myGender);
+                                ImgFromUrlToInputStream imgFromUrlToInputStream=new ImgFromUrlToInputStream(googleUserInfo.getPictureUrl());
+                                List images=new ArrayList<InputStream>(1);
+                                images.set(0, imgFromUrlToInputStream.getInputStream());
+                                userServiceBean.addImage(user, images);
                             } else {
                                 //update user
                                 googleUser.setName(name);
