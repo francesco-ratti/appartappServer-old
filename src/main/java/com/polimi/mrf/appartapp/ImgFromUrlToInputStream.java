@@ -25,6 +25,7 @@ public class ImgFromUrlToInputStream {
         URLConnection openConnection = new URL(this.url).openConnection();
         openConnection.addRequestProperty("User-Agent",
                 "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36");
+        openConnection.connect();
         return openConnection.getInputStream();
     }
 

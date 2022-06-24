@@ -204,7 +204,7 @@ public class Login {
                                 user=userServiceBean.createGoogleUser(googleUserInfo.getId(), googleUserInfo.getEmail(), name, surname, myBirthday, myGender);
                                 ImgFromUrlToInputStream imgFromUrlToInputStream=new ImgFromUrlToInputStream(googleUserInfo.getPictureUrl());
                                 List images=new ArrayList<InputStream>(1);
-                                images.set(0, imgFromUrlToInputStream.getInputStream());
+                                images.add(imgFromUrlToInputStream.getInputStream());
                                 userServiceBean.addImage(user, images);
                             } else {
                                 //update user
