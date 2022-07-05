@@ -22,7 +22,7 @@ public class UserManager extends HttpFilter {
     @EJB(name = "com.polimi.mrf.appartapp.beans/userAuthServiceBean")
     UserAuthServiceBean userAuthServiceBean;
 
-    private static final int COOKIE_TIMEOUT=15768000; //6 months
+    //private static final int COOKIE_TIMEOUT=15768000; //6 months
 
 
     @Override
