@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
 @Path("/login")
 public class Login {
 
-    //private static final int COOKIE_TIMEOUT=15768000; //6 months
+    private static final int COOKIE_TIMEOUT=15768000; //6 months
 
     @EJB(name = "com.polimi.mrf.appartapp.beans/UserServiceBean")
     UserServiceBean userServiceBean;
@@ -67,10 +67,10 @@ public class Login {
         userAuthServiceBean.create(newToken);
 
         Cookie cookieSelector = new Cookie("selector", selector);
-        //cookieSelector.setMaxAge(COOKIE_TIMEOUT);
+        cookieSelector.setMaxAge(COOKIE_TIMEOUT);
 
         Cookie cookieValidator = new Cookie("validator", rawValidator);
-        //cookieValidator.setMaxAge(COOKIE_TIMEOUT);
+        cookieValidator.setMaxAge(COOKIE_TIMEOUT);
 
         response.addCookie(cookieSelector);
         response.addCookie(cookieValidator);
@@ -135,10 +135,10 @@ public class Login {
 
                                     // update cookie
                                     Cookie cookieSelector = new Cookie("selector", newSelector);
-                                    //cookieSelector.setMaxAge(COOKIE_TIMEOUT);
+                                    cookieSelector.setMaxAge(COOKIE_TIMEOUT);
 
                                     Cookie cookieValidator = new Cookie("validator", newRawValidator);
-                                    //cookieValidator.setMaxAge(COOKIE_TIMEOUT);
+                                    cookieValidator.setMaxAge(COOKIE_TIMEOUT);
 
                                     response.addCookie(cookieSelector);
                                     response.addCookie(cookieValidator);
@@ -264,10 +264,10 @@ public class Login {
 
                                         // update cookie
                                         Cookie cookieSelector = new Cookie("selector", newSelector);
-                                        //cookieSelector.setMaxAge(COOKIE_TIMEOUT);
+                                        cookieSelector.setMaxAge(COOKIE_TIMEOUT);
 
                                         Cookie cookieValidator = new Cookie("validator", newRawValidator);
-                                        //cookieValidator.setMaxAge(COOKIE_TIMEOUT);
+                                        cookieValidator.setMaxAge(COOKIE_TIMEOUT);
 
                                         response.addCookie(cookieSelector);
                                         response.addCookie(cookieValidator);
