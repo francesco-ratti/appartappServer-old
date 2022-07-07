@@ -67,9 +67,11 @@ public class Login extends HttpServlet {
 
         Cookie cookieSelector = new Cookie("selector", selector);
         cookieSelector.setMaxAge(COOKIE_TIMEOUT);
+        cookieSelector.setPath("/");
 
         Cookie cookieValidator = new Cookie("validator", rawValidator);
         cookieValidator.setMaxAge(COOKIE_TIMEOUT);
+        cookieValidator.setPath("/");
 
         response.addCookie(cookieSelector);
         response.addCookie(cookieValidator);
@@ -134,9 +136,11 @@ public class Login extends HttpServlet {
                                     // update cookie
                                     Cookie cookieSelector = new Cookie("selector", newSelector);
                                     cookieSelector.setMaxAge(COOKIE_TIMEOUT);
+                                    cookieSelector.setPath("/");
 
                                     Cookie cookieValidator = new Cookie("validator", newRawValidator);
                                     cookieValidator.setMaxAge(COOKIE_TIMEOUT);
+                                    cookieValidator.setPath("/");
 
                                     response.addCookie(cookieSelector);
                                     response.addCookie(cookieValidator);
@@ -263,9 +267,11 @@ public class Login extends HttpServlet {
                                         // update cookie
                                         Cookie cookieSelector = new Cookie("selector", newSelector);
                                         cookieSelector.setMaxAge(COOKIE_TIMEOUT);
+                                        cookieSelector.setPath("/");
 
                                         Cookie cookieValidator = new Cookie("validator", newRawValidator);
                                         cookieValidator.setMaxAge(COOKIE_TIMEOUT);
+                                        cookieValidator.setPath("/");
 
                                         response.addCookie(cookieSelector);
                                         response.addCookie(cookieValidator);
