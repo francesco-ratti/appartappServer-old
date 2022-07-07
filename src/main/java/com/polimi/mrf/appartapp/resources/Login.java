@@ -95,7 +95,7 @@ public class Login {
                 String idToken = request.getParameter("idtoken");
                 String accessToken = request.getParameter("accesstoken");
 
-                if ((email == null || email.isEmpty()) && (password == null || password.isEmpty()) && (idToken == null || idToken.isEmpty())) {
+                if ((email == null || email.isEmpty()) && (password == null || password.isEmpty()) && (idToken == null || idToken.isEmpty()) && (accessToken==null || accessToken.isEmpty())) {
 
                     Cookie[] cookies = request.getCookies();
 
