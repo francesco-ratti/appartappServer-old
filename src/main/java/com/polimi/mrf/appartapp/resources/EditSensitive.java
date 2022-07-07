@@ -10,6 +10,7 @@ import com.polimi.mrf.appartapp.entities.User;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -41,6 +42,11 @@ public class EditSensitive {
                     cu.setPassword(newpassword.trim());
                 }
                 userServiceBean.updateUser(user);
+
+                HttpSession session=request.getSession();
+                if (session!=null)
+                    session.setAttribute("loggeduser", user);
+
                 UserAdapter userAdapter = new UserAdapter();
                 Gson gson = new GsonBuilder()
                         .excludeFieldsWithoutExposeAnnotation()

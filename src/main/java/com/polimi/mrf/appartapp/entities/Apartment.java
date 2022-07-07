@@ -16,7 +16,7 @@ import java.util.Map;
 @NamedQuery(name = "Apartment.getNewUsersWhoLikedMyApartments", query = "SELECT u FROM User u JOIN u.likedApartments a WHERE a IN :ownedApartmentList AND u.id NOT IN (SELECT lu.id FROM a.likedUsers lu) AND u.id NOT IN (SELECT iu.id FROM a.ignoredUsers iu)")
 */
 @NamedQuery(name = "Apartment.getNewUsers", query = "SELECT new com.polimi.mrf.appartapp.entities.UserApartmentContainer( TREAT (u AS User), TREAT (a AS Apartment )) FROM User u JOIN u.likedApartments a WHERE (a.id=:apartmentId AND u NOT IN (SELECT m.user FROM a.matches m) AND u NOT IN (SELECT iu FROM a.ignoredUsers iu))")
-@NamedQuery(name = "Apartment.getNewUsersWhoLikedMyApartments", query = "SELECT new com.polimi.mrf.appartapp.entities.UserApartmentContainer(u,a) FROM User u JOIN u.likedApartments a WHERE (a IN :ownedApartmentList AND u NOT IN (SELECT m.user FROM a.matches m) AND u NOT IN (SELECT iu FROM a.ignoredUsers iu))")
+@NamedQuery(name = "Apartment.getNewUsersWhoLikedMyApartments", query = "SELECT new com.polimi.mrf.appartapp.entities.UserApartmentContainer(u,a) FROM User u JOIN u.likedApartments a WHERE (u.bio is not null AND length(u.bio)>0 AND u.reason is not null AND length(u.reason)>0 and u.month is not null and u.job is not null and length(u.job)>0 and u.income is not null and length(u.income)>0 and u.smoker is not null and u.pets is not null and length(u.pets)>0 ) AND (a IN :ownedApartmentList AND u NOT IN (SELECT m.user FROM a.matches m) AND u NOT IN (SELECT iu FROM a.ignoredUsers iu))")
 
 @Entity
 public class Apartment {

@@ -13,7 +13,7 @@ import com.polimi.mrf.appartapp.entities.User;
 
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -29,7 +29,7 @@ public class EditUser {
 
     @POST
     @Produces("application/json")
-    public Response EditUser(@Context HttpServletRequest request) {
+    public Response edit(@Context HttpServletRequest request) {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String birthdayStr = request.getParameter("birthday");
@@ -59,28 +59,33 @@ public class EditUser {
             user.setGender(Gender.valueOf(genderStr));
 
         //tenants:
-        if (bioStr!=null && bioStr.trim().length()>0)
+        if (bioStr!=null) //&& bioStr.trim().length()>0)
             user.setBio(bioStr.trim());
 
-        if (reasonStr!=null && reasonStr.trim().length()>0)
+        if (reasonStr!=null) // && reasonStr.trim().length()>0)
             user.setReason(reasonStr.trim());
 
-        if (monthStr != null && monthStr.length()>0)
+        if (monthStr != null) //&& monthStr.length()>0)
             user.setMonth(Month.valueOf(monthStr.trim()));
 
-        if (jobStr!=null && jobStr.trim().length()>0)
+        if (jobStr!=null) //&& jobStr.trim().length()>0)
             user.setJob(jobStr.trim());
 
-        if (incomeStr!=null && incomeStr.trim().length()>0)
+        if (incomeStr!=null) //&& incomeStr.trim().length()>0)
             user.setIncome(incomeStr.trim());
 
-        if (smokerStr!=null && smokerStr.trim().length()>0)
+        if (smokerStr!=null) //&& smokerStr.trim().length()>0)
             user.setSmoker(TemporalQ.valueOf(smokerStr.trim()));
 
-        if (petsStr!=null && petsStr.trim().length()>0)
+        if (petsStr!=null) //&& petsStr.trim().length()>0)
             user.setPets(petsStr.trim());
 
         userServiceBean.updateUser(user);
+
+        HttpSession session=request.getSession();
+        if (session!=null)
+            session.setAttribute("loggeduser", user);
+
         UserAdapter userAdapter=new UserAdapter();
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
