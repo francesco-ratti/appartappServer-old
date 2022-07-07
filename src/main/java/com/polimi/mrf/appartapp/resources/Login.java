@@ -18,10 +18,9 @@ import com.polimi.mrf.appartapp.google.GoogleUserInfo;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.ejb.EJB;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -38,8 +37,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Path("/login")
-public class Login {
+@WebServlet(name = "Login", value = "/api/login")
+public class Login extends HttpServlet {
 
     private static final int COOKIE_TIMEOUT=15768000; //6 months
 
@@ -77,9 +76,8 @@ public class Login {
         return response;
     }
 
-    @POST
-    @Produces("application/json")
-    public Response login(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
 
@@ -280,11 +278,8 @@ public class Login {
                             } else {
                                 //create new entity
                                 response = generateNewTokenAndAppendToResponse(response, userAuthServiceBean, user);
-
                             }
                         }
-
-
                     }
                 }
             }
@@ -301,15 +296,22 @@ public class Login {
                         .create();
                 String json = gson.toJson(user);
 
-                return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(json).build();
-            } else
-                return Response.status(Response.Status.UNAUTHORIZED).type(MediaType.TEXT_PLAIN).entity("UNAUTHORIZED").build();
+                response.setStatus(Response.Status.OK.getStatusCode());
+                response.setContentType(MediaType.APPLICATION_JSON);
+                response.getWriter().println(json);
+            } else {
+                response.setStatus(Response.Status.UNAUTHORIZED.getStatusCode());
+                response.setContentType(MediaType.TEXT_PLAIN);
+            }
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
-            return Response.status(Response.Status.UNAUTHORIZED).type(MediaType.TEXT_PLAIN).entity("UNAUTHORIZED").build();
+            response.setStatus(Response.Status.UNAUTHORIZED.getStatusCode());
+            response.setContentType(MediaType.TEXT_PLAIN);
         } catch (IOException e) {
             e.printStackTrace();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.TEXT_PLAIN).entity("INTERNAL_SERVER_ERROR").build();
+            response.setStatus(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+            response.setContentType(MediaType.TEXT_PLAIN);
         }
+
     }
 }
