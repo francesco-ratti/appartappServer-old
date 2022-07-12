@@ -26,6 +26,7 @@ public class Match {
     User user;
 
     @Expose
+    @Column(columnDefinition = "TIMESTAMP (3)")
     Date matchDate;
 
     @Id
