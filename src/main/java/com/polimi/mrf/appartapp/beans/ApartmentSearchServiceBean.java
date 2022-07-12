@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Stateful(name="ApartmentSearchServiceBean")
-//@StatefulTimeout(value = 5, unit = TimeUnit.MINUTES)
+@StatefulTimeout(value = 4, unit = TimeUnit.MINUTES)
 public class ApartmentSearchServiceBean {
     @PersistenceContext(unitName = "appartapp")
     private EntityManager em;

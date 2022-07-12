@@ -38,6 +38,10 @@ public class GetNextNewUser {
         }
 
         UserApartmentContainer nextuser= userSearchServiceBean.getNewApartmentNextResult();
+        if (nextuser==null) {
+            userSearchServiceBean.SearchNewUsers(user);
+            nextuser= userSearchServiceBean.getNewApartmentNextResult();
+        }
         session.setAttribute("usersearchservicebean", userSearchServiceBean);
 
         UserAdapter userAdapter=new UserAdapter();

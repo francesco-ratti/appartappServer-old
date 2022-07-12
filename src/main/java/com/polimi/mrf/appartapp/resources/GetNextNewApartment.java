@@ -36,6 +36,10 @@ public class GetNextNewApartment {
         }
 
         Apartment nextapartment= apartmentSearchServiceBean.getNewApartmentNextResult();
+        if (nextapartment==null) {
+            apartmentSearchServiceBean.SearchNewApartments(user);
+            nextapartment= apartmentSearchServiceBean.getNewApartmentNextResult();
+        }
         session.setAttribute("apartmentsearchservicebean", apartmentSearchServiceBean);
 
         UserAdapter userAdapter=new UserAdapter();
