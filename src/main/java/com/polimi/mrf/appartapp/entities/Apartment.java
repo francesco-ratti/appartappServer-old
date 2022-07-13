@@ -32,7 +32,7 @@ public class Apartment {
     }
 
     @Expose
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private User owner;
 
     @Expose
@@ -136,7 +136,7 @@ public class Apartment {
 
     public void setOwner(User owner) {
         this.owner = owner;
-        owner.addOwnedApartment(this);
+        this.owner.addOwnedApartment(this);
     }
 
     @Override

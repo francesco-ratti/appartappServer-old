@@ -31,6 +31,7 @@ public class GetOwnedApartments {
         User user= (User) request.getAttribute("user");
 
         List<Apartment> ownedApartments=user.getOwnedApartments();
+        //List<Apartment> ownedApartments=userServiceBean.getOwnedApartments(user);
 
         UserAdapter userAdapter=new UserAdapter();
         Gson gson = new GsonBuilder()

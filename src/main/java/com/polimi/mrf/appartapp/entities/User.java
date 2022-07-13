@@ -13,6 +13,8 @@ import java.util.*;
 )
 @NamedQuery(name = "User.findMatchedApartments", query = "SELECT m FROM Match m JOIN m.apartment a WHERE m.user=:user ORDER BY m.matchDate DESC")//JOIN a.matches m WHERE m.user=:user ORDER BY m.matchDate DESC")
 
+@NamedQuery(name = "User.getOwnedApartments", query="SELECT a FROM User u JOIN u.ownedApartments a WHERE u=:user")
+
 //@NamedQuery(name = "User.findMatchedApartments", query = "SELECT a FROM Apartment a JOIN a.likedUsers luMap WHERE KEY(luMap).id=:userId AND a.id IN (SELECT l.id FROM User u JOIN u.likedApartments l WHERE u.id=KEY(luMap).id) ORDER BY VALUE(luMap) DESC")  //in parenthesis "useless"
 
 //@NamedQuery(name = "User.findMatchedApartmentsFromDate", query = "SELECT a FROM Apartment a JOIN a.likedUsers luMap WHERE KEY(luMap).id=:userId AND VALUE(luMap)>=:date AND a.id IN (SELECT l.id FROM User u JOIN u.likedApartments l WHERE u.id=KEY(luMap).id) ORDER BY VALUE(luMap) DESC")  //in parenthesis "useless"
@@ -56,7 +58,7 @@ public class User {
             inverseJoinColumns=@JoinColumn(name="apartment_id"))
     private List<Apartment> likedApartments;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Apartment> ownedApartments;
 
     @Expose

@@ -35,6 +35,10 @@ public class UserServiceBean {
             return null;
     }
 
+    public List<Apartment> getOwnedApartments(User user) {
+        return em.createNamedQuery("User.getOwnedApartments", Apartment.class).setParameter("user", user).getResultList();
+    }
+
     public User createGoogleUser(String googleId, String email, String name, String surname, Date birthday, Gender gender) {
         GoogleUser u=new GoogleUser();
         u.setGoogleId(googleId);
