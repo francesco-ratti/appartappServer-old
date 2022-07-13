@@ -100,6 +100,7 @@ public class ApartmentServiceBean {
         apartment.setOwner(user);
         apartment=appendImages(apartment, images);
         em.persist(apartment);
+        em.merge(user);
         return apartment;
     }
 

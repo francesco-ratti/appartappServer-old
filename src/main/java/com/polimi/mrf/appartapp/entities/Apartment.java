@@ -32,7 +32,7 @@ public class Apartment {
     }
 
     @Expose
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     private User owner;
 
     @Expose
