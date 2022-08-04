@@ -31,9 +31,9 @@ public class UserManager extends HttpFilter {
         HttpSession session = req.getSession();
         User user = null;
 
-        if (session != null && session.getAttribute("loggeduser") != null) {
+        /*if (session != null && session.getAttribute("loggeduser") != null) {
             user = (User) session.getAttribute("loggeduser");
-        } else {
+        } else {*/
             Cookie[] cookies = req.getCookies();
 
             if (cookies != null) {
@@ -89,7 +89,7 @@ public class UserManager extends HttpFilter {
                     }
                 }
             }
-        }
+        //}
         if (user == null) {
             res.setStatus(Response.Status.UNAUTHORIZED.getStatusCode());
             return;

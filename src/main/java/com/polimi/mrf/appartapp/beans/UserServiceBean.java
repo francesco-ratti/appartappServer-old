@@ -1,6 +1,6 @@
 package com.polimi.mrf.appartapp.beans;
 
-import com.polimi.mrf.appartapp.Gender;
+import com.polimi.mrf.appartapp.enums.Gender;
 import com.polimi.mrf.appartapp.entities.*;
 
 import javax.ejb.EJB;

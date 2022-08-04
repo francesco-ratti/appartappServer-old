@@ -1,9 +1,9 @@
 package com.polimi.mrf.appartapp.entities;
 
 import com.google.gson.annotations.Expose;
-import com.polimi.mrf.appartapp.Gender;
-import com.polimi.mrf.appartapp.Month;
-import com.polimi.mrf.appartapp.TemporalQ;
+import com.polimi.mrf.appartapp.enums.Gender;
+import com.polimi.mrf.appartapp.enums.Month;
+import com.polimi.mrf.appartapp.enums.TemporalQ;
 
 import javax.persistence.*;
 import java.util.*;

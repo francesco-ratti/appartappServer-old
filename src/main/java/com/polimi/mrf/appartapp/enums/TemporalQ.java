@@ -1,4 +1,4 @@
-package com.polimi.mrf.appartapp;
+package com.polimi.mrf.appartapp.enums;
 
 public enum TemporalQ {
     Yes,

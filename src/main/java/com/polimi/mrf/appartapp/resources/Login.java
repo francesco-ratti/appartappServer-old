@@ -1,11 +1,10 @@
 package com.polimi.mrf.appartapp.resources;
 
-import com.google.api.services.people.v1.model.Birthday;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.polimi.mrf.appartapp.Gender;
+import com.polimi.mrf.appartapp.enums.Gender;
 import com.polimi.mrf.appartapp.HashGenerator;
-import com.polimi.mrf.appartapp.ImgFromUrlToInputStream;
+import com.polimi.mrf.appartapp.imageutils.ImgFromUrlToInputStream;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserAuthServiceBean;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
@@ -21,10 +20,6 @@ import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;

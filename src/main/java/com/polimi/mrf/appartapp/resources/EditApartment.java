@@ -2,10 +2,8 @@ package com.polimi.mrf.appartapp.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.polimi.mrf.appartapp.Gender;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.ApartmentServiceBean;
-import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.Apartment;
 import com.polimi.mrf.appartapp.entities.CredentialsUser;
 import com.polimi.mrf.appartapp.entities.GoogleUser;
@@ -19,7 +17,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Date;
 
 @Path("/reserved/editapartment")
 public class EditApartment {

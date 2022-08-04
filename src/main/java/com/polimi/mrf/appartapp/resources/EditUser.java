@@ -2,9 +2,9 @@ package com.polimi.mrf.appartapp.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.polimi.mrf.appartapp.Gender;
-import com.polimi.mrf.appartapp.Month;
-import com.polimi.mrf.appartapp.TemporalQ;
+import com.polimi.mrf.appartapp.enums.Gender;
+import com.polimi.mrf.appartapp.enums.Month;
+import com.polimi.mrf.appartapp.enums.TemporalQ;
 import com.polimi.mrf.appartapp.UserAdapter;
 import com.polimi.mrf.appartapp.beans.UserServiceBean;
 import com.polimi.mrf.appartapp.entities.CredentialsUser;
