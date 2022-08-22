@@ -82,9 +82,9 @@ public class EditUser {
 
         userServiceBean.updateUser(user);
 
-        HttpSession session=request.getSession();
-        if (session!=null)
-            session.setAttribute("loggeduser", user);
+        //HttpSession session=request.getSession();
+        //if (session!=null)
+        //    session.setAttribute("loggeduser", user);
 
         UserAdapter userAdapter=new UserAdapter();
         Gson gson = new GsonBuilder()

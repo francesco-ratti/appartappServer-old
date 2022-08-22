@@ -26,9 +26,9 @@ public class UserManager extends HttpFilter {
 
 
     @Override
-    public void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException, ServletException {
+    public void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
 
-        HttpSession session = req.getSession();
+        //HttpSession session = req.getSession();
         User user = null;
 
         /*if (session != null && session.getAttribute("loggeduser") != null) {
@@ -57,8 +57,8 @@ public class UserManager extends HttpFilter {
                         String hashedValidatorCookie = HashGenerator.generateSHA256(rawValidator);
 
                         if (hashedValidatorCookie.equals(hashedValidatorDatabase)) {
-                            session = req.getSession();
-                            session.setAttribute("loggeduser", token.getUser());
+                            //session = req.getSession();
+                            //session.setAttribute("loggeduser", token.getUser());
                             user = token.getUser();
 
                         /*

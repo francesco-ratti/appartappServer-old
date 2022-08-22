@@ -82,9 +82,10 @@ public class Login extends HttpServlet {
         User user = null;
 
         try {
-            if (session != null && session.getAttribute("loggeduser") != null) {
-                user = (User) session.getAttribute("loggeduser");
-            } else {
+            //if (session != null && session.getAttribute("loggeduser") != null) {
+            //    user = (User) session.getAttribute("loggeduser");
+            //}
+            //else {
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
                 String idToken = request.getParameter("idtoken");
@@ -173,7 +174,6 @@ public class Login extends HttpServlet {
                             com.google.api.services.people.v1.model.Date birthday=googleUserInfo.getBirthday().getDate();
                             Date myBirthday=new Date(0);
 
-                            String bstr=birthday.toString();
                             if (birthday.getDay()!=null)
                                 myBirthday.setDate(birthday.getDay());
                             if (birthday.getMonth()!=null)
@@ -282,11 +282,11 @@ public class Login extends HttpServlet {
                             }
                         }
                     }
-                }
+//                }
             }
             if (user != null) {
-                session = request.getSession();
-                session.setAttribute("loggeduser", user);
+                //session = request.getSession();
+                //session.setAttribute("loggeduser", user);
 
                 UserAdapter userAdapter=new UserAdapter();
                 Gson gson = new GsonBuilder()
