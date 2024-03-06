@@ -1,19 +1,20 @@
-package com.polimi.mrf.appartapp.beans;
+package com.polimi.mrf.appart.beans;
 
-import com.polimi.mrf.appartapp.entities.GoogleUser;
-import com.polimi.mrf.appartapp.entities.User;
-import com.polimi.mrf.appartapp.entities.UserAuthToken;
+import com.polimi.mrf.appart.entities.GoogleUser;
+import com.polimi.mrf.appart.entities.User;
+import com.polimi.mrf.appart.entities.UserAuthToken;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
 @Stateless(name="UserAuthServiceBean")
 public class UserAuthServiceBean {
 
-    @PersistenceContext(unitName = "appartapp")
+    @PersistenceContext(unitName = "appart")
     private EntityManager em;
 
     public GoogleUser findGoogleUserByGoogleId(String googleId) {

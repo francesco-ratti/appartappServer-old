@@ -1,12 +1,13 @@
-package com.polimi.mrf.appartapp.beans;
+package com.polimi.mrf.appart.beans;
 
-import com.polimi.mrf.appartapp.enums.Gender;
-import com.polimi.mrf.appartapp.entities.*;
+import com.polimi.mrf.appart.enums.Gender;
+import com.polimi.mrf.appart.entities.*;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
+import org.apache.commons.io.IOUtils;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -19,10 +20,10 @@ import java.util.List;
 public class UserServiceBean {
     public static final String userImagesFolderPath = System.getProperty("user.home")+"\\uploadedImages\\users\\";
 
-    @EJB(name = "com.polimi.mrf.appartapp.beans/ImgIdServiceBean")
-    ImgIdServiceBean imgIdServiceBean;
+    @EJB(name = "com.polimi.mrf.appart.beans/ImgServiceBean")
+    ImgServiceBean ImgServiceBean;
 
-    @PersistenceContext(unitName = "appartapp")
+    @PersistenceContext(unitName = "appart")
     private EntityManager em;
     public UserServiceBean() {
     }
@@ -76,12 +77,13 @@ public class UserServiceBean {
 
     private User appendImages(User user, List<InputStream> images) throws IOException {
         for (InputStream image: images) {
-            long currId=imgIdServiceBean.getNewUserImageId();
+//            long currId=ImgServiceBean.getNewUserImageId();
 
-            Path path=Path.of(userImagesFolderPath + currId+".jpg");
-            Files.copy(image, path, StandardCopyOption.REPLACE_EXISTING);
+//            Path path=Path.of(userImagesFolderPath + currId+".jpg");
+//            Files.copy(image, path, StandardCopyOption.REPLACE_EXISTING);
             UserImage userImage=new UserImage();
-            userImage.setId(currId);
+            userImage.setImageBytes(IOUtils.toByteArray(image));
+//            userImage.setId(currId);
 
             user.addImage(userImage);
         }

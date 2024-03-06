@@ -1,26 +1,27 @@
-package com.polimi.mrf.appartapp.resources;
+package com.polimi.mrf.appart.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.polimi.mrf.appartapp.UserAdapter;
-import com.polimi.mrf.appartapp.beans.ApartmentSearchServiceBean;
-import com.polimi.mrf.appartapp.entities.Apartment;
-import com.polimi.mrf.appartapp.entities.CredentialsUser;
-import com.polimi.mrf.appartapp.entities.GoogleUser;
-import com.polimi.mrf.appartapp.entities.User;
+import com.polimi.mrf.appart.UserAdapter;
+import com.polimi.mrf.appart.beans.ApartmentSearchServiceBean;
+import com.polimi.mrf.appart.entities.Apartment;
+import com.polimi.mrf.appart.entities.CredentialsUser;
+import com.polimi.mrf.appart.entities.GoogleUser;
+import com.polimi.mrf.appart.entities.User;
 
-import javax.ejb.EJB;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+
+import jakarta.ejb.EJB;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/reserved/getnextnewapartment")
 public class GetNextNewApartment {
-    @EJB(name = "com.polimi.mrf.appartapp.beans/ApartmentSearchServiceBean")
+    @EJB(name = "com.polimi.mrf.appart.beans/ApartmentSearchServiceBean")
     ApartmentSearchServiceBean apartmentSearchServiceBean;
 
     @POST

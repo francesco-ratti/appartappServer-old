@@ -1,12 +1,13 @@
-package com.polimi.mrf.appartapp.beans;
+package com.polimi.mrf.appart.beans;
 
-import com.polimi.mrf.appartapp.entities.User;
-import com.polimi.mrf.appartapp.entities.UserApartmentContainer;
+import com.polimi.mrf.appart.entities.User;
+import com.polimi.mrf.appart.entities.UserApartmentContainer;
 
-import javax.ejb.Stateful;
-import javax.ejb.StatefulTimeout;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+
+import jakarta.ejb.Stateful;
+import jakarta.ejb.StatefulTimeout;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -14,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 @Stateful(name="UserSearchServiceBean")
 @StatefulTimeout(value = 4, unit = TimeUnit.MINUTES)
 public class UserSearchServiceBean {
-    @PersistenceContext(unitName = "appartapp")
+    @PersistenceContext(unitName = "appart")
     private EntityManager em;
 
     private List<UserApartmentContainer> userList=null;

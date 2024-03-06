@@ -1,4 +1,4 @@
-package com.polimi.mrf.appartapp.enums;
+package com.polimi.mrf.appart.enums;
 
 public enum Gender {
     M,

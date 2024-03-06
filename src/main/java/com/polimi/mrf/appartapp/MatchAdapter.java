@@ -1,7 +1,7 @@
-package com.polimi.mrf.appartapp;
+package com.polimi.mrf.appart;
 
 import com.google.gson.*;
-import com.polimi.mrf.appartapp.entities.*;
+import com.polimi.mrf.appart.entities.*;
 
 import java.lang.reflect.Type;
 import java.util.List;

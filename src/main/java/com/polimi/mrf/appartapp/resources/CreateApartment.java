@@ -1,21 +1,22 @@
-package com.polimi.mrf.appartapp.resources;
+package com.polimi.mrf.appart.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.polimi.mrf.appartapp.beans.ApartmentServiceBean;
-import com.polimi.mrf.appartapp.beans.UserServiceBean;
-import com.polimi.mrf.appartapp.entities.Apartment;
-import com.polimi.mrf.appartapp.entities.User;
+import com.polimi.mrf.appart.beans.ApartmentServiceBean;
+import com.polimi.mrf.appart.beans.UserServiceBean;
+import com.polimi.mrf.appart.entities.Apartment;
+import com.polimi.mrf.appart.entities.User;
 
-import javax.ejb.EJB;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import javax.ws.rs.core.Response;
+
+import jakarta.ejb.EJB;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import jakarta.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -26,11 +27,11 @@ import java.util.List;
 @WebServlet(name = "CreateApartment", value = "/api/reserved/createapartment")
 @MultipartConfig
 public class CreateApartment extends HttpServlet {
-    @EJB(name = "com.polimi.mrf.appartapp.beans/ApartmentServiceBean")
+    @EJB(name = "com.polimi.mrf.appart.beans/ApartmentServiceBean")
     ApartmentServiceBean apartmentServiceBean;
 
     /*
-    @EJB(name = "com.polimi.mrf.appartapp.beans/UserServiceBean")
+    @EJB(name = "com.polimi.mrf.appart.beans/UserServiceBean")
     UserServiceBean userServiceBean;
      */
     @Override

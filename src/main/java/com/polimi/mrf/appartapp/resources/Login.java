@@ -1,27 +1,29 @@
-package com.polimi.mrf.appartapp.resources;
+package com.polimi.mrf.appart.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.polimi.mrf.appartapp.enums.Gender;
-import com.polimi.mrf.appartapp.HashGenerator;
-import com.polimi.mrf.appartapp.imageutils.ImgFromUrlToInputStream;
-import com.polimi.mrf.appartapp.UserAdapter;
-import com.polimi.mrf.appartapp.beans.UserAuthServiceBean;
-import com.polimi.mrf.appartapp.beans.UserServiceBean;
-import com.polimi.mrf.appartapp.entities.CredentialsUser;
-import com.polimi.mrf.appartapp.entities.GoogleUser;
-import com.polimi.mrf.appartapp.entities.User;
-import com.polimi.mrf.appartapp.entities.UserAuthToken;
-import com.polimi.mrf.appartapp.google.GoogleTokenVerifier;
-import com.polimi.mrf.appartapp.google.GoogleUserInfo;
+import com.polimi.mrf.appart.enums.Gender;
+import com.polimi.mrf.appart.HashGenerator;
+import com.polimi.mrf.appart.imageutils.ImgFromUrlToInputStream;
+import com.polimi.mrf.appart.UserAdapter;
+import com.polimi.mrf.appart.beans.UserAuthServiceBean;
+import com.polimi.mrf.appart.beans.UserServiceBean;
+import com.polimi.mrf.appart.entities.CredentialsUser;
+import com.polimi.mrf.appart.entities.GoogleUser;
+import com.polimi.mrf.appart.entities.User;
+import com.polimi.mrf.appart.entities.UserAuthToken;
+import com.polimi.mrf.appart.google.GoogleTokenVerifier;
+import com.polimi.mrf.appart.google.GoogleUserInfo;
+import jakarta.ejb.EJB;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.apache.commons.lang3.RandomStringUtils;
 
-import javax.ejb.EJB;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -37,10 +39,10 @@ public class Login extends HttpServlet {
 
     private static final int COOKIE_TIMEOUT=15768000; //6 months
 
-    @EJB(name = "com.polimi.mrf.appartapp.beans/UserServiceBean")
+    @EJB(name = "com.polimi.mrf.appart.beans/UserServiceBean")
     UserServiceBean userServiceBean;
 
-    @EJB(name = "com.polimi.mrf.appartapp.beans/UserAuthServiceBean")
+    @EJB(name = "com.polimi.mrf.appart.beans/UserAuthServiceBean")
     UserAuthServiceBean userAuthServiceBean;
 
     public static HttpServletResponse generateNewTokenAndAppendToResponse(HttpServletResponse response, UserAuthServiceBean userAuthServiceBean, User user) throws UnsupportedEncodingException {

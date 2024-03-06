@@ -1,6 +1,6 @@
-package com.polimi.mrf.appartapp.entities;
+package com.polimi.mrf.appart.entities;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity

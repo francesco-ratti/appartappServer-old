@@ -9,8 +9,5 @@
         <module name="appartapp" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="appartapp" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>

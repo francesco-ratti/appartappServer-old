@@ -1,17 +1,19 @@
-package com.polimi.mrf.appartapp.beans;
+package com.polimi.mrf.appart.beans;
 
-import com.polimi.mrf.appartapp.entities.*;
+import com.polimi.mrf.appart.entities.Apartment;
+import com.polimi.mrf.appart.entities.ApartmentImage;
+import com.polimi.mrf.appart.entities.Match;
+import com.polimi.mrf.appart.entities.User;
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceException;
+import org.apache.commons.io.IOUtils;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
 
@@ -20,10 +22,10 @@ public class ApartmentServiceBean {
 
     public static final String apartmentImagesFolderPath = System.getProperty("user.home")+"\\uploadedImages\\apartments\\";
 
-    @EJB(name = "com.polimi.mrf.appartapp.beans/ImgIdServiceBean")
-    ImgIdServiceBean imgIdServiceBean;
+//    @EJB(name = "com.polimi.mrf.appart.beans/ImgServiceBean")
+//    ImgServiceBean ImgServiceBean;
 
-    @PersistenceContext(unitName = "appartapp")
+    @PersistenceContext(unitName = "appart")
     private EntityManager em;
 
     public void likeApartment(User user, Long apartmentId) {
@@ -78,12 +80,13 @@ public class ApartmentServiceBean {
 
     private Apartment appendImages(Apartment apartment, List<InputStream> images) throws IOException {
         for (InputStream image: images) {
-            long currId=imgIdServiceBean.getNewApartmentImageId();
-
-            Path path=Path.of(apartmentImagesFolderPath + currId+".jpg");
-            Files.copy(image, path, StandardCopyOption.REPLACE_EXISTING);
+//            long currId=ImgServiceBean.getNewApartmentImageId();
+//
+//            Path path=Path.of(apartmentImagesFolderPath + currId+".jpg");
+//            Files.copy(image, path, StandardCopyOption.REPLACE_EXISTING);
             ApartmentImage apartmentImage=new ApartmentImage();
-            apartmentImage.setId(currId);
+            apartmentImage.setImageBytes(IOUtils.toByteArray(image));
+//            apartmentImage.setId(currId);
 
             apartment.addImage(apartmentImage);
         }
@@ -98,7 +101,6 @@ public class ApartmentServiceBean {
         apartment.setAddress(address);
         apartment.setAdditionalExpenseDetail(additionalExpenseDetail);
         apartment.setOwner(user);
-        apartment=appendImages(apartment, images);
         em.persist(apartment);
         em.merge(user);
         return apartment;

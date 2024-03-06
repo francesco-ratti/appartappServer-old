@@ -1,6 +1,6 @@
-package com.polimi.mrf.appartapp.entities;
+package com.polimi.mrf.appart.entities;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @NamedQuery(name="GoogleUser.findByGoogleId",
         query="SELECT g FROM GoogleUser g WHERE g.googleId=:googleId"

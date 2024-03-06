@@ -1,8 +1,8 @@
-package com.polimi.mrf.appartapp.entities;
+package com.polimi.mrf.appart.entities;
 
 import com.google.gson.annotations.Expose;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity

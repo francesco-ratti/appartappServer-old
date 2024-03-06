@@ -1,4 +1,4 @@
-package com.polimi.mrf.appartapp.google;
+package com.polimi.mrf.appart.google;
 
 import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
@@ -24,10 +24,10 @@ import java.util.List;
 
 public class GoogleTokenVerifier {
 
-    private static final String FIREBASE_PROJECT_ID="appartapp-5f260";
-    private static final String APPLICATION_NAME = "appartapp";
+    private static final String FIREBASE_PROJECT_ID="appart-5f260";
+    private static final String APPLICATION_NAME = "appart";
     private static final String PUBLIC_KEY_URL="https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com";
-    private static final String ISSUER="https://securetoken.google.com/appartapp-5f260";
+    private static final String ISSUER="https://securetoken.google.com/appart-5f260";
 
     public static GoogleUserInfo verifyToken(String idTokenString, String accessTokenString) throws GeneralSecurityException, IOException {
 

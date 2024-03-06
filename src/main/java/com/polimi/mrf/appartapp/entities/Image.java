@@ -1,14 +1,15 @@
-package com.polimi.mrf.appartapp.entities;
+package com.polimi.mrf.appart.entities;
 
 import com.google.gson.annotations.Expose;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @MappedSuperclass
 public abstract class Image {
     @Expose
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     //@Column(nullable = true)
     //public String description;
@@ -19,6 +20,18 @@ public abstract class Image {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] imageBytes;
+
+    public void setImageBytes(byte[] imageBytes) {
+        this.imageBytes = imageBytes;
+    }
+
+    public byte[] getImageBytes() {
+        return imageBytes;
     }
 
     @Override

@@ -1,25 +1,29 @@
-package com.polimi.mrf.appartapp.filters;
+package com.polimi.mrf.appart.filters;
 
-import com.polimi.mrf.appartapp.HashGenerator;
-import com.polimi.mrf.appartapp.beans.UserAuthServiceBean;
-import com.polimi.mrf.appartapp.beans.UserServiceBean;
-import com.polimi.mrf.appartapp.entities.User;
-import com.polimi.mrf.appartapp.entities.UserAuthToken;
+import com.polimi.mrf.appart.HashGenerator;
+import com.polimi.mrf.appart.beans.UserAuthServiceBean;
+import com.polimi.mrf.appart.beans.UserServiceBean;
+import com.polimi.mrf.appart.entities.User;
+import com.polimi.mrf.appart.entities.UserAuthToken;
+import jakarta.ejb.EJB;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.RandomStringUtils;
 
-import javax.ejb.EJB;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.*;
-import javax.ws.rs.core.Response;
+
+import jakarta.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.Date;
 
 @WebFilter(filterName="UserManagerFilter", urlPatterns="/api/reserved/*")
 public class UserManager extends HttpFilter {
 
-    @EJB(name = "com.polimi.mrf.appartapp.beans/userAuthServiceBean")
+    @EJB(name = "com.polimi.mrf.appart.beans/userAuthServiceBean")
     UserAuthServiceBean userAuthServiceBean;
 
     //private static final int COOKIE_TIMEOUT=15768000; //6 months

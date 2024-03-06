@@ -1,4 +1,4 @@
-package com.polimi.mrf.appartapp.google;
+package com.polimi.mrf.appart.google;
 
 import com.google.api.services.people.v1.model.Birthday;
 import com.google.api.services.people.v1.model.Gender;

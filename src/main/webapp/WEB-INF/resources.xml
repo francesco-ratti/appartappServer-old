@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <Resource id="appartapp" type="DataSource">
-        JdbcDriver com.mysql.cj.jdbc.Driver
-        JdbcUrl jdbc:mysql://localhost:3306/appartapp?autoReconnect=true
+    <Resource id="appart" type="DataSource">
+        JdbcDriver org.mariadb.jdbc.Driver
+        JdbcUrl jdbc:mariadb://q5t2kq.stackhero-network.com/appart
         PoolMinSize=0
         validationInterval=1800000
         testOnBorrow=true
         validationQuery=SELECT 1
         maxConnLifetimeMillis=27000000
-        UserName appuser
-        Password NotLocalhost
+        UserName root
+        Password Bk5uxltnTIFqg04lJgCj38UFVDUEH83O
     </Resource>
 </resources>

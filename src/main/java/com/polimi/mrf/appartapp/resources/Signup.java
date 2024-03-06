@@ -1,33 +1,34 @@
-package com.polimi.mrf.appartapp.resources;
+package com.polimi.mrf.appart.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.polimi.mrf.appartapp.beans.UserAuthServiceBean;
-import com.polimi.mrf.appartapp.enums.Gender;
-import com.polimi.mrf.appartapp.UserAdapter;
-import com.polimi.mrf.appartapp.beans.UserServiceBean;
-import com.polimi.mrf.appartapp.entities.CredentialsUser;
-import com.polimi.mrf.appartapp.entities.GoogleUser;
-import com.polimi.mrf.appartapp.entities.User;
+import com.polimi.mrf.appart.beans.UserAuthServiceBean;
+import com.polimi.mrf.appart.enums.Gender;
+import com.polimi.mrf.appart.UserAdapter;
+import com.polimi.mrf.appart.beans.UserServiceBean;
+import com.polimi.mrf.appart.entities.CredentialsUser;
+import com.polimi.mrf.appart.entities.GoogleUser;
+import com.polimi.mrf.appart.entities.User;
+import jakarta.ejb.EJB;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
-import javax.ejb.EJB;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+
 import java.io.IOException;
 import java.util.Date;
 
-import static com.polimi.mrf.appartapp.resources.Login.generateNewTokenAndAppendToResponse;
+import static com.polimi.mrf.appart.resources.Login.generateNewTokenAndAppendToResponse;
 
 @WebServlet(name = "Signup", value = "/api/signup")
 public class Signup extends HttpServlet {
-    @EJB(name = "com.polimi.mrf.appartapp.beans/UserServiceBean")
+    @EJB(name = "com.polimi.mrf.appart.beans/UserServiceBean")
     UserServiceBean userServiceBean;
 
-    @EJB(name = "com.polimi.mrf.appartapp.beans/UserAuthServiceBean")
+    @EJB(name = "com.polimi.mrf.appart.beans/UserAuthServiceBean")
     UserAuthServiceBean userAuthServiceBean;
 
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException {

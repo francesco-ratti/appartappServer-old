@@ -1,4 +1,4 @@
-package com.polimi.mrf.appartapp.imageutils;
+package com.polimi.mrf.appart.imageutils;
 
 import java.awt.image.BufferedImage;
 

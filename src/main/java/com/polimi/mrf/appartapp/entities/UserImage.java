@@ -1,8 +1,8 @@
-package com.polimi.mrf.appartapp.entities;
+package com.polimi.mrf.appart.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQuery;
 
 @NamedQuery(name="UserImage.findMaxId",
         query="SELECT MAX(ui.id) FROM UserImage ui"

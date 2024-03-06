@@ -1,4 +1,4 @@
-package com.polimi.mrf.appartapp;
+package com.polimi.mrf.appart;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

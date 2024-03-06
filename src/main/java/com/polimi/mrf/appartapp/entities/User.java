@@ -1,11 +1,11 @@
-package com.polimi.mrf.appartapp.entities;
+package com.polimi.mrf.appart.entities;
 
 import com.google.gson.annotations.Expose;
-import com.polimi.mrf.appartapp.enums.Gender;
-import com.polimi.mrf.appartapp.enums.Month;
-import com.polimi.mrf.appartapp.enums.TemporalQ;
+import com.polimi.mrf.appart.enums.Gender;
+import com.polimi.mrf.appart.enums.Month;
+import com.polimi.mrf.appart.enums.TemporalQ;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.*;
 
 @NamedQuery(name="User.findByEmail",

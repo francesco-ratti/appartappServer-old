@@ -1,26 +1,27 @@
-package com.polimi.mrf.appartapp.resources;
+package com.polimi.mrf.appart.resources;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.polimi.mrf.appartapp.UserAdapter;
-import com.polimi.mrf.appartapp.beans.ApartmentServiceBean;
-import com.polimi.mrf.appartapp.entities.Apartment;
-import com.polimi.mrf.appartapp.entities.CredentialsUser;
-import com.polimi.mrf.appartapp.entities.GoogleUser;
-import com.polimi.mrf.appartapp.entities.User;
+import com.polimi.mrf.appart.UserAdapter;
+import com.polimi.mrf.appart.beans.ApartmentServiceBean;
+import com.polimi.mrf.appart.entities.Apartment;
+import com.polimi.mrf.appart.entities.CredentialsUser;
+import com.polimi.mrf.appart.entities.GoogleUser;
+import com.polimi.mrf.appart.entities.User;
 
-import javax.ejb.EJB;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+
+import jakarta.ejb.EJB;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/reserved/editapartment")
 public class EditApartment {
-    @EJB(name = "com.polimi.mrf.appartapp.beans/ApartmentServiceBean")
+    @EJB(name = "com.polimi.mrf.appart.beans/ApartmentServiceBean")
     ApartmentServiceBean apartmentServiceBean;
 
     @POST

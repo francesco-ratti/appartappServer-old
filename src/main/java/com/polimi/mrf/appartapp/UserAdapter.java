@@ -1,14 +1,8 @@
-package com.polimi.mrf.appartapp;
+package com.polimi.mrf.appart;
 
 import com.google.gson.*;
+import com.polimi.mrf.appart.entities.User;
 
-import java.util.List;
-
-import com.google.gson.annotations.Expose;
-import com.polimi.mrf.appartapp.entities.User;
-import com.polimi.mrf.appartapp.entities.UserImage;
-
-import javax.persistence.Column;
 import java.lang.reflect.Type;
 
 public class UserAdapter implements JsonSerializer<User> {
