@@ -93,9 +93,9 @@ public class User {
     @Column(nullable = true)
     String pets;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<UserAuthToken> userAuthTokens = new HashSet<>(0);
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     public Set<UserAuthToken> getUserAuthTokens() {
         return userAuthTokens;
     }
