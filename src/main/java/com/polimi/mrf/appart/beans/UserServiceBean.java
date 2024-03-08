@@ -72,7 +72,7 @@ public class UserServiceBean {
     }
     public boolean UserExists(String email) {
         List<User> users=em.createNamedQuery("User.findByEmail", User.class).setParameter("email", email).getResultList();
-        return (users!=null && users.size()>0);
+        return (users!=null && !users.isEmpty());
     }
 
     private User appendImages(User user, List<InputStream> images) throws IOException {
