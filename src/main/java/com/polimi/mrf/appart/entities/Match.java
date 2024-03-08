@@ -19,15 +19,15 @@ public class Match {
     @Expose
     @ManyToOne()
     @JoinColumn(name = "apartment_id")
-    Apartment apartment;
+    private Apartment apartment;
 
     @ManyToOne()
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 
     @Expose
     @Column(columnDefinition = "TIMESTAMP (3)")
-    Date matchDate;
+    private Date matchDate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
