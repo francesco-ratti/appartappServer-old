@@ -151,7 +151,7 @@
                 <version>9.1.2</version>
                 <configuration>
                     <tomeeVersion>9.1.2</tomeeVersion>
-                    <tomeeClassifier>plume</tomeeClassifier>
+                    <tomeeClassifier>microprofile</tomeeClassifier>
                 </configuration>
             </plugin>
             <plugin>
