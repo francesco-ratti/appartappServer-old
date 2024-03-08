@@ -2,8 +2,11 @@
 <resources>
     <Resource id="appart" type="DataSource">
         JdbcDriver org.mariadb.jdbc.Driver
-        JdbcUrl jdbc:mariadb://q5t2kq.stackhero-network.com/appart
+        JdbcUrl jdbc:mariadb://q5t2kq.stackhero-network.com/appart?reconnect=true
+        maxPoolSize=2
+        minPoolSize=0m
         PoolMinSize=0
+        PoolMaxSize=2
         validationInterval=1800000
         testOnBorrow=true
         validationQuery=SELECT 1
