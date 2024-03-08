@@ -67,31 +67,31 @@ public class User {
 
     @Expose
     @Column(nullable = true)
-    String bio;
+    private String bio;
 
     @Expose
     @Column(nullable = true)
-    String reason;
+    private String reason;
 
     @Expose
     @Column(nullable = true)
-    Month month;
+    private Month month;
 
     @Expose
     @Column(nullable = true)
-    String job;
+    private String job;
 
     @Expose
     @Column(nullable = true)
-    String income;
+    private String income;
 
     @Expose
     @Column(nullable = true)
-    TemporalQ smoker;
+    private TemporalQ smoker;
 
     @Expose
     @Column(nullable = true)
-    String pets;
+    private String pets;
 
     private Set<UserAuthToken> userAuthTokens = new HashSet<>(0);
 
