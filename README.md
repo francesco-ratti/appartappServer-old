@@ -1,6 +1,6 @@
 # Getting Started
 
-Welcome to our server Git project! Below are the steps to get started quickly.
+Welcome to Appart Server! Below are the steps to get started quickly.
 
 ## Prerequisites
 Make sure you have the following installed:
