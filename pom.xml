@@ -95,6 +95,18 @@
       </dependency>
 
 
+      <dependency>
+          <groupId>org.apache.tomee</groupId>
+          <artifactId>tomee-embedded</artifactId>
+          <version>9.1.2</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.6.1</version>
+      </dependency>
+
+
 
 
 
@@ -107,6 +119,32 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.3.2</version>
-      </plugin>    </plugins>
+      </plugin>
+
+
+        <plugin>
+            <groupId>org.apache.tomee.maven</groupId>
+            <artifactId>tomee-maven-plugin</artifactId>
+            <version>9.1.2</version>
+            <configuration>
+                <tomeeVersion>9.1.2</tomeeVersion>
+                <tomeeClassifier>microprofile</tomeeClassifier>
+            </configuration>
+        </plugin>
+
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>3.6.1</version>
+            <executions>
+                <execution>
+                    <id>copy-dependencies</id>
+                    <phase>package</phase>
+                    <goals><goal>copy-dependencies</goal></goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
   </build>
 </project>
