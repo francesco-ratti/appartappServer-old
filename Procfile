@@ -1,1 +1,1 @@
-web:    java -cp target/classes:target/dependency/* org.apache.tomee.embedded.Main --port=$PORT --as-war
+web:    java -cp target/classes:target/dependency/* org.apache.tomee.embedded.Main -Dappart=new://Resource?type=javax.sql.DataSource -Dappart.jdbcDriver=org.mariadb.jdbc.Driver -Dappart.jdbcUrl=jdbc:mariadb://q5t2kq.stackhero-network.com/appart?reconnect=true -Dappart.UserName=root -Dappart.password=Bk5uxltnTIFqg04lJgCj38UFVDUEH83O --port=$PORT --as-war
