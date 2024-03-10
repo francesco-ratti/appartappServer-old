@@ -46,21 +46,12 @@ public class Login extends HttpServlet {
     UserAuthServiceBean userAuthServiceBean;
 
     public static HttpServletResponse generateNewTokenAndAppendToResponse(HttpServletResponse response, UserAuthServiceBean userAuthServiceBean, User user) throws UnsupportedEncodingException {
-        UserAuthToken newToken = new UserAuthToken();
 
         String selector = RandomStringUtils.randomAlphanumeric(12);
         String rawValidator =  RandomStringUtils.randomAlphanumeric(64);
+        String hashedValidator = HashGenerator.generateSHA256(rawValidator);
 
-        String hashedValidator = null;
-
-        hashedValidator = HashGenerator.generateSHA256(rawValidator);
-        newToken.setSelector(selector);
-        newToken.setValidator(hashedValidator);
-        newToken.setLastUse(new Date());
-
-        newToken.setUser(user);
-
-        userAuthServiceBean.create(newToken);
+        userAuthServiceBean.create(selector, hashedValidator, user);
 
         Cookie cookieSelector = new Cookie("selector", selector);
         cookieSelector.setMaxAge(COOKIE_TIMEOUT);

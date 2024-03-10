@@ -9,6 +9,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Stateless(name="UserAuthServiceBean")
@@ -32,8 +33,15 @@ public class UserAuthServiceBean {
         return null;
     }
 
-    public void create(UserAuthToken newToken) {
+    public UserAuthToken create(String selector, String hashedValidator, User user) {
+        UserAuthToken newToken = new UserAuthToken();
+        newToken.setSelector(selector);
+        newToken.setValidator(hashedValidator);
+        newToken.setLastUse(new Date());
+        newToken.setUser(user);
+
         em.persist(newToken);
+        return newToken;
     }
 
     public void update(UserAuthToken newToken) {
