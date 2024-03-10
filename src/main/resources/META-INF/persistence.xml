@@ -5,6 +5,7 @@
              version="3.0">
   <persistence-unit name="appart" transaction-type="JTA">
     <jta-data-source>java:openejb/Resource/appart</jta-data-source>
+    <non-jta-data-source>java:openejb/Resource/appart</non-jta-data-source>
     <properties>
       <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
       <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>

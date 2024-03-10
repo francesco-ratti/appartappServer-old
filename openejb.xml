@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openejb>
+    <Resource id="appart" type="javax.sql.DataSource.class">
+        JdbcDriver org.mariadb.jdbc.Driver
+        JdbcUrl jdbc:mariadb://q5t2kq.stackhero-network.com/appart?reconnect=true
+        maxPoolSize=2
+        minPoolSize=0m
+        PoolMinSize=0
+        PoolMaxSize=2
+        validationInterval=1800000
+        testOnBorrow=true
+        validationQuery=SELECT 1
+        maxConnLifetimeMillis=27000000
+        UserName root
+        Password Bk5uxltnTIFqg04lJgCj38UFVDUEH83O
+    </Resource>
+</openejb>
