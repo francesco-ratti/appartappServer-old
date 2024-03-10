@@ -8,6 +8,7 @@
     <non-jta-data-source>appart</non-jta-data-source>
     <properties>
       <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
+      <property name="openjpa.Compatibility=CheckDatabaseForCascadePersistToDetachedEntity" value="true"/>
     </properties>
   </persistence-unit>
 </persistence>
