@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <Resource id="appart" type="DataSource">
+    <Resource id="appart" type="javax.sql.DataSource.class">
         JdbcDriver org.mariadb.jdbc.Driver
         JdbcUrl jdbc:mariadb://q5t2kq.stackhero-network.com/appart?reconnect=true
         maxPoolSize=2
