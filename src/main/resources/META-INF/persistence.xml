@@ -7,7 +7,6 @@
     <jta-data-source>appart</jta-data-source>
     <non-jta-data-source>appart</non-jta-data-source>
     <properties>
-      <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
       <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
     </properties>
   </persistence-unit>
