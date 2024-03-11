@@ -62,7 +62,7 @@ public class User {
     private List<Apartment> ownedApartments;
 
     @Expose
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy="user", fetch = FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval = true)
     private List<UserImage> images =new ArrayList<>();
 
     @Expose

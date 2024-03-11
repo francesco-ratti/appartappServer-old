@@ -47,7 +47,7 @@ public class Apartment {
     private String additionalExpenseDetail;
 
     @Expose
-    @OneToMany(mappedBy="apartment", cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy="apartment", fetch = FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval = true)
     private List<ApartmentImage> images =new ArrayList<>();
     /*
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
