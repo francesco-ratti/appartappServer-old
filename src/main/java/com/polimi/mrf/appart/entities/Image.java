@@ -24,6 +24,7 @@ public abstract class Image {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
+    @Column(length = 16777215)
     private byte[] imageBytes;
 
     public void setImageBytes(byte[] imageBytes) {

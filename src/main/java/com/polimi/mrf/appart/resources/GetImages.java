@@ -54,10 +54,10 @@ public class GetImages {
         try {
             //for security reasons cast to long: ids can only be numeric, avoid path navigation security issue
             long id=Long.parseLong(idStr.trim());
-            Image img=imgServiceBean.getApartmentImageById(id);
+            byte[] img=imgServiceBean.getApartmentImageBytesById(id);
 
             Response.ResponseBuilder response = Response.ok((StreamingOutput) output -> {
-                output.write(img.getImageBytes());
+                output.write(img);
                 output.flush();
             });
 
@@ -81,12 +81,12 @@ public class GetImages {
             //for security reasons cast to long: ids can only be numeric, avoid path navigation security issue
             long id=Long.parseLong(idStr.trim());
 
-            Image img=imgServiceBean.getUserImageById(id);
+            byte[] img=imgServiceBean.getUserImageBytesById(id);
 
             Response.ResponseBuilder response = Response.ok(new StreamingOutput(){
                 @Override
                 public void write(OutputStream output) throws IOException, WebApplicationException {
-                    output.write(img.getImageBytes());
+                    output.write(img);
                     output.flush();
                 }
             });
