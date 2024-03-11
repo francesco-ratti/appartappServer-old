@@ -23,7 +23,7 @@ public abstract class Image {
     }
 
     @Lob
-    @Basic(fetch = FetchType.EAGER)
+    @Basic(fetch = FetchType.LAZY)
     private byte[] imageBytes;
 
     public void setImageBytes(byte[] imageBytes) {
