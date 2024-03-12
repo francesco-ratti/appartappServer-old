@@ -23,7 +23,7 @@ import java.util.Date;
 @WebFilter(filterName="UserManagerFilter", urlPatterns="/api/reserved/*")
 public class UserManager extends HttpFilter {
 
-    @EJB(name = "com.polimi.mrf.appart.beans/userAuthServiceBean")
+    @EJB
     UserAuthServiceBean userAuthServiceBean;
 
     //private static final int COOKIE_TIMEOUT=15768000; //6 months

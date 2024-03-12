@@ -22,7 +22,7 @@ import java.util.List;
 
 @Path("/reserved/getallnewusers")
 public class GetAllNewUsers {
-    @EJB(name = "com.polimi.mrf.appart.beans/UserSearchServiceBean")
+    @EJB
     UserSearchServiceBean userSearchServiceBean;
 
     @POST

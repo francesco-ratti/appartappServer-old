@@ -22,7 +22,7 @@ public class ApartmentServiceBean {
 
     public static final String apartmentImagesFolderPath = System.getProperty("user.home")+"\\uploadedImages\\apartments\\";
 
-//    @EJB(name = "com.polimi.mrf.appart.beans/ImgServiceBean")
+//    @EJB
 //    ImgServiceBean ImgServiceBean;
 
     @PersistenceContext(unitName = "appart")

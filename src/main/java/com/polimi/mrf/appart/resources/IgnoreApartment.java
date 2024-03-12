@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 
 @Path("/reserved/ignoreapartment")
 public class IgnoreApartment {
-    @EJB(name = "com.polimi.mrf.appart.beans/ApartmentServiceBean")
+    @EJB
     ApartmentServiceBean apartmentServiceBean;
 
     @POST

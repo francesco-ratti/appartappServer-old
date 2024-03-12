@@ -39,10 +39,10 @@ public class Login extends HttpServlet {
 
     private static final int COOKIE_TIMEOUT=15768000; //6 months
 
-    @EJB(name = "com.polimi.mrf.appart.beans/UserServiceBean")
+    @EJB
     UserServiceBean userServiceBean;
 
-    @EJB(name = "com.polimi.mrf.appart.beans/UserAuthServiceBean")
+    @EJB
     UserAuthServiceBean userAuthServiceBean;
 
     public static HttpServletResponse generateNewTokenAndAppendToResponse(HttpServletResponse response, UserAuthServiceBean userAuthServiceBean, User user) throws UnsupportedEncodingException {

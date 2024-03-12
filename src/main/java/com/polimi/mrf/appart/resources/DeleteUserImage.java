@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @Path("/reserved/deleteuserimage")
 public class DeleteUserImage {
-    @EJB(name = "com.polimi.mrf.appart.beans/UserServiceBean")
+    @EJB
     UserServiceBean userServiceBean;
 
     @POST

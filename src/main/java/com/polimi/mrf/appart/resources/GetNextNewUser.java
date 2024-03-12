@@ -23,7 +23,7 @@ import jakarta.ws.rs.core.Response;
 
 @Path("/reserved/getnextnewuser")
 public class GetNextNewUser {
-    @EJB(name = "com.polimi.mrf.appart.beans/UserSearchServiceBean")
+    @EJB
     UserSearchServiceBean userSearchServiceBean;
 
     @POST

@@ -25,10 +25,10 @@ import static com.polimi.mrf.appart.resources.Login.generateNewTokenAndAppendToR
 
 @WebServlet(name = "Signup", value = "/api/signup")
 public class Signup extends HttpServlet {
-    @EJB(name = "com.polimi.mrf.appart.beans/UserServiceBean")
+    @EJB
     UserServiceBean userServiceBean;
 
-    @EJB(name = "com.polimi.mrf.appart.beans/UserAuthServiceBean")
+    @EJB
     UserAuthServiceBean userAuthServiceBean;
 
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException {

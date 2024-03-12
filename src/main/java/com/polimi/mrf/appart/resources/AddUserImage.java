@@ -22,7 +22,7 @@ import java.util.List;
 @WebServlet(name = "AddUserImage", value = "/api/reserved/adduserimage")
 @MultipartConfig
 public class AddUserImage extends HttpServlet {
-    @EJB(name = "com.polimi.mrf.appart.beans/UserServiceBean")
+    @EJB
     UserServiceBean userServiceBean;
 
     @Override

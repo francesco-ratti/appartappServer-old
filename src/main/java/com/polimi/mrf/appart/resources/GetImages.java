@@ -16,7 +16,7 @@ import java.io.OutputStream;
 @Path("/")
 public class GetImages {
 
-    @EJB(name = "com.polimi.mrf.appart.beans/ImgServiceBean")
+    @EJB
     ImgServiceBean imgServiceBean;
 
 //    public Response buildResponse(String idStr, String folderPath) {

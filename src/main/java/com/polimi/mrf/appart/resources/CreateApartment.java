@@ -27,11 +27,11 @@ import java.util.List;
 @WebServlet(name = "CreateApartment", value = "/api/reserved/createapartment")
 @MultipartConfig
 public class CreateApartment extends HttpServlet {
-    @EJB(name = "com.polimi.mrf.appart.beans/ApartmentServiceBean")
+    @EJB
     ApartmentServiceBean apartmentServiceBean;
 
     /*
-    @EJB(name = "com.polimi.mrf.appart.beans/UserServiceBean")
+    @EJB
     UserServiceBean userServiceBean;
      */
     @Override

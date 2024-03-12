@@ -16,7 +16,7 @@ import jakarta.ws.rs.core.Response;
 
 @Path("/reserved/likeuser")
 public class LikeUser {
-    @EJB(name = "com.polimi.mrf.appart.beans/ApartmentServiceBean")
+    @EJB
     ApartmentServiceBean apartmentServiceBean;
 
     @POST

@@ -21,7 +21,7 @@ import jakarta.ws.rs.core.Response;
 
 @Path("/reserved/getnextnewapartment")
 public class GetNextNewApartment {
-    @EJB(name = "com.polimi.mrf.appart.beans/ApartmentSearchServiceBean")
+    @EJB
     ApartmentSearchServiceBean apartmentSearchServiceBean;
 
     @POST

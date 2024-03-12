@@ -22,7 +22,7 @@ import java.util.List;
 @WebServlet(name = "AddApartmentImage", value = "/api/reserved/addapartmentimage")
 @MultipartConfig
 public class AddApartmentImage extends HttpServlet {
-    @EJB(name = "com.polimi.mrf.appart.beans/ApartmentServiceBean")
+    @EJB
     ApartmentServiceBean apartmentServiceBean;
 
     @Override

@@ -23,7 +23,7 @@ import java.util.Date;
 
 @Path("/reserved/edituser")
 public class EditUser {
-    @EJB(name = "com.polimi.mrf.appart.beans/UserServiceBean")
+    @EJB
     UserServiceBean userServiceBean;
 
     @POST

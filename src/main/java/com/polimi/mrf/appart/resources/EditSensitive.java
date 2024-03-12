@@ -20,7 +20,7 @@ import jakarta.ws.rs.core.Response;
 
 @Path("/reserved/editsensitive")
 public class EditSensitive {
-    @EJB(name = "com.polimi.mrf.appart.beans/UserServiceBean")
+    @EJB
     UserServiceBean userServiceBean;
 
     @POST

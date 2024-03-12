@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @Path("/reserved/deleteapartmentimage")
 public class DeleteApartmentImage {
-    @EJB(name = "com.polimi.mrf.appart.beans/ApartmentServiceBean")
+    @EJB
     ApartmentServiceBean apartmentServiceBean;
 
     @POST

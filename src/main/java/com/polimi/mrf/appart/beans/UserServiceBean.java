@@ -20,7 +20,7 @@ import java.util.List;
 public class UserServiceBean {
     public static final String userImagesFolderPath = System.getProperty("user.home")+"\\uploadedImages\\users\\";
 
-    @EJB(name = "com.polimi.mrf.appart.beans/ImgServiceBean")
+    @EJB
     ImgServiceBean ImgServiceBean;
 
     @PersistenceContext(unitName = "appart")

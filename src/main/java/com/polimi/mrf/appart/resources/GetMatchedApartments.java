@@ -23,7 +23,7 @@ import java.util.List;
 
 @Path("/reserved/getmatchedapartments")
 public class GetMatchedApartments {
-    @EJB(name = "com.polimi.mrf.appart.beans/UserServiceBean")
+    @EJB
     UserServiceBean userServiceBean;
 
     @POST

@@ -15,7 +15,7 @@ import jakarta.ws.rs.core.Response;
 
 @Path("/reserved/ignoreuser")
 public class IgnoreUser {
-    @EJB(name = "com.polimi.mrf.appart.beans/ApartmentServiceBean")
+    @EJB
     ApartmentServiceBean apartmentServiceBean;
 
     @POST
