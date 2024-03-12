@@ -34,14 +34,22 @@ public class ImgServiceBean {
     //first run, retrieve max ids from data store
 
     public byte[] getApartmentImageBytesById(long imgId) {
-        return em.find(ApartmentImage.class, imgId).getImageBytes();
+        ApartmentImage aImg=em.find(ApartmentImage.class, imgId);
+        if (aImg==null)
+            return null;
+        else
+            return aImg.getImageBytes();
     }
     public Image getApartmentImageById(long imgId) {
         return em.find(ApartmentImage.class, imgId);
     }
 
     public byte[] getUserImageBytesById(long imgId) {
-        return em.find(UserImage.class, imgId).getImageBytes();
+        UserImage uImg = em.find(UserImage.class, imgId);
+        if (uImg==null)
+            return null;
+        else
+            return uImg.getImageBytes();
     }
     public Image getUserImageById(long imgId) {
         return em.find(UserImage.class, imgId);

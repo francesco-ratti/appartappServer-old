@@ -56,6 +56,9 @@ public class GetImages {
             long id=Long.parseLong(idStr.trim());
             byte[] img=imgServiceBean.getApartmentImageBytesById(id);
 
+            if (img==null)
+                return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity("id not exists").build();
+
             Response.ResponseBuilder response = Response.ok((StreamingOutput) output -> {
                 output.write(img);
                 output.flush();
@@ -82,6 +85,8 @@ public class GetImages {
             long id=Long.parseLong(idStr.trim());
 
             byte[] img=imgServiceBean.getUserImageBytesById(id);
+            if (img==null)
+                return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity("id not exists").build();
 
             Response.ResponseBuilder response = Response.ok(new StreamingOutput(){
                 @Override
