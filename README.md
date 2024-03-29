@@ -5,7 +5,7 @@ Welcome to Appart Server! Below are the steps to get started quickly.
 ## Prerequisites
 Make sure you have the following installed:
 - Java JDK 21
-- TomEE Plume
+- TomEE MicroProfile
 - IntelliJ Ultimate (free with a university account)
 
 **Test the Hello World Project**:
